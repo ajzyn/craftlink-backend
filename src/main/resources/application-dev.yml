@@ -1,3 +1,14 @@
+app:
+  frontend-url: http://localhost:3000
+
+auth:
+  jwt:
+    expiration-time: 600000
+    secret: ${JWT_ACCESS_TOKEN_SECRET}
+  cookies:
+    refresh-token:
+      expiration-time: 180000
+
 server:
   port: 8080
 
