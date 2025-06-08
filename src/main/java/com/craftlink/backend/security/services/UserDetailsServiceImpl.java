@@ -5,7 +5,6 @@ import com.craftlink.backend.config.exceptions.custom.InvalidCredentialsExceptio
 import com.craftlink.backend.security.models.UserPrincipal;
 import com.craftlink.backend.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,15 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-            .map(user -> {
-                var authorities = user.resolveAuthorities()
-                    .stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .toList();
-
-                return new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), user.getUserType(), authorities);
-            })
-            .orElseThrow(()-> new InvalidCredentialsException(ExceptionCode.USER_NOT_EXIST));
+        return userRepository.findByEmailWithSpecializations(email)
+            .map(UserPrincipal::new)
+            .orElseThrow(() -> new InvalidCredentialsException(ExceptionCode.USER_NOT_EXIST));
     }
 }
