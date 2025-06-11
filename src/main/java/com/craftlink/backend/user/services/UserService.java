@@ -6,6 +6,7 @@ import com.craftlink.backend.config.exceptions.custom.BusinessException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
 import com.craftlink.backend.user.entities.UserEntity;
+import com.craftlink.backend.user.models.UserType;
 import com.craftlink.backend.user.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class UserService {
             .email(registerRequestDto.getEmail())
             .password(hashedPassword)
             .client(client)
+            .userType(UserType.CLIENT)
             .build();
 
         try {
@@ -62,6 +64,7 @@ public class UserService {
             .email(registerRequestDto.getEmail())
             .password(hashedPassword)
             .specialist(specialist)
+            .userType(UserType.SPECIALIST)
             .build();
 
         try {

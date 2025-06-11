@@ -1,5 +1,5 @@
 app:
-  frontend-url: http://localhost:3000
+  frontend-url: http://localhost:5173
 
 auth:
   jwt:
@@ -9,9 +9,10 @@ auth:
     refresh-token:
       expiration-time-in-seconds: 180000
       domain: localhost
-      path: /
+      path: /api/auth
       httpOnly: true
       isSecure: false
+      sameSite: strict
 
 server:
   port: 8080

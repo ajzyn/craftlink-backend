@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,6 +43,18 @@ public class SecurityConfig {
         http
             .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
+            .headers(headers -> headers
+                .contentTypeOptions(Customizer.withDefaults())
+                .httpStrictTransportSecurity(hsts -> {
+                    if (!isDevEnv) {
+                        hsts.maxAgeInSeconds(31536000)
+                            .includeSubDomains(true)
+                            .preload(true);
+                    } else {
+                        hsts.disable();
+                    }
+                })
+            )
             .authorizeHttpRequests(auth -> {
                     if (isDevEnv) {
                         auth.requestMatchers(
@@ -69,7 +82,12 @@ public class SecurityConfig {
         corsConfiguration.setAllowedMethods(List.of("GET", "DELETE", "POST", "PUT", "PATCH", "OPTIONS"));
         corsConfiguration.setAllowedOrigins(List.of(frontendUrl));
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setAllowedHeaders(List.of(
+            "Authorization",
+            "Content-Type",
+            "Accept"
+        ));
+        corsConfiguration.setMaxAge(3600L);
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

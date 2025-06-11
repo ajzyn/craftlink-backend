@@ -14,4 +14,5 @@ public class CookieOptions {
     boolean isSecure;
     String path;
     boolean httpOnly;
+    String sameSite;
 }

@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -33,14 +35,16 @@ public class CookieService {
         validateCookieOptions(cookieOptions);
         log.info("Cookie validated");
 
-        var cookie = new Cookie(cookieOptions.getName(), cookieOptions.getValue());
-        cookie.setPath(cookieOptions.getPath());
-        cookie.setSecure(cookieOptions.isSecure());
-        cookie.setDomain(cookieOptions.getDomain());
-        cookie.setHttpOnly(cookieOptions.isHttpOnly());
-        cookie.setMaxAge((int) cookieOptions.getExpirationTimeInSeconds());
+        var cookie = ResponseCookie.from(cookieOptions.getName(), cookieOptions.getValue())
+            .domain(cookieOptions.getDomain())
+            .path(cookieOptions.getPath())
+            .secure(cookieOptions.isSecure())
+            .httpOnly(cookieOptions.isHttpOnly())
+            .sameSite(cookieOptions.getSameSite())
+            .maxAge(cookieOptions.getExpirationTimeInSeconds())
+            .build();
 
-        response.addCookie(cookie);
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         log.info("Cookie added: name={}, value={}", cookieOptions.getName(), cookieOptions.getValue());
     }
 
