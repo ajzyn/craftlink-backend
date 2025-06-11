@@ -1,6 +1,7 @@
 package com.craftlink.backend.user.entities;
 
 import com.craftlink.backend.auth.entities.AuthorityEntity;
+import com.craftlink.backend.auth.entities.RefreshTokenEntity;
 import com.craftlink.backend.client.entities.ClientEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
@@ -17,9 +18,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +57,6 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private UserType userType;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_authorities",
@@ -69,6 +71,8 @@ public class UserEntity extends BaseEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ClientEntity client;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RefreshTokenEntity> refreshToken;
 
     public void setClient(ClientEntity client) {
         this.client = client;

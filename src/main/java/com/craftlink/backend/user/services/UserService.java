@@ -2,12 +2,10 @@ package com.craftlink.backend.user.services;
 
 import com.craftlink.backend.auth.dtos.RegisterRequestDto;
 import com.craftlink.backend.client.entities.ClientEntity;
-import com.craftlink.backend.config.exceptions.ExceptionCode;
-import com.craftlink.backend.config.exceptions.custom.UserAlreadyExistException;
-import com.craftlink.backend.config.exceptions.custom.UserPersistenceException;
+import com.craftlink.backend.config.exceptions.custom.BusinessException;
+import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
 import com.craftlink.backend.user.entities.UserEntity;
-import com.craftlink.backend.user.models.UserType;
 import com.craftlink.backend.user.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +23,9 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void registerClient(RegisterRequestDto registerRequestDto){
-        if(userRepository.existsByEmail(registerRequestDto.getEmail())){
-            throw new UserAlreadyExistException();
+    public void registerClient(RegisterRequestDto registerRequestDto) {
+        if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
+            throw new BusinessException(ExceptionCode.USER_ALREADY_EXISTS);
         }
 
         var hashedPassword = passwordEncoder.encode(registerRequestDto.getPassword());
@@ -40,17 +38,20 @@ public class UserService {
             .client(client)
             .build();
 
-        try{
+        try {
             userRepository.save(user);
-        }catch (DataAccessException ex){
-            throw new UserPersistenceException(ExceptionCode.CLIENT_NOT_REGISTERED, ex);
+        } catch (DataAccessException ex) {
+            throw new BusinessException(
+                ExceptionCode.SERVICE_UNAVAILABLE,
+                ex
+            );
         }
     }
 
     @Transactional
-    public void registerSpecialist(RegisterRequestDto registerRequestDto){
-        if(userRepository.existsByEmail(registerRequestDto.getEmail())){
-            throw new UserAlreadyExistException();
+    public void registerSpecialist(RegisterRequestDto registerRequestDto) {
+        if (userRepository.existsByEmail(registerRequestDto.getEmail())) {
+            throw new BusinessException(ExceptionCode.USER_ALREADY_EXISTS);
         }
 
         var hashedPassword = passwordEncoder.encode(registerRequestDto.getPassword());
@@ -63,10 +64,18 @@ public class UserService {
             .specialist(specialist)
             .build();
 
-        try{
+        try {
             userRepository.save(user);
-        }catch (DataAccessException ex){
-            throw new UserPersistenceException(ExceptionCode.SPECIALIST_NOT_REGISTERED, ex);
+        } catch (DataAccessException ex) {
+            throw new BusinessException(
+                ExceptionCode.SERVICE_UNAVAILABLE,
+                ex
+            );
         }
+    }
+
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(() -> new BusinessException(ExceptionCode.USER_ALREADY_EXISTS));
     }
 }

@@ -3,11 +3,15 @@ app:
 
 auth:
   jwt:
-    expiration-time: 600000
+    expiration-time: 60000
     secret: ${JWT_ACCESS_TOKEN_SECRET}
   cookies:
     refresh-token:
-      expiration-time: 180000
+      expiration-time-in-seconds: 180000
+      domain: localhost
+      path: /
+      httpOnly: true
+      isSecure: false
 
 server:
   port: 8080
@@ -28,7 +32,9 @@ spring:
     url: jdbc:postgresql://localhost:5434/craftlink
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     properties:
       hibernate:

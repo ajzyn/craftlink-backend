@@ -13,14 +13,14 @@ public class AuthorizationHelper {
 
     public boolean hasSpecialization(String code) {
         return getCurrentPrincipal()
-            .map(user -> user.getSpecializationCodes().contains(code))
+            .map(user -> user.getSpecializationSlugs().contains(code))
             .orElse(false);
     }
 
     public boolean hasAnySpecialization(String... codes) {
         return getCurrentPrincipal()
             .map(user -> {
-                var userSpecs = user.getSpecializationCodes();
+                var userSpecs = user.getSpecializationSlugs();
                 return Arrays.stream(codes).anyMatch(userSpecs::contains);
             })
             .orElse(false);

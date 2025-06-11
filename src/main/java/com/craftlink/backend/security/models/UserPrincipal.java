@@ -17,7 +17,7 @@ public class UserPrincipal implements UserDetails {
     private final String username;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final Set<String> specializationCodes;
+    private final Set<String> specializationSlugs;
 
     public UserPrincipal(UserEntity user) {
         id = user.getId();
@@ -29,13 +29,13 @@ public class UserPrincipal implements UserDetails {
             .collect(Collectors.toSet());
 
         if (user.getSpecialist() != null && user.getSpecialist().getSpecializations() != null) {
-            specializationCodes = user.getSpecialist()
+            specializationSlugs = user.getSpecialist()
                 .getSpecializations()
                 .stream()
                 .map(SpecializationEntity::getSlug)
                 .collect(Collectors.toSet());
         } else {
-            specializationCodes = Set.of();
+            specializationSlugs = Set.of();
         }
     }
 }

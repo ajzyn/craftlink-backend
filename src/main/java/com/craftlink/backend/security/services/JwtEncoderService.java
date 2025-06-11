@@ -1,8 +1,8 @@
 package com.craftlink.backend.security.services;
 
-import com.craftlink.backend.config.exceptions.ExceptionCode;
-import com.craftlink.backend.config.exceptions.custom.InvalidJwtException;
-import com.craftlink.backend.config.exceptions.custom.JwtGenerationException;
+import com.craftlink.backend.config.exceptions.custom.SecurityException;
+import com.craftlink.backend.config.exceptions.custom.ValidationException;
+import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -22,12 +22,13 @@ import org.springframework.stereotype.Service;
 public class JwtEncoderService {
 
 
-    public String generateToken(String subject, Long expTime, String secret){
+    public String generateToken(String subject, Long expTime, String secret) {
         if (expTime == null) {
-            throw new JwtGenerationException(ExceptionCode.JWT_EXP_TIME_NULL);
+            throw new ValidationException(ExceptionCode.MISSING_REQUIRED_FIELD,
+                Map.of("expTimeMillis", "Expiration time is required"));
         }
 
-        try{
+        try {
             Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
 
             return Jwts.builder()
@@ -36,17 +37,20 @@ public class JwtEncoderService {
                 .setIssuedAt(new Date())
                 .signWith(getSigningKey(secret))
                 .compact();
-        }catch (JwtException e) {
-            throw new JwtGenerationException(ExceptionCode.JWT_GENERAL_EXCEPTION);
+        } catch (JwtException e) {
+            throw new SecurityException(ExceptionCode.JWT_INTERNAL_ERROR, "Error generating JWT: " + e.getMessage());
         }
     }
 
-    public String generateToken(String subject, Map<String, String> claims, Long expTime, String secret){
+    public String generateToken(String subject, Map<String, String> claims, Long expTime, String secret) {
         if (expTime == null) {
-            throw new JwtGenerationException(ExceptionCode.JWT_EXP_TIME_NULL);
+            throw new ValidationException(
+                ExceptionCode.MISSING_REQUIRED_FIELD,
+                Map.of("expTimeMillis", "Expiration time is required")
+            );
         }
 
-        try{
+        try {
             Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
 
             return Jwts.builder()
@@ -56,13 +60,16 @@ public class JwtEncoderService {
                 .setIssuedAt(new Date())
                 .signWith(getSigningKey(secret))
                 .compact();
-        }catch (JwtException e) {
-            throw new JwtGenerationException(ExceptionCode.JWT_GENERAL_EXCEPTION);
+        } catch (JwtException e) {
+            throw new SecurityException(
+                ExceptionCode.JWT_INTERNAL_ERROR,
+                "Error generating JWT: " + e.getMessage()
+            );
         }
     }
 
-    public String extractSubject(String token, String secret){
-        try{
+    public String extractSubject(String token, String secret) {
+        try {
 
             Claims claims = Jwts
                 .parserBuilder()
@@ -72,17 +79,25 @@ public class JwtEncoderService {
                 .getBody();
 
             return claims.getSubject();
-        }catch (ExpiredJwtException e) {
-            throw new InvalidJwtException(ExceptionCode.JWT_EXPIRED, e);
-
+        } catch (ExpiredJwtException e) {
+            throw new SecurityException(
+                ExceptionCode.JWT_EXPIRED,
+                "Token has expired"
+            );
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-            throw new InvalidJwtException(ExceptionCode.JWT_NOT_VALID, e);
+            throw new SecurityException(
+                ExceptionCode.TOKEN_FORMAT_ERROR,
+                "Invalid authentication token"
+            );
         }
     }
 
-    private Key getSigningKey(String secret){
-        if(secret.length() < 32){
-            throw new JwtGenerationException(ExceptionCode.JWT_SECRET_TOO_SHORT);
+    private Key getSigningKey(String secret) {
+        if (secret.length() < 32) {
+            throw new SecurityException(
+                ExceptionCode.JWT_INTERNAL_ERROR,
+                "JWT secret too short: " + secret.length()
+            );
         }
 
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
