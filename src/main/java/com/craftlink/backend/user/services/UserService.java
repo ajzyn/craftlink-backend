@@ -79,6 +79,6 @@ public class UserService {
 
     public UserEntity getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-            .orElseThrow(() -> new BusinessException(ExceptionCode.USER_ALREADY_EXISTS));
+            .orElseThrow(() -> new BusinessException(ExceptionCode.USER_NOT_FOUND));
     }
 }

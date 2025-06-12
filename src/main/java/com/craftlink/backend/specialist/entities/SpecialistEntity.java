@@ -7,7 +7,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,8 +39,7 @@ public class SpecialistEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SpecialistType type;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(nullable = false)
+    @OneToOne(mappedBy = "specialist", cascade = CascadeType.ALL)
     private UserEntity user;
 
     @ManyToMany()

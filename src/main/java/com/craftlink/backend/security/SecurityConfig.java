@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,13 +42,13 @@ public class SecurityConfig {
         var isDevEnv = Arrays.asList(environment.getActiveProfiles()).contains("dev");
 
         http
-            .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+            .csrf(AbstractHttpConfigurer::disable)
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
             .headers(headers -> headers
                 .contentTypeOptions(Customizer.withDefaults())
                 .httpStrictTransportSecurity(hsts -> {
                     if (!isDevEnv) {
-                        hsts.maxAgeInSeconds(31536000)
+                        hsts.maxAgeInSeconds(3600L)
                             .includeSubDomains(true)
                             .preload(true);
                     } else {

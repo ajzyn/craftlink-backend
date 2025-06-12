@@ -163,12 +163,8 @@ public class GlobalExceptionHandler {
 
 
     private String getCurrentUsername() {
-        try {
-            var auth = SecurityContextHolder.getContext().getAuthentication();
-            return auth != null ? auth.getName() : "anonymous";
-        } catch (Exception e) {
-            return "unknown";
-        }
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null ? auth.getName() : "anonymous";
     }
 
     private Map<String, String> convertToStringMap(Map<String, String> source) {

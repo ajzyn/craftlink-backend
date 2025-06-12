@@ -6,6 +6,7 @@ import com.craftlink.backend.client.entities.ClientEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
 import com.craftlink.backend.user.models.UserType;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,28 +66,25 @@ public class UserEntity extends BaseEntity {
     )
     private Set<AuthorityEntity> authorities = new HashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "specialist_id")
     private SpecialistEntity specialist;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private ClientEntity client;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RefreshTokenEntity> refreshToken;
 
-    public void setClient(ClientEntity client) {
-        this.client = client;
-
-        if (client != null) {
-            client.setUser(this);
+    @PostConstruct
+    private void setupBidirectionalRelations() {
+        if (this.client != null) {
+            this.client.setUser(this);
         }
-    }
 
-    public void setSpecialist(SpecialistEntity specialist) {
-        this.specialist = specialist;
-
-        if (specialist != null) {
-            specialist.setUser(this);
+        if (this.specialist != null) {
+            this.specialist.setUser(this);
         }
     }
 }

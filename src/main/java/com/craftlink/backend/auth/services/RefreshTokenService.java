@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 public class RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final SecureRandom secureRandom = new SecureRandom();
     private final CookieService cookieService;
     private final AccessTokenService accessTokenService;
     private final UserService userService;
@@ -70,6 +69,7 @@ public class RefreshTokenService {
 
     private String generateRefreshToken() {
         var randomBytes = new byte[64];
+        var secureRandom = new SecureRandom();
         secureRandom.nextBytes(randomBytes);
 
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
