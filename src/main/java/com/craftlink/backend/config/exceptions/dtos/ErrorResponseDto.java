@@ -11,7 +11,6 @@ public class ErrorResponseDto {
 
     private String error;
     private String message;
-    private String requestId;
     private LocalDateTime timestamp;
     private Map<String, String> details;
 }

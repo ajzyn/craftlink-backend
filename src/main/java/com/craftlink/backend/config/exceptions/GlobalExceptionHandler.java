@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,14 +26,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleSecurityException(
         SecurityException ex, HttpServletRequest request) {
 
-        String requestId = generateRequestId();
-
-        logSecurityError(ex, request, requestId);
+        logSecurityError(ex, request);
 
         var response = ErrorResponseDto.builder()
             .error(ex.getCode().getUserCode())
             .message(ex.getCode().getUserMessage())
-            .requestId(requestId)
             .timestamp(LocalDateTime.now())
             .build();
 
@@ -44,29 +41,25 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleBusinessException(
         BusinessException ex, HttpServletRequest request) {
 
-        String requestId = generateRequestId();
-
         if (ex.getCode().isSafeForUser()) {
-            log.info("Business operation failed [{}] - Code: {}, Path: {}, Details: {}",
-                requestId, ex.getCode().getCode(), request.getRequestURI(), ex.getDetails());
+            log.info("Business operation failed - Code: {}, Path: {}, Details: {}",
+                ex.getCode().getCode(), request.getRequestURI(), ex.getDetails());
 
             var response = ErrorResponseDto.builder()
                 .error(ex.getCode().getUserCode())
                 .message(ex.getCode().getUserMessage())
-                .requestId(requestId)
                 .timestamp(LocalDateTime.now())
                 .details(convertToStringMap(ex.getDetails()))
                 .build();
 
             return ResponseEntity.status(ex.getCode().getHttpStatus()).body(response);
         } else {
-            log.error("Internal business error [{}] - Code: {}, Path: {}, Details: {}",
-                requestId, ex.getCode().getCode(), request.getRequestURI(), ex.getDetails());
+            log.error("Internal business error - Code: {}, Path: {}, Details: {}",
+                ex.getCode().getCode(), request.getRequestURI(), ex.getDetails());
 
             var response = ErrorResponseDto.builder()
                 .error(ex.getCode().getUserCode())
                 .message(ex.getCode().getUserMessage())
-                .requestId(requestId)
                 .timestamp(LocalDateTime.now())
                 .build();
 
@@ -78,15 +71,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleValidationException(
         ValidationException ex, HttpServletRequest request) {
 
-        String requestId = generateRequestId();
-
-        log.warn("Validation error [{}] - Code: {}, Path: {}, Fields: {}",
-            requestId, ex.getCode().getCode(), request.getRequestURI(), ex.getFieldErrors().keySet());
+        log.warn("Validation error - Code: {}, Path: {}, Fields: {}",
+            ex.getCode().getCode(), request.getRequestURI(), ex.getFieldErrors().keySet());
 
         var response = ErrorResponseDto.builder()
             .error(ex.getCode().getUserCode())
             .message(ex.getCode().getUserMessage())
-            .requestId(requestId)
             .timestamp(LocalDateTime.now())
             .details(ex.getFieldErrors())
             .build();
@@ -98,19 +88,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleMethodArgumentNotValid(
         MethodArgumentNotValidException ex, HttpServletRequest request) {
 
-        String requestId = generateRequestId();
-
         Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
             fieldErrors.put(error.getField(), error.getDefaultMessage()));
 
-        log.warn("Spring validation error [{}] - Path: {}, Fields: {}",
-            requestId, request.getRequestURI(), fieldErrors.keySet());
+        log.warn("Spring validation error - Path: {}, Fields: {}",
+            request.getRequestURI(), fieldErrors.keySet());
 
         var response = ErrorResponseDto.builder()
             .error("VALIDATION_ERROR")
             .message("Invalid request data")
-            .requestId(requestId)
             .timestamp(LocalDateTime.now())
             .details(fieldErrors)
             .build();
@@ -118,31 +105,42 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponseDto> handleBadCredentials(
+        BadCredentialsException ex, HttpServletRequest request) {
+
+        log.warn("Bad credentials error - Path: {}, Fields: {}",
+            request.getRequestURI(), ex.getMessage());
+
+        var response = ErrorResponseDto.builder()
+            .error("BAD_CREDENTIALS")
+            .message("Invalid email or password")
+            .timestamp(LocalDateTime.now())
+            .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> handleGenericException(
         Exception ex, HttpServletRequest request) {
 
-        String requestId = generateRequestId();
-
-        log.error("Unhandled exception [{}] - Path: {}, Error: {}",
-            requestId, request.getRequestURI(), ex.getMessage(), ex);
+        log.error("Unhandled exception - Path: {}, Error: {}",
+            request.getRequestURI(), ex.getMessage(), ex);
 
         var response = ErrorResponseDto.builder()
             .error("INTERNAL_SERVER_ERROR")
             .message("An unexpected error occurred")
-            .requestId(requestId)
             .timestamp(LocalDateTime.now())
             .build();
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-    //TODO: sprawdzic stacktrace - czy dziala poprawnie z super(ex)
-
-    private void logSecurityError(SecurityException ex, HttpServletRequest request, String requestId) {
+    private void logSecurityError(SecurityException ex, HttpServletRequest request) {
         String logMessage = String.format(
-            "Security error [%s] - Code: %s, Path: %s, User: %s, UserAgent: %s",
-            requestId, ex.getCode().getCode(), request.getRequestURI(),
+            "Security error - Code: %s, Path: %s, User: %s, UserAgent: %s",
+            ex.getCode().getCode(), request.getRequestURI(),
             getCurrentUsername(), request.getHeader("User-Agent")
         );
 
@@ -156,11 +154,6 @@ public class GlobalExceptionHandler {
 
         log.error(logMessage);
     }
-
-    private String generateRequestId() {
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
-
 
     private String getCurrentUsername() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
