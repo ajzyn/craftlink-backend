@@ -1,5 +1,6 @@
 package com.craftlink.backend.security;
 
+import com.craftlink.backend.security.entrypoints.CustomAuthenticationEntryPoint;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter,
+        CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         var isDevEnv = Arrays.asList(environment.getActiveProfiles()).contains("dev");
 
         http
@@ -68,6 +70,7 @@ public class SecurityConfig {
                     auth.anyRequest().permitAll();
                 }
             )
+            .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint))
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(
                 sessionConfigurer -> sessionConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

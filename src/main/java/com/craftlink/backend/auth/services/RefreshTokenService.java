@@ -9,6 +9,7 @@ import com.craftlink.backend.config.exceptions.custom.ValidationException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import com.craftlink.backend.security.services.AccessTokenService;
 import com.craftlink.backend.shared.cookies.CookieService;
+import com.craftlink.backend.user.entities.UserEntity;
 import com.craftlink.backend.user.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -31,8 +32,8 @@ public class RefreshTokenService {
     private final RefreshTokenCookieProperties refreshTokenCookieProperties;
 
     @Transactional
-    public RefreshTokenEntity createRefreshToken(String userEmail) {
-        var user = userService.getUserByEmail(userEmail);
+    public RefreshTokenEntity createRefreshToken(UserEntity user) {
+
         var token = generateRefreshToken();
         var expirationDate = Instant.now()
             .plus(refreshTokenCookieProperties.getExpirationTimeInSeconds(), ChronoUnit.SECONDS);
