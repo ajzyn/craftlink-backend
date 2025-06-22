@@ -1,7 +1,7 @@
-package com.craftlink.backend.security;
+package com.craftlink.backend.config.security;
 
-import com.craftlink.backend.security.services.AccessTokenService;
-import com.craftlink.backend.security.services.UserDetailsServiceImpl;
+import com.craftlink.backend.config.security.services.AccessTokenService;
+import com.craftlink.backend.config.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         var authHeader = request.getHeader("Authorization");
 
-        if(authHeader == null || !authHeader.startsWith("Bearer ") || SecurityContextHolder.getContext().getAuthentication() != null){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")
+            || SecurityContextHolder.getContext().getAuthentication() != null) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -36,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         var jwtToken = authHeader.substring(BEARER_PREFIX_LENGTH);
         var userEmail = accessTokenService.getUserEmail(jwtToken);
 
-        if(userEmail != null){
+        if (userEmail != null) {
             var user = userDetailsService.loadUserByUsername(userEmail);
 
             var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

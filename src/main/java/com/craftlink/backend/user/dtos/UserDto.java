@@ -12,6 +12,6 @@ public class UserDto {
     private Integer id;
     private String username;
     private String authorities;
-    private Set<String> specializationSlugs;
+    private Set<String> offeredServices;
     private UserType userType;
 }

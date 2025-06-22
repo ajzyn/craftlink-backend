@@ -1,4 +1,4 @@
-package com.craftlink.backend.security.services;
+package com.craftlink.backend.config.security.services;
 
 import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.custom.ValidationException;

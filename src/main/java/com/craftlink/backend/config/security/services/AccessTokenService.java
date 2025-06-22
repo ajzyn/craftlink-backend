@@ -1,4 +1,4 @@
-package com.craftlink.backend.security.services;
+package com.craftlink.backend.config.security.services;
 
 import com.craftlink.backend.shared.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;

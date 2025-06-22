@@ -1,6 +1,6 @@
-package com.craftlink.backend.security.utils;
+package com.craftlink.backend.config.security.utils;
 
-import com.craftlink.backend.security.models.UserPrincipal;
+import com.craftlink.backend.config.security.models.UserPrincipal;
 import java.util.Arrays;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +13,15 @@ public class AuthorizationHelper {
 
     public boolean hasSpecialization(String code) {
         return getCurrentPrincipal()
-            .map(user -> user.getSpecializationSlugs().contains(code))
+            .map(user -> user.getOfferedServices().contains(code))
             .orElse(false);
     }
 
     public boolean hasAnySpecialization(String... codes) {
         return getCurrentPrincipal()
             .map(user -> {
-                var userSpecs = user.getSpecializationSlugs();
-                return Arrays.stream(codes).anyMatch(userSpecs::contains);
+                var offeredServices = user.getOfferedServices();
+                return Arrays.stream(codes).anyMatch(offeredServices::contains);
             })
             .orElse(false);
     }

@@ -36,9 +36,10 @@ public class UserService {
         var user = UserEntity.builder()
             .email(registerRequestDto.getEmail())
             .password(hashedPassword)
-            .client(client)
             .userType(UserType.CLIENT)
             .build();
+
+        user.setClient(client);
 
         try {
             userRepository.save(user);
@@ -63,9 +64,10 @@ public class UserService {
         var user = UserEntity.builder()
             .email(registerRequestDto.getEmail())
             .password(hashedPassword)
-            .specialist(specialist)
             .userType(UserType.SPECIALIST)
             .build();
+
+        user.setSpecialist(specialist);
 
         try {
             userRepository.save(user);

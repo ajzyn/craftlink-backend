@@ -1,7 +1,8 @@
-package com.craftlink.backend.security.models;
+package com.craftlink.backend.config.security.models;
 
-import com.craftlink.backend.specialist.entities.SpecializationEntity;
+import com.craftlink.backend.service.entities.ServiceEntity;
 import com.craftlink.backend.user.entities.UserEntity;
+import com.craftlink.backend.user.models.UserType;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,26 +17,28 @@ public class UserPrincipal implements UserDetails {
     private final Integer id;
     private final String username;
     private final String password;
+    private final UserType userType;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final Set<String> specializationSlugs;
+    private final Set<String> offeredServices;
 
     public UserPrincipal(UserEntity user) {
         id = user.getId();
         username = user.getEmail();
         password = user.getPassword();
+        userType = user.getUserType();
         authorities = user.getAuthorities()
             .stream()
             .map(role -> new SimpleGrantedAuthority(role.getCode()))
             .collect(Collectors.toSet());
 
-        if (user.getSpecialist() != null && user.getSpecialist().getSpecializations() != null) {
-            specializationSlugs = user.getSpecialist()
-                .getSpecializations()
+        if (user.getSpecialist() != null && user.getSpecialist().getOfferedServices() != null) {
+            offeredServices = user.getSpecialist()
+                .getOfferedServices()
                 .stream()
-                .map(SpecializationEntity::getSlug)
+                .map(ServiceEntity::getSlug)
                 .collect(Collectors.toSet());
         } else {
-            specializationSlugs = Set.of();
+            offeredServices = Set.of();
         }
     }
 }

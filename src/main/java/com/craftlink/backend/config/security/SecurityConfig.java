@@ -1,6 +1,6 @@
-package com.craftlink.backend.security;
+package com.craftlink.backend.config.security;
 
-import com.craftlink.backend.security.entrypoints.CustomAuthenticationEntryPoint;
+import com.craftlink.backend.config.security.entrypoints.CustomAuthenticationEntryPoint;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

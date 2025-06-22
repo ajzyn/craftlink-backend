@@ -3,7 +3,6 @@ package com.craftlink.backend.client.entities;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.user.entities.UserEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +28,6 @@ public class ClientEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "client", optional = false)
     private UserEntity user;
 }

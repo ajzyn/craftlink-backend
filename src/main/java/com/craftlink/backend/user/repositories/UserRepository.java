@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("""
         SELECT u FROM UserEntity u
         LEFT JOIN FETCH u.specialist s
-        LEFT JOIN FETCH s.specializations
+        LEFT JOIN FETCH s.offeredServices
         WHERE u.email = :email
         """)
-    Optional<UserEntity> findByEmailWithSpecializations(String email);
+    Optional<UserEntity> findByEmailWithServices(String email);
 }

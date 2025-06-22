@@ -109,6 +109,22 @@
       <groupId>org.modelmapper</groupId>
       <version>3.0.0</version>
     </dependency>
+    <dependency>
+      <artifactId>sts</artifactId>
+      <groupId>software.amazon.awssdk</groupId>
+      <version>2.31.65</version>
+    </dependency>
+    <dependency>
+      <artifactId>s3</artifactId>
+      <groupId>software.amazon.awssdk</groupId>
+      <version>2.31.65</version>
+    </dependency>
+    <dependency>
+      <artifactId>annotations</artifactId>
+      <groupId>org.jetbrains</groupId>
+      <scope>compile</scope>
+      <version>13.0</version>
+    </dependency>
   </dependencies>
   <description>Marketplace for cross-border service providers</description>
   <developers>

@@ -1,8 +1,8 @@
-package com.craftlink.backend.security.services;
+package com.craftlink.backend.config.security.services;
 
 import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
-import com.craftlink.backend.security.models.UserPrincipal;
+import com.craftlink.backend.config.security.models.UserPrincipal;
 import com.craftlink.backend.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmailWithSpecializations(email)
+        return userRepository.findByEmailWithServices(email)
             .map(UserPrincipal::new)
             .orElseThrow(() -> new SecurityException(ExceptionCode.AUTHENTICATION_FAILED,
                 "Invalid credentials for email: " + email));

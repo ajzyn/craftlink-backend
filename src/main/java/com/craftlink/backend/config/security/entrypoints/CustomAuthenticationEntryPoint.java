@@ -1,9 +1,8 @@
-package com.craftlink.backend.security.entrypoints;
+package com.craftlink.backend.config.security.entrypoints;
 
 import com.craftlink.backend.config.exceptions.dtos.ErrorResponseDto;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-        AuthenticationException authException) throws IOException, ServletException {
+        AuthenticationException authException) throws IOException {
         var error = ErrorResponseDto.builder()
             .message(ExceptionCode.UNAUTHORIZED.getUserMessage())
             .error(ExceptionCode.UNAUTHORIZED.getCode()).timestamp(LocalDateTime.now())
