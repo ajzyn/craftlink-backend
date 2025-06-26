@@ -1,7 +1,7 @@
 package com.craftlink.backend.category.repositories;
 
 import com.craftlink.backend.category.entities.CategoryEntity;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,6 +12,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
     @Query("""
         SELECT DISTINCT c FROM CategoryEntity c
         JOIN FETCH c.services
+        LEFT JOIN FETCH c.image
+        WHERE c.slug = :slug
         """)
-    List<CategoryEntity> findAllWithServices();
+    Optional<CategoryEntity> findBySlugWithServicesAndImage(String slug);
 }

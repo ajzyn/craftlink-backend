@@ -30,7 +30,8 @@ public class CategoryImageEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    //    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String imageKey;
 
     @Column(nullable = false)
@@ -45,7 +46,6 @@ public class CategoryImageEntity extends BaseEntity {
     @Column(nullable = false)
     private Long fileSize;
 
-    @Column(nullable = false)
     private String userId;
 
     private Instant uploadCompletedAt;

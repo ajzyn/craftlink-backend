@@ -1,11 +1,11 @@
 package com.craftlink.backend.category;
 
-import com.craftlink.backend.category.dtos.CategoryDto;
+import com.craftlink.backend.category.dtos.CategoryBasicDto;
+import com.craftlink.backend.category.dtos.CategoryDetailsDto;
 import com.craftlink.backend.category.services.CategoryImageService;
 import com.craftlink.backend.category.services.CategoryService;
 import com.craftlink.backend.config.aws.dtos.PresignedUploadRequestDto;
 import com.craftlink.backend.config.aws.dtos.PresignedUploadResponseDto;
-import com.craftlink.backend.shared.dtos.TemporaryCredentialsResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,24 +29,23 @@ public class CategoryController {
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getCategories(
-        @RequestParam(defaultValue = "") String searchPhrase) {
-        return ResponseEntity.ok(categoryService.getCategoriesWithAssignedServices());
+    public ResponseEntity<List<CategoryBasicDto>> getCategories() {
+        return ResponseEntity.ok(categoryService.getCategories());
     }
 
-    //TODO: add authorization check
-    @PostMapping("/{categoryId}/credentials")
-    public TemporaryCredentialsResponse getCategoryCredentials(@PathVariable String categoryId) {
-        return null;
+    @GetMapping("/{slug}")
+    public ResponseEntity<CategoryDetailsDto> getCategoryWithServices(@PathVariable String slug) {
+        return ResponseEntity.ok(categoryService.getCategoryDetailsBySlug(slug));
     }
 
+    //TODO: add authorization check and create presignedULR to fetch image
     @PostMapping("/image/upload-url")
     public ResponseEntity<PresignedUploadResponseDto> getPresignedUploadUrl(@Valid @RequestBody
     PresignedUploadRequestDto request) {
         return ResponseEntity.ok(categoryImageService.createUploadImageSession(request));
     }
 
-    @PatchMapping("/image/{imageKey}/complate")
+    @PatchMapping("/image/{imageKey}/complete")
     public ResponseEntity<HttpStatus> markUploadImageAsCompleted(@PathVariable String imageKey) {
         categoryImageService.markUploadCompleted(imageKey);
 

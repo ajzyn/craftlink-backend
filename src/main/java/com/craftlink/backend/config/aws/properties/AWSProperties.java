@@ -17,12 +17,6 @@ public class AWSProperties {
     private String region;
 
     @NotNull
-    private String accessKey;
-
-    @NotNull
-    private String secretKey;
-
-    @NotNull
     private String bucketName;
 
     @NotNull

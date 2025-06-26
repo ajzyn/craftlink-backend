@@ -39,6 +39,7 @@ public class ServiceEntity extends BaseEntity {
     private Integer id;
 
     private String name;
+    private String description;
     private String slug;
 
     @ManyToOne(optional = false)

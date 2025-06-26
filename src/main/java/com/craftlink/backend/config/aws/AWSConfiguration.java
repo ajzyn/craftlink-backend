@@ -4,9 +4,8 @@ import com.craftlink.backend.config.aws.properties.AWSProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -39,7 +38,6 @@ public class AWSConfiguration {
 
 
     private AwsCredentialsProvider createCredentialsProvider() {
-        return StaticCredentialsProvider.create(AwsBasicCredentials.create(AWSProperties.getAccessKey(),
-            AWSProperties.getSecretKey()));
+        return EnvironmentVariableCredentialsProvider.create();
     }
 }

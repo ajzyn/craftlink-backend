@@ -7,8 +7,6 @@ spring:
 aws:
   s3:
     region: ${AWS_REGION:eu-central-1}
-    access-key: ${AWS_ACCESS_KEY_ID}
-    secret-key: ${AWS_SECRET_ACCESS_KEY}
     bucket-name: ${AWS_S3_BUCKET_NAME}
     presigned-url-ttl-minutes: 30
 
