@@ -68,7 +68,11 @@ public enum ExceptionCode {
         HttpStatus.BAD_REQUEST, false),
     CONTENT_TYPE_NOT_ALLOWED("CONTENT_TYPE_NOT_ALLOWED",
         "File format is not supported.",
-        HttpStatus.BAD_REQUEST, false);
+        HttpStatus.BAD_REQUEST, false),
+
+
+    //configuration
+    FAILED_TO_LOAD_FILE("FAILED_TO_LOAD_FILE", "Failed to load file", HttpStatus.INTERNAL_SERVER_ERROR, false);
 
 
     private final String code;

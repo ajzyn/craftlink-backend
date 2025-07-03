@@ -1,0 +1,450 @@
+[
+  {
+    "name": "Warszawa",
+    "hasDistricts": true
+  },
+  {
+    "name": "Kraków",
+    "hasDistricts": true
+  },
+  {
+    "name": "Łódź",
+    "hasDistricts": true
+  },
+  {
+    "name": "Wrocław",
+    "hasDistricts": true
+  },
+  {
+    "name": "Poznań",
+    "hasDistricts": true
+  },
+  {
+    "name": "Gdańsk",
+    "hasDistricts": true
+  },
+  {
+    "name": "Szczecin",
+    "hasDistricts": true
+  },
+  {
+    "name": "Katowice",
+    "hasDistricts": true
+  },
+  {
+    "name": "Lublin",
+    "hasDistricts": true
+  },
+  {
+    "name": "Białystok",
+    "hasDistricts": true
+  },
+  {
+    "name": "Gdynia",
+    "hasDistricts": true
+  },
+  {
+    "name": "Bydgoszcz",
+    "hasDistricts": true
+  },
+  {
+    "name": "Rzeszów",
+    "hasDistricts": true
+  },
+  {
+    "name": "Częstochowa",
+    "hasDistricts": true
+  },
+  {
+    "name": "Radom",
+    "hasDistricts": false
+  },
+  {
+    "name": "Toruń",
+    "hasDistricts": false
+  },
+  {
+    "name": "Sosnowiec",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kielce",
+    "hasDistricts": false
+  },
+  {
+    "name": "Gliwice",
+    "hasDistricts": false
+  },
+  {
+    "name": "Zabrze",
+    "hasDistricts": false
+  },
+  {
+    "name": "Bytom",
+    "hasDistricts": false
+  },
+  {
+    "name": "Bielsko-Biała",
+    "hasDistricts": false
+  },
+  {
+    "name": "Rybnik",
+    "hasDistricts": false
+  },
+  {
+    "name": "Ruda Śląska",
+    "hasDistricts": false
+  },
+  {
+    "name": "Opole",
+    "hasDistricts": false
+  },
+  {
+    "name": "Tychy",
+    "hasDistricts": false
+  },
+  {
+    "name": "Gorzów Wielkopolski",
+    "hasDistricts": false
+  },
+  {
+    "name": "Elbląg",
+    "hasDistricts": false
+  },
+  {
+    "name": "Płock",
+    "hasDistricts": false
+  },
+  {
+    "name": "Wałbrzych",
+    "hasDistricts": false
+  },
+  {
+    "name": "Zielona Góra",
+    "hasDistricts": false
+  },
+  {
+    "name": "Tarnów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Chorzów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kalisz",
+    "hasDistricts": false
+  },
+  {
+    "name": "Koszalin",
+    "hasDistricts": false
+  },
+  {
+    "name": "Legnica",
+    "hasDistricts": false
+  },
+  {
+    "name": "Grudziądz",
+    "hasDistricts": false
+  },
+  {
+    "name": "Słupsk",
+    "hasDistricts": false
+  },
+  {
+    "name": "Jaworzno",
+    "hasDistricts": false
+  },
+  {
+    "name": "Jastrzębie-Zdrój",
+    "hasDistricts": false
+  },
+  {
+    "name": "Jelenia Góra",
+    "hasDistricts": false
+  },
+  {
+    "name": "Mysłowice",
+    "hasDistricts": false
+  },
+  {
+    "name": "Konin",
+    "hasDistricts": false
+  },
+  {
+    "name": "Piła",
+    "hasDistricts": false
+  },
+  {
+    "name": "Piotrków Trybunalski",
+    "hasDistricts": false
+  },
+  {
+    "name": "Inowrocław",
+    "hasDistricts": false
+  },
+  {
+    "name": "Lubin",
+    "hasDistricts": false
+  },
+  {
+    "name": "Siedlce",
+    "hasDistricts": false
+  },
+  {
+    "name": "Ostrowiec Świętokrzyski",
+    "hasDistricts": false
+  },
+  {
+    "name": "Siemianowice Śląskie",
+    "hasDistricts": false
+  },
+  {
+    "name": "Głogów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Pabianice",
+    "hasDistricts": false
+  },
+  {
+    "name": "Leszno",
+    "hasDistricts": false
+  },
+  {
+    "name": "Żory",
+    "hasDistricts": false
+  },
+  {
+    "name": "Zamość",
+    "hasDistricts": false
+  },
+  {
+    "name": "Pruszków",
+    "hasDistricts": false
+  },
+  {
+    "name": "Łomża",
+    "hasDistricts": false
+  },
+  {
+    "name": "Ełk",
+    "hasDistricts": false
+  },
+  {
+    "name": "Tomaszów Mazowiecki",
+    "hasDistricts": false
+  },
+  {
+    "name": "Chełm",
+    "hasDistricts": false
+  },
+  {
+    "name": "Mielec",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kędzierzyn-Koźle",
+    "hasDistricts": false
+  },
+  {
+    "name": "Przemyśl",
+    "hasDistricts": false
+  },
+  {
+    "name": "Stalowa Wola",
+    "hasDistricts": false
+  },
+  {
+    "name": "Tczew",
+    "hasDistricts": false
+  },
+  {
+    "name": "Biała Podlaska",
+    "hasDistricts": false
+  },
+  {
+    "name": "Świdnica",
+    "hasDistricts": false
+  },
+  {
+    "name": "Będzin",
+    "hasDistricts": false
+  },
+  {
+    "name": "Zgierz",
+    "hasDistricts": false
+  },
+  {
+    "name": "Piekary Śląskie",
+    "hasDistricts": false
+  },
+  {
+    "name": "Racibórz",
+    "hasDistricts": false
+  },
+  {
+    "name": "Legionowo",
+    "hasDistricts": false
+  },
+  {
+    "name": "Ostrołęka",
+    "hasDistricts": false
+  },
+  {
+    "name": "Tarnobrzeg",
+    "hasDistricts": false
+  },
+  {
+    "name": "Puławy",
+    "hasDistricts": false
+  },
+  {
+    "name": "Wodzisław Śląski",
+    "hasDistricts": false
+  },
+  {
+    "name": "Skarżysko-Kamienna",
+    "hasDistricts": false
+  },
+  {
+    "name": "Radomsko",
+    "hasDistricts": false
+  },
+  {
+    "name": "Skierniewice",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kutno",
+    "hasDistricts": false
+  },
+  {
+    "name": "Starogard Gdański",
+    "hasDistricts": false
+  },
+  {
+    "name": "Krosno",
+    "hasDistricts": false
+  },
+  {
+    "name": "Dębica",
+    "hasDistricts": false
+  },
+  {
+    "name": "Otwock",
+    "hasDistricts": false
+  },
+  {
+    "name": "Żyrardów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Oświęcim",
+    "hasDistricts": false
+  },
+  {
+    "name": "Świnoujście",
+    "hasDistricts": false
+  },
+  {
+    "name": "Bolesławiec",
+    "hasDistricts": false
+  },
+  {
+    "name": "Nowa Sól",
+    "hasDistricts": false
+  },
+  {
+    "name": "Sopot",
+    "hasDistricts": false
+  },
+  {
+    "name": "Jarosław",
+    "hasDistricts": false
+  },
+  {
+    "name": "Świdnik",
+    "hasDistricts": false
+  },
+  {
+    "name": "Chrzanów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Knurów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Sanok",
+    "hasDistricts": false
+  },
+  {
+    "name": "Chojnice",
+    "hasDistricts": false
+  },
+  {
+    "name": "Mikołów",
+    "hasDistricts": false
+  },
+  {
+    "name": "Żary",
+    "hasDistricts": false
+  },
+  {
+    "name": "Malbork",
+    "hasDistricts": false
+  },
+  {
+    "name": "Szczecinek",
+    "hasDistricts": false
+  },
+  {
+    "name": "Sochaczew",
+    "hasDistricts": false
+  },
+  {
+    "name": "Brzeg",
+    "hasDistricts": false
+  },
+  {
+    "name": "Jasło",
+    "hasDistricts": false
+  },
+  {
+    "name": "Olkusz",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kwidzyn",
+    "hasDistricts": false
+  },
+  {
+    "name": "Mińsk Mazowiecki",
+    "hasDistricts": false
+  },
+  {
+    "name": "Oleśnica",
+    "hasDistricts": false
+  },
+  {
+    "name": "Wołomin",
+    "hasDistricts": false
+  },
+  {
+    "name": "Piaseczno",
+    "hasDistricts": false
+  },
+  {
+    "name": "Kraśnik",
+    "hasDistricts": false
+  },
+  {
+    "name": "Cieszyn",
+    "hasDistricts": false
+  },
+  {
+    "name": "Łęczyca",
+    "hasDistricts": false
+  }
+]

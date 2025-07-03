@@ -1,7 +1,7 @@
 package com.craftlink.backend.category;
 
-import com.craftlink.backend.category.dtos.CategoryBasicDto;
 import com.craftlink.backend.category.dtos.CategoryDetailsDto;
+import com.craftlink.backend.category.dtos.CategorySummaryDto;
 import com.craftlink.backend.category.services.CategoryImageService;
 import com.craftlink.backend.category.services.CategoryService;
 import com.craftlink.backend.config.aws.dtos.PresignedUploadRequestDto;
@@ -29,7 +29,7 @@ public class CategoryController {
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryBasicDto>> getCategories() {
+    public ResponseEntity<List<CategorySummaryDto>> getCategories() {
         return ResponseEntity.ok(categoryService.getCategories());
     }
 

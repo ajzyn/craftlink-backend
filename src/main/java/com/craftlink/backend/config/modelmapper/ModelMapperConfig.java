@@ -1,5 +1,6 @@
 package com.craftlink.backend.config.modelmapper;
 
+import com.craftlink.backend.category.dtos.CategoryBasicDto;
 import com.craftlink.backend.category.dtos.CategoryDetailsDto;
 import com.craftlink.backend.category.entities.CategoryEntity;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,9 @@ public class ModelMapperConfig {
 
 
     private void configureCategoryMapper(ModelMapper mapper) {
+
+        mapper.createTypeMap(CategoryEntity.class, CategoryBasicDto.class)
+            .addMapping(src -> src.getImage().getImageKey(), CategoryBasicDto::setImageKey);
 
         mapper.createTypeMap(CategoryEntity.class, CategoryDetailsDto.class)
             .addMapping(src -> src.getImage().getImageKey(), CategoryDetailsDto::setImageKey);

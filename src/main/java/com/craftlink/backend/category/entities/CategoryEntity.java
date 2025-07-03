@@ -35,6 +35,7 @@ public class CategoryEntity extends BaseEntity {
     private String description;
 
     private String name;
+    @Column(unique = true)
     private String slug;
     private String iconName;
 

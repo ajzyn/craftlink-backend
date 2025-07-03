@@ -5,10 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryBasicDto {
+public class CategoryBasicDto extends CategorySummaryDto {
 
-    private Integer id;
-    private String name;
-    private String slug;
-    private String iconName;
+    private String imageKey;
+    private String description;
 }

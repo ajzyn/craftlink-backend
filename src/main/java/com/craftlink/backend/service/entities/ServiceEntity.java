@@ -6,6 +6,7 @@ import com.craftlink.backend.serviceRequest.entities.ServiceRequestEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.shared.enums.EntityStatus;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,6 +41,8 @@ public class ServiceEntity extends BaseEntity {
 
     private String name;
     private String description;
+
+    @Column(unique = true)
     private String slug;
 
     @ManyToOne(optional = false)

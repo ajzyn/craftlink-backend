@@ -1,6 +1,6 @@
 package com.craftlink.backend.category.dtos;
 
-import com.craftlink.backend.service.dtos.ServiceDto;
+import com.craftlink.backend.service.dtos.ServiceDetailsDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -16,8 +16,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class CreateCategoryRequestDto {
 
-    Set<ServiceDto> services = new HashSet<>();
-    
+    Set<ServiceDetailsDto> services = new HashSet<>();
+
     @NotBlank
     @Size(max = 100)
     private String name;

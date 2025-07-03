@@ -1,7 +1,7 @@
 package com.craftlink.backend.category.services;
 
-import com.craftlink.backend.category.dtos.CategoryBasicDto;
 import com.craftlink.backend.category.dtos.CategoryDetailsDto;
+import com.craftlink.backend.category.dtos.CategorySummaryDto;
 import com.craftlink.backend.category.repositories.CategoryRepository;
 import com.craftlink.backend.config.aws.services.S3Service;
 import com.craftlink.backend.config.exceptions.custom.BusinessException;
@@ -21,11 +21,11 @@ public class CategoryService {
     private final ModelMapper modelMapper;
     private final S3Service s3Service;
 
-    public List<CategoryBasicDto> getCategories() {
+    public List<CategorySummaryDto> getCategories() {
         var categories = categoryRepository.findAll();
 
         return categories.stream()
-            .map(category -> modelMapper.map(category, CategoryBasicDto.class))
+            .map(category -> modelMapper.map(category, CategorySummaryDto.class))
             .toList();
     }
 

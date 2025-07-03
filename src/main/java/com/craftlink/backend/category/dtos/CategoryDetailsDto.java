@@ -10,7 +10,5 @@ import lombok.Setter;
 @Setter
 public class CategoryDetailsDto extends CategoryBasicDto {
 
-    private String imageKey;
-    private String description;
     private Set<ServiceBasicDto> services = new HashSet<>();
 }
