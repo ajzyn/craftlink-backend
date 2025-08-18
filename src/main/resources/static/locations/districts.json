@@ -1,0 +1,146 @@
+{
+  "Warszawa": [
+    "Śródmieście",
+    "Mokotów",
+    "Ursynów",
+    "Wola",
+    "Ochota",
+    "Żoliborz",
+    "Bielany",
+    "Bemowo",
+    "Targówek",
+    "Praga-Północ",
+    "Praga-Południe",
+    "Wilanów",
+    "Wawer",
+    "Białołęka",
+    "Ursus",
+    "Rembertów"
+  ],
+  "Kraków": [
+    "Stare Miasto",
+    "Podgórze",
+    "Nowa Huta",
+    "Krowodrza",
+    "Zwierzyniec",
+    "Dębniki",
+    "Prądnik Biały",
+    "Prądnik Czerwony",
+    "Czyżyny",
+    "Mistrzejowice",
+    "Bieńczyce",
+    "Wzgórza Krzesławickie",
+    "Bieżanów-Prokocim",
+    "Łagiewniki-Borek Fałęcki",
+    "Swoszowice",
+    "Bronowice"
+  ],
+  "Łódź": [
+    "Bałuty",
+    "Górna",
+    "Polesie",
+    "Śródmieście",
+    "Widzew"
+  ],
+  "Wrocław": [
+    "Stare Miasto",
+    "Śródmieście",
+    "Krzyki",
+    "Fabryczna",
+    "Psie Pole"
+  ],
+  "Poznań": [
+    "Stare Miasto",
+    "Nowe Miasto",
+    "Wilda",
+    "Jeżyce",
+    "Grunwald"
+  ],
+  "Gdańsk": [
+    "Śródmieście",
+    "Wrzeszcz",
+    "Przymorze",
+    "Zaspa",
+    "Oliwa",
+    "Chełm",
+    "Orunia",
+    "Letnica",
+    "Matarnia"
+  ],
+  "Szczecin": [
+    "Śródmieście",
+    "Prawobrzeże",
+    "Zachód",
+    "Północ"
+  ],
+  "Katowice": [
+    "Śródmieście",
+    "Ligota-Panewniki",
+    "Piotrowice-Ochojec",
+    "Brynów",
+    "Koszutka",
+    "Dąb",
+    "Giszowiec",
+    "Nikiszowiec"
+  ],
+  "Lublin": [
+    "Śródmieście",
+    "Czechów",
+    "Bronowice",
+    "Tatary",
+    "Ponikwoda",
+    "Dziesiąta",
+    "Za Cukrownią"
+  ],
+  "Białystok": [
+    "Centrum",
+    "Białostoczek",
+    "Piasta",
+    "Nowe Miasto",
+    "Antoniuk",
+    "Starosielce",
+    "Zawady"
+  ],
+  "Gdynia": [
+    "Śródmieście",
+    "Dąbrowa",
+    "Chwarzno-Wiczlino",
+    "Karwiny",
+    "Grabówek",
+    "Obłuże",
+    "Oksywie"
+  ],
+  "Bydgoszcz": [
+    "Śródmieście",
+    "Błonie",
+    "Fordon",
+    "Wyżyny",
+    "Bartodzieje",
+    "Kapusciska",
+    "Szwederowo"
+  ],
+  "Rzeszów": [
+    "Śródmieście",
+    "Nowe Miasto",
+    "Baranówka",
+    "Drabinianka",
+    "Staromieście",
+    "Zalesie",
+    "Biała",
+    "Pobitno",
+    "Wilkowyja",
+    "Słocina"
+  ],
+  "Częstochowa": [
+    "Śródmieście",
+    "Raków",
+    "Północ",
+    "Tysiąclecie",
+    "Wrzosowiak",
+    "Stradom",
+    "Podjasnogórska",
+    "Zawodzie-Dąbie",
+    "Trzech Wieszczów",
+    "Parkitka"
+  ]
+}

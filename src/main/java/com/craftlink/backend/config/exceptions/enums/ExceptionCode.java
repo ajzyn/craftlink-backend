@@ -43,7 +43,36 @@ public enum ExceptionCode {
     RESOURCE_NOT_FOUND("RESOURCE_NOT_FOUND", "Resource not found", HttpStatus.NOT_FOUND, true),
     OPERATION_NOT_ALLOWED("OPERATION_NOT_ALLOWED", "Operation not allowed", HttpStatus.METHOD_NOT_ALLOWED, true),
     TOO_MANY_REQUESTS("TOO_MANY_REQUESTS", "Too many requests. Please try again later", HttpStatus.TOO_MANY_REQUESTS,
-        true);
+        true),
+
+    //aws
+    FAILED_GENERATE_S3_PRESIGNED_URL("FAILED_GENERATE_S3_PRESIGNED_URL",
+        "Unable to generate upload link. Please try again in a moment.",
+        HttpStatus.INTERNAL_SERVER_ERROR, false),
+    FAILED_VERIFYING_IMAGE("FAILED_VERIFYING_IMAGE",
+        "Unable to verify uploaded image on S3",
+        HttpStatus.INTERNAL_SERVER_ERROR, false),
+    FAILED_TO_REMOVE_IMAGE("FAILED_TO_REMOVE_IMAGE",
+        "Unable to delete image from storage",
+        HttpStatus.INTERNAL_SERVER_ERROR, false),
+    AWS_FILE_NOT_FOUND("AWS_FILE_NOT_FOUND",
+        "Unable to find a file in AWS",
+        HttpStatus.INTERNAL_SERVER_ERROR, false),
+
+
+    //file validation
+    FILE_IS_TOO_BIG("FILE_IS_TOO_LARGE", "File size exceeds maximum allowed limit. Please choose a smaller file.",
+        HttpStatus.BAD_REQUEST, true),
+    EXTENSION_NOT_ALLOWED("EXTENSION_NOT_ALLOWED",
+        "File type is not supported",
+        HttpStatus.BAD_REQUEST, false),
+    CONTENT_TYPE_NOT_ALLOWED("CONTENT_TYPE_NOT_ALLOWED",
+        "File format is not supported.",
+        HttpStatus.BAD_REQUEST, false),
+
+
+    //configuration
+    FAILED_TO_LOAD_FILE("FAILED_TO_LOAD_FILE", "Failed to load file", HttpStatus.INTERNAL_SERVER_ERROR, false);
 
 
     private final String code;

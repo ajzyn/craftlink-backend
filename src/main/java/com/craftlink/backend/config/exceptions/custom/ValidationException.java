@@ -10,6 +10,12 @@ public class ValidationException extends RuntimeException {
     private final ExceptionCode code;
     private final Map<String, String> fieldErrors;
 
+    public ValidationException(ExceptionCode code) {
+        super(code.getUserMessage());
+        this.fieldErrors = Map.of();
+        this.code = code;
+    }
+
     public ValidationException(ExceptionCode code, Map<String, String> fieldErrors) {
         super(code.getUserMessage());
         this.fieldErrors = fieldErrors;

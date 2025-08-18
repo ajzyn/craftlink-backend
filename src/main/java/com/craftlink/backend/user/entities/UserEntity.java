@@ -6,7 +6,6 @@ import com.craftlink.backend.client.entities.ClientEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.specialist.entities.SpecialistEntity;
 import com.craftlink.backend.user.models.UserType;
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -77,14 +76,17 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RefreshTokenEntity> refreshToken;
 
-    @PostConstruct
-    private void setupBidirectionalRelations() {
-        if (this.client != null) {
-            this.client.setUser(this);
+    public void setClient(ClientEntity client) {
+        this.client = client;
+        if (client != null) {
+            client.setUser(this);  // Synchronizacja za każdym razem
         }
+    }
 
-        if (this.specialist != null) {
-            this.specialist.setUser(this);
+    public void setSpecialist(SpecialistEntity specialist) {
+        this.specialist = specialist;
+        if (specialist != null) {
+            specialist.setUser(this);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.craftlink.backend.auth;
 
 import com.craftlink.backend.auth.dtos.LoginRequestDto;
+import com.craftlink.backend.auth.dtos.LoginResponseDto;
 import com.craftlink.backend.auth.dtos.RegisterRequestDto;
 import com.craftlink.backend.auth.services.AuthService;
 import com.craftlink.backend.auth.services.RefreshTokenService;
@@ -40,10 +41,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        var token = authService.login(loginRequestDto, response);
-
-        return ResponseEntity.ok(Map.of("token", token));
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto,
+        HttpServletResponse response) {
+        return ResponseEntity.ok(authService.login(loginRequestDto, response));
     }
 
     @GetMapping("/refresh-token")

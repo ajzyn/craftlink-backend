@@ -7,9 +7,9 @@ import com.craftlink.backend.auth.repositories.RefreshTokenRepository;
 import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.custom.ValidationException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
-import com.craftlink.backend.security.services.AccessTokenService;
+import com.craftlink.backend.config.security.services.AccessTokenService;
 import com.craftlink.backend.shared.cookies.CookieService;
-import com.craftlink.backend.user.services.UserService;
+import com.craftlink.backend.user.entities.UserEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import java.security.SecureRandom;
@@ -27,12 +27,11 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final CookieService cookieService;
     private final AccessTokenService accessTokenService;
-    private final UserService userService;
     private final RefreshTokenCookieProperties refreshTokenCookieProperties;
 
     @Transactional
-    public RefreshTokenEntity createRefreshToken(String userEmail) {
-        var user = userService.getUserByEmail(userEmail);
+    public RefreshTokenEntity createRefreshToken(UserEntity user) {
+
         var token = generateRefreshToken();
         var expirationDate = Instant.now()
             .plus(refreshTokenCookieProperties.getExpirationTimeInSeconds(), ChronoUnit.SECONDS);

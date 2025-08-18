@@ -3,3 +3,26 @@ spring:
     name: CraftLink
   profiles:
     active: dev
+
+aws:
+  s3:
+    region: ${AWS_REGION:eu-central-1}
+    bucket-name: ${AWS_S3_BUCKET_NAME}
+    presigned-url-ttl-minutes: 30
+
+app:
+  s3:
+    images:
+      categories:
+        prefix: categories/images/
+        max-size-bytes: 10485760
+        allowed-content-types:
+          - image/jpeg
+          - image/jpg
+          - image/webp
+        allowed-file-extensions:
+          - .jpg
+          - .jpeg
+          - .webp
+          - .png
+        cleanup-orphaned-after-hours: 2

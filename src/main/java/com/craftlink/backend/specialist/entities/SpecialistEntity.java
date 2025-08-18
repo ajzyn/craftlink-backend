@@ -1,9 +1,9 @@
 package com.craftlink.backend.specialist.entities;
 
+import com.craftlink.backend.service.entities.ServiceEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.specialist.models.SpecialistType;
 import com.craftlink.backend.user.entities.UserEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,7 +29,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user", "specializations"})
+@ToString(exclude = {"user", "offeredServices"})
 public class SpecialistEntity extends BaseEntity {
 
     @Id
@@ -39,15 +39,14 @@ public class SpecialistEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SpecialistType type;
 
-    @OneToOne(mappedBy = "specialist", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "specialist", optional = false)
     private UserEntity user;
 
     @ManyToMany()
     @JoinTable(
-        name = "specialists_specializations",
+        name = "specialists_services",
         joinColumns = @JoinColumn(name = "specialist_id"),
-        inverseJoinColumns = @JoinColumn(name = "specialization_id")
+        inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private Set<SpecializationEntity> specializations = new HashSet<>();
-
+    private Set<ServiceEntity> offeredServices = new HashSet<>();
 }

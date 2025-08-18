@@ -1,5 +1,7 @@
 app:
   frontend-url: http://localhost:5173
+  database:
+    seed: true
 
 auth:
   jwt:
