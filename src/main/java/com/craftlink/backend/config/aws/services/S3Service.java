@@ -27,115 +27,117 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 @Slf4j
 public class S3Service {
 
-    private final S3Client s3Client;
-    private final S3Presigner s3Presigner;
-    private final AWSProperties awsProperties;
-    private final FileKeyGenerator keyGenerator;
-    private final FileValidationService validationService;
+  private final S3Client s3Client;
+  private final S3Presigner s3Presigner;
+  private final AWSProperties awsProperties;
+  private final FileKeyGenerator keyGenerator;
+  private final FileValidationService validationService;
 
 
-    @Transactional
-    public PresignedUploadResponseDto generatePresignedUploadUrl(PresignedUrlArgs presignedUrlArgs) {
+  @Transactional
+  public PresignedUploadResponseDto generatePresignedUploadUrl(PresignedUrlArgs presignedUrlArgs) {
 
-        validationService.validateUploadRequest(presignedUrlArgs);
+    validationService.validateUploadRequest(presignedUrlArgs);
 
-        String imageKey;
+    String imageKey;
 
-        if (presignedUrlArgs.getUserId() != null) {
-            imageKey = keyGenerator.generateFileKey(presignedUrlArgs.getPrefix(),
-                presignedUrlArgs.getRequest().getFileName(),
-                presignedUrlArgs.getUserId());
-        } else {
-            imageKey = keyGenerator.generateFileKey(presignedUrlArgs.getPrefix(),
-                presignedUrlArgs.getRequest().getFileName());
-        }
-
-        PutObjectRequest putObjectRequest = buildPutObjectRequest(imageKey, presignedUrlArgs.getRequest());
-        PutObjectPresignRequest presignReq = buildPresignedRequest(putObjectRequest);
-
-        try {
-            URL presignedUrl = s3Presigner.presignPutObject(presignReq).url();
-            Instant expiresAt = Instant.now()
-                .plus(Duration.ofMinutes(awsProperties.getPresignedUrlTtlMinutes()));
-
-            log.info("Presigned URL wygenerowany. Klucz: {}, wygasa: {}", imageKey, expiresAt);
-
-            return PresignedUploadResponseDto.builder()
-                .presignedUrl(presignedUrl.toString())
-                .imageKey(imageKey)
-                .expiresAt(expiresAt)
-                .maxFileSize(presignedUrlArgs.getMaxSize())
-                .allowedTypes(String.join(", ", presignedUrlArgs.getAllowedContentTypes()))
-                .build();
-
-        } catch (Exception e) {
-            log.error("Błąd generowania presigned URL dla klucza: {}", imageKey, e);
-            throw new BusinessException(ExceptionCode.FAILED_GENERATE_S3_PRESIGNED_URL, e);
-        }
+    if (presignedUrlArgs.getUserId() != null) {
+      imageKey = keyGenerator.generateFileKey(presignedUrlArgs.getPrefix(),
+          presignedUrlArgs.getRequest().getFileName(),
+          presignedUrlArgs.getUserId());
+    } else {
+      imageKey = keyGenerator.generateFileKey(presignedUrlArgs.getPrefix(),
+          presignedUrlArgs.getRequest().getFileName());
     }
 
+    PutObjectRequest putObjectRequest = buildPutObjectRequest(imageKey,
+        presignedUrlArgs.getRequest());
+    PutObjectPresignRequest presignReq = buildPresignedRequest(putObjectRequest);
 
-    public boolean imageExists(String fileKey) {
-        try {
-            s3Client.headObject(HeadObjectRequest.builder()
-                .bucket(awsProperties.getBucketName())
-                .key(fileKey)
-                .build());
+    try {
+      URL presignedUrl = s3Presigner.presignPutObject(presignReq).url();
+      Instant expiresAt = Instant.now()
+          .plus(Duration.ofMinutes(awsProperties.getPresignedUrlTtlMinutes()));
 
-            log.debug("Obraz istnieje w S3: {}", fileKey);
-            return true;
+      log.info("Presigned URL generated. Key: {}, expires at: {}", imageKey, expiresAt);
 
-        } catch (NoSuchKeyException e) {
-            log.debug("Obraz nie istnieje w S3: {}", fileKey);
-            return false;
+      return PresignedUploadResponseDto.builder()
+          .presignedUrl(presignedUrl.toString())
+          .imageKey(imageKey)
+          .expiresAt(expiresAt)
+          .maxFileSize(presignedUrlArgs.getMaxSize())
+          .allowedTypes(String.join(", ", presignedUrlArgs.getAllowedContentTypes()))
+          .build();
 
-        } catch (Exception e) {
-            log.error("Błąd sprawdzania istnienia obrazu: {}", fileKey, e);
-            throw new BusinessException(ExceptionCode.FAILED_VERIFYING_IMAGE, e);
-        }
+    } catch (Exception e) {
+      log.error("Error generating presigned URL for key: {}", imageKey, e);
+      throw new BusinessException(ExceptionCode.FAILED_GENERATE_S3_PRESIGNED_URL, e);
     }
+  }
 
-    public void deleteImage(String fileKey) {
-        try {
-            s3Client.deleteObject(DeleteObjectRequest.builder()
-                .bucket(awsProperties.getBucketName())
-                .key(fileKey)
-                .build());
 
-            log.info("Usunięto obraz z S3: {}", fileKey);
+  public boolean imageExists(String fileKey) {
+    try {
+      s3Client.headObject(HeadObjectRequest.builder()
+          .bucket(awsProperties.getBucketName())
+          .key(fileKey)
+          .build());
 
-        } catch (Exception e) {
-            log.error("Błąd usuwania obrazu z S3: {}", fileKey, e);
-            throw new BusinessException(ExceptionCode.FAILED_VERIFYING_IMAGE, e);
-        }
+      log.debug("Image exists in S3: {}", fileKey);
+      return true;
+
+    } catch (NoSuchKeyException e) {
+      log.debug("Image does not exist in S3: {}", fileKey);
+      return false;
+
+    } catch (Exception e) {
+      log.error("Error verifying image existence: {}", fileKey, e);
+      throw new BusinessException(ExceptionCode.FAILED_VERIFYING_IMAGE, e);
     }
+  }
 
-    public String generatePublicImageUrl(String fileKey) {
-        return String.format("https://%s.s3.%s.amazonaws.com/%s",
-            awsProperties.getBucketName(),
-            awsProperties.getRegion(),
-            fileKey);
-    }
+  public void deleteImage(String fileKey) {
+    try {
+      s3Client.deleteObject(DeleteObjectRequest.builder()
+          .bucket(awsProperties.getBucketName())
+          .key(fileKey)
+          .build());
 
-    private PutObjectRequest buildPutObjectRequest(String fileKey, PresignedUploadRequestDto request) {
-        return PutObjectRequest.builder()
-            .bucket(awsProperties.getBucketName())
-            .key(fileKey)
-            .contentType(request.getContentType())
-            .contentLength(request.getFileSize())
-            .metadata(Map.of(
-                "original-filename", request.getFileName(),
-                "upload-timestamp", String.valueOf(System.currentTimeMillis()),
-                "file-size", request.getFileSize().toString(),
-                "uploader", "category-manager-app"
-            ))
-            .build();
-    }
+      log.info("Deleted image from S3: {}", fileKey);
 
-    private PutObjectPresignRequest buildPresignedRequest(PutObjectRequest putObjectRequest) {
-        return PutObjectPresignRequest.builder()
-            .signatureDuration(Duration.ofMinutes(awsProperties.getPresignedUrlTtlMinutes()))
-            .putObjectRequest(putObjectRequest)
-            .build();
+    } catch (Exception e) {
+      log.error("Error deleting image from S3: {}", fileKey, e);
+      throw new BusinessException(ExceptionCode.FAILED_VERIFYING_IMAGE, e);
     }
+  }
+
+  public String generatePublicImageUrl(String fileKey) {
+    return String.format("https://%s.s3.%s.amazonaws.com/%s",
+        awsProperties.getBucketName(),
+        awsProperties.getRegion(),
+        fileKey);
+  }
+
+  private PutObjectRequest buildPutObjectRequest(String fileKey,
+      PresignedUploadRequestDto request) {
+    return PutObjectRequest.builder()
+        .bucket(awsProperties.getBucketName())
+        .key(fileKey)
+        .contentType(request.getContentType())
+        .contentLength(request.getFileSize())
+        .metadata(Map.of(
+            "original-filename", request.getFileName(),
+            "upload-timestamp", String.valueOf(System.currentTimeMillis()),
+            "file-size", request.getFileSize().toString(),
+            "uploader", "category-manager-app"
+        ))
+        .build();
+  }
+
+  private PutObjectPresignRequest buildPresignedRequest(PutObjectRequest putObjectRequest) {
+    return PutObjectPresignRequest.builder()
+        .signatureDuration(Duration.ofMinutes(awsProperties.getPresignedUrlTtlMinutes()))
+        .putObjectRequest(putObjectRequest)
+        .build();
+  }
 }

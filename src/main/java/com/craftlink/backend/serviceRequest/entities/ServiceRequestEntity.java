@@ -1,8 +1,13 @@
 package com.craftlink.backend.serviceRequest.entities;
 
 import com.craftlink.backend.service.entities.ServiceEntity;
+import com.craftlink.backend.serviceRequest.enums.DeadlineType;
+import com.craftlink.backend.serviceRequest.enums.ServiceRequestStatus;
 import com.craftlink.backend.shared.entities.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,15 +30,29 @@ import lombok.ToString;
 @ToString(exclude = {"serviceType"})
 public class ServiceRequestEntity extends BaseEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Integer id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  private Integer id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "service_id", nullable = false)
-    private ServiceEntity serviceType;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "service_id", nullable = false)
+  private ServiceEntity serviceType;
 
-    private String description;
-    private String location;
-    private LocalDate preferredDate;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private ServiceRequestStatus status;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private DeadlineType deadlineType;
+
+  @Column(nullable = false)
+  private LocalDate calculatedDeadlineType;
+
+  private LocalDate deadlineDate;
+
+  private String description;
+  private String location;
+  private LocalDate preferredDate;
+
 }

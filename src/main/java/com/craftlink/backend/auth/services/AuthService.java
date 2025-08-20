@@ -1,5 +1,10 @@
 package com.craftlink.backend.auth.services;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Service;
+
 import com.craftlink.backend.auth.dtos.LoginRequestDto;
 import com.craftlink.backend.auth.dtos.LoginResponseDto;
 import com.craftlink.backend.auth.dtos.RegisterRequestDto;
@@ -11,13 +16,10 @@ import com.craftlink.backend.shared.cookies.CookieOptions;
 import com.craftlink.backend.shared.cookies.CookieService;
 import com.craftlink.backend.user.dtos.UserDto;
 import com.craftlink.backend.user.services.UserService;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +51,7 @@ public class AuthService {
 
         var refreshToken = refreshTokenService.createRefreshToken(user);
         cookieService.setCookie(response, CookieOptions.builder()
-            .name(TokenType.REFRESH.getName())
+            .name(TokenType.REFRESH.name())
             .value(refreshToken.getToken())
             .isSecure(refreshTokenCookieProperties.isSecure())
             .httpOnly(refreshTokenCookieProperties.isHttpOnly())
