@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 @Slf4j
@@ -140,6 +141,22 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
   }
 
+  @ExceptionHandler(NoResourceFoundException.class)
+  public ResponseEntity<ErrorResponseDto> handleNoResourceFound(
+      NoResourceFoundException ex, HttpServletRequest request) {
+    log.error("No Resource found exception - Path: {}, Error: {}",
+        request.getRequestURI(), ex.getMessage(), ex);
+
+    var response = ErrorResponseDto.builder()
+        .error("NOT_FOUND")
+        .message("Requested resource not found")
+        .timestamp(LocalDateTime.now())
+        .build();
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+  }
+
+
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponseDto> handleGenericException(
       Exception ex, HttpServletRequest request) {
@@ -155,6 +172,7 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
   }
+
 
   private void logSecurityError(SecurityException ex, HttpServletRequest request) {
     String logMessage = String.format(
