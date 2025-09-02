@@ -21,85 +21,64 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtEncoderService {
 
-
-    public String generateToken(String subject, Long expTime, String secret) {
-        if (expTime == null) {
-            throw new ValidationException(ExceptionCode.MISSING_REQUIRED_FIELD,
-                Map.of("expTimeMillis", "Expiration time is required"));
-        }
-
-        try {
-            Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
-
-            return Jwts.builder()
-                .setExpiration(tokenExpTime)
-                .setSubject(subject)
-                .setIssuedAt(new Date())
-                .signWith(getSigningKey(secret))
-                .compact();
-        } catch (JwtException e) {
-            throw new SecurityException(ExceptionCode.JWT_INTERNAL_ERROR, "Error generating JWT: " + e.getMessage());
-        }
+  public String generateToken(String subject, Map<String, String> claims, Long expTime, String secret) {
+    if (expTime == null) {
+      throw new ValidationException(
+          ExceptionCode.MISSING_REQUIRED_FIELD,
+          Map.of("expTimeMillis", "Expiration time is required")
+      );
     }
 
-    public String generateToken(String subject, Map<String, String> claims, Long expTime, String secret) {
-        if (expTime == null) {
-            throw new ValidationException(
-                ExceptionCode.MISSING_REQUIRED_FIELD,
-                Map.of("expTimeMillis", "Expiration time is required")
-            );
-        }
+    try {
+      Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
 
-        try {
-            Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
+      return Jwts.builder()
+          .setExpiration(tokenExpTime)
+          .setClaims(claims)
+          .setSubject(subject)
+          .setIssuedAt(new Date())
+          .signWith(getSigningKey(secret))
+          .compact();
+    } catch (JwtException e) {
+      throw new SecurityException(
+          ExceptionCode.JWT_INTERNAL_ERROR,
+          "Error generating JWT: " + e.getMessage()
+      );
+    }
+  }
 
-            return Jwts.builder()
-                .setExpiration(tokenExpTime)
-                .setSubject(subject)
-                .setClaims(claims)
-                .setIssuedAt(new Date())
-                .signWith(getSigningKey(secret))
-                .compact();
-        } catch (JwtException e) {
-            throw new SecurityException(
-                ExceptionCode.JWT_INTERNAL_ERROR,
-                "Error generating JWT: " + e.getMessage()
-            );
-        }
+  public String extractSubject(String token, String secret) {
+    try {
+
+      Claims claims = Jwts
+          .parserBuilder()
+          .setSigningKey(getSigningKey(secret))
+          .build()
+          .parseClaimsJws(token)
+          .getBody();
+
+      return claims.getSubject();
+    } catch (ExpiredJwtException e) {
+      throw new SecurityException(
+          ExceptionCode.JWT_EXPIRED,
+          "Token has expired"
+      );
+    } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
+      throw new SecurityException(
+          ExceptionCode.TOKEN_FORMAT_ERROR,
+          "Invalid authentication token"
+      );
+    }
+  }
+
+  private Key getSigningKey(String secret) {
+    if (secret.length() < 32) {
+      throw new SecurityException(
+          ExceptionCode.JWT_INTERNAL_ERROR,
+          "JWT secret too short: " + secret.length()
+      );
     }
 
-    public String extractSubject(String token, String secret) {
-        try {
-
-            Claims claims = Jwts
-                .parserBuilder()
-                .setSigningKey(getSigningKey(secret))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-            return claims.getSubject();
-        } catch (ExpiredJwtException e) {
-            throw new SecurityException(
-                ExceptionCode.JWT_EXPIRED,
-                "Token has expired"
-            );
-        } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-            throw new SecurityException(
-                ExceptionCode.TOKEN_FORMAT_ERROR,
-                "Invalid authentication token"
-            );
-        }
-    }
-
-    private Key getSigningKey(String secret) {
-        if (secret.length() < 32) {
-            throw new SecurityException(
-                ExceptionCode.JWT_INTERNAL_ERROR,
-                "JWT secret too short: " + secret.length()
-            );
-        }
-
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-    }
+    return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+  }
 }

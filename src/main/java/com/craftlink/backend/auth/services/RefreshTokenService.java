@@ -46,7 +46,7 @@ public class RefreshTokenService {
   }
 
   public String refreshAccessToken(HttpServletRequest request) {
-    var rawToken = cookieService.getCookie(request, TokenType.REFRESH.name());
+    var rawToken = cookieService.getCookie(request, TokenType.REFRESH_TOKEN.name());
     if (rawToken == null || rawToken.isBlank()) {
       throw new ValidationException(
           ExceptionCode.MISSING_REQUIRED_FIELD,
@@ -63,7 +63,8 @@ public class RefreshTokenService {
       throw new SecurityException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
     }
 
-    return jwtService.generateAccessToken(refreshTokenEntity.getUser().getEmail());
+    return jwtService.generateAccessToken(refreshTokenEntity.getUser().getId().toString(),
+        refreshTokenEntity.getUser().getEmail());
   }
 
   private String generateRefreshToken() {

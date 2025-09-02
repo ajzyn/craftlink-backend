@@ -42,4 +42,5 @@ public class UserPrincipal implements UserDetails {
       offeredServices = Set.of();
     }
   }
+  
 }

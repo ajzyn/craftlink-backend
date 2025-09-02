@@ -50,7 +50,7 @@ public class AuthService {
 
     var refreshToken = refreshTokenService.createRefreshToken(user);
     cookieService.setCookie(response, CookieOptions.builder()
-        .name(TokenType.REFRESH.name())
+        .name(TokenType.REFRESH_TOKEN.name())
         .value(refreshToken.getToken())
         .isSecure(refreshTokenCookieProperties.isSecure())
         .httpOnly(refreshTokenCookieProperties.isHttpOnly())
@@ -59,7 +59,7 @@ public class AuthService {
         .expirationTimeInSeconds(refreshTokenCookieProperties.getExpirationTimeInSeconds())
         .build());
 
-    var token = jwtService.generateAccessToken(userPrincipal.getUsername());
+    var token = jwtService.generateAccessToken(userPrincipal.getId().toString(), userPrincipal.getUsername());
     return LoginResponseDto.builder()
         .token(token)
         .user(modelMapper.map(user, UserDto.class))

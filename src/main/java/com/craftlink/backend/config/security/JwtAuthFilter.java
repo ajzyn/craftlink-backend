@@ -1,7 +1,11 @@
 package com.craftlink.backend.config.security;
 
+import com.craftlink.backend.config.exceptions.custom.SecurityException;
+import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
+import com.craftlink.backend.config.security.models.UserPrincipal;
 import com.craftlink.backend.config.security.services.JwtService;
-import com.craftlink.backend.config.security.services.UserDetailsServiceImpl;
+import com.craftlink.backend.shared.services.UuidUtils;
+import com.craftlink.backend.user.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private static final int BEARER_PREFIX_LENGTH = 7;
 
   private final JwtService jwtService;
-  private final UserDetailsServiceImpl userDetailsService;
+  private final UserService userService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response,
@@ -37,12 +41,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     var jwtToken = authHeader.substring(BEARER_PREFIX_LENGTH);
-    var userEmail = jwtService.getUserEmail(jwtToken);
+    var userId = jwtService.getUserId(jwtToken);
 
-    if (userEmail != null) {
-      var user = userDetailsService.loadUserByUsername(userEmail);
+    if (userId != null) {
+      var uuid = UuidUtils.safeParse(userId).orElseThrow(
+          () -> new SecurityException(ExceptionCode.JWT_INVALID, "Invalid token subject: " + userId));
 
-      var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+      var user = userService.getUserById(uuid).orElseThrow(
+          () -> new SecurityException(ExceptionCode.AUTHENTICATION_FAILED, "User not found. ID: " + userId));
+
+      var userPrincipal = new UserPrincipal(user);
+
+      var authToken = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
 
       SecurityContextHolder.getContext().setAuthentication(authToken);
     }
