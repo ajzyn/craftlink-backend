@@ -1,5 +1,6 @@
 package com.craftlink.backend.category.dtos;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class CategorySummaryDto {
 
-    private Integer id;
-    private String name;
-    private String slug;
-    private String iconName;
+  private UUID id;
+  private String name;
+  private String slug;
+  private String iconName;
 }

@@ -2,6 +2,7 @@ package com.craftlink.backend.user.dtos;
 
 import com.craftlink.backend.user.models.UserType;
 import java.util.Set;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +10,9 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 
-    private Integer id;
-    private String username;
-    private String authorities;
-    private Set<String> offeredServices;
-    private UserType userType;
+  private UUID id;
+  private String username;
+  private String authorities;
+  private Set<String> offeredServices;
+  private UserType userType;
 }

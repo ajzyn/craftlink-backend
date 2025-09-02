@@ -1,4 +1,4 @@
-package com.craftlink.backend.serviceRequest.enums;
+package com.craftlink.backend.jobRequest.domain.model.valueObjects;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public enum ServiceRequestStatus {
+public enum JobRequestStatus {
 
   ACTIVE,
   TAKEN,

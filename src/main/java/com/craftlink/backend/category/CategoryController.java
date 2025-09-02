@@ -21,34 +21,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/categories")
+@RequestMapping("/api/sec/categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
-    private final CategoryImageService categoryImageService;
+  private final CategoryService categoryService;
+  private final CategoryImageService categoryImageService;
 
 
-    @GetMapping
-    public ResponseEntity<List<CategorySummaryDto>> getCategories() {
-        return ResponseEntity.ok(categoryService.getCategories());
-    }
+  @GetMapping
+  public ResponseEntity<List<CategorySummaryDto>> getCategories() {
+    return ResponseEntity.ok(categoryService.getCategories());
+  }
 
-    @GetMapping("/{slug}")
-    public ResponseEntity<CategoryDetailsDto> getCategoryWithServices(@PathVariable String slug) {
-        return ResponseEntity.ok(categoryService.getCategoryDetailsBySlug(slug));
-    }
+  @GetMapping("/{slug}")
+  public ResponseEntity<CategoryDetailsDto> getCategoryWithServices(@PathVariable String slug) {
+    return ResponseEntity.ok(categoryService.getCategoryDetailsBySlug(slug));
+  }
 
-    //TODO: add authorization check and create presignedULR to fetch image
-    @PostMapping("/image/upload-url")
-    public ResponseEntity<PresignedUploadResponseDto> getPresignedUploadUrl(@Valid @RequestBody
-    PresignedUploadRequestDto request) {
-        return ResponseEntity.ok(categoryImageService.createUploadImageSession(request));
-    }
+  //TODO: add authorization check and create presignedULR to fetch image
+  @PostMapping("/image/upload-url")
+  public ResponseEntity<PresignedUploadResponseDto> getPresignedUploadUrl(@Valid @RequestBody
+  PresignedUploadRequestDto request) {
+    return ResponseEntity.ok(categoryImageService.createUploadImageSession(request));
+  }
 
-    @PatchMapping("/image/{imageKey}/complete")
-    public ResponseEntity<HttpStatus> markUploadImageAsCompleted(@PathVariable String imageKey) {
-        categoryImageService.markUploadCompleted(imageKey);
+  @PatchMapping("/image/{imageKey}/complete")
+  public ResponseEntity<HttpStatus> markUploadImageAsCompleted(@PathVariable String imageKey) {
+    categoryImageService.markUploadCompleted(imageKey);
 
-        return ResponseEntity.noContent().build();
-    }
+    return ResponseEntity.noContent().build();
+  }
 }

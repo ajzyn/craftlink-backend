@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>backend</artifactId>
   <build>
@@ -11,30 +12,44 @@
             <path>
               <artifactId>lombok</artifactId>
               <groupId>org.projectlombok</groupId>
+              <version>1.18.32</version>
+            </path>
+            <path>
+              <artifactId>mapstruct-processor</artifactId>
+              <groupId>org.mapstruct</groupId>
+              <version>1.5.5.Final</version>
+            </path>
+            <path>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <groupId>org.projectlombok</groupId>
+              <version>0.2.0</version>
             </path>
             <path>
               <artifactId>spring-boot-configuration-processor</artifactId>
               <groupId>org.springframework.boot</groupId>
             </path>
           </annotationProcessorPaths>
+          <compilerArgs>--enable-preview</compilerArgs>
+          <source>21</source>
+          <target>21</target>
         </configuration>
         <groupId>org.apache.maven.plugins</groupId>
-      </plugin>
-      <plugin>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <artifactId>lombok</artifactId>
-              <groupId>org.projectlombok</groupId>
-            </exclude>
-          </excludes>
-        </configuration>
-        <groupId>org.springframework.boot</groupId>
+        <version>3.11.0</version>
       </plugin>
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <artifactId>mapstruct</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <version>1.5.5.Final</version>
+    </dependency>
+    <dependency>
+      <artifactId>mapstruct-processor</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <scope>provided</scope>
+      <version>1.5.5.Final</version>
+    </dependency>
     <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -83,11 +98,13 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <groupId>org.springframework.boot</groupId>
       <optional>true</optional>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
-      <optional>true</optional>
+      <scope>provided</scope>
+      <version>1.18.32</version>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-test</artifactId>

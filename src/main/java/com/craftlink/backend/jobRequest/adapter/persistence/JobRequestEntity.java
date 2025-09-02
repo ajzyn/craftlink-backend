@@ -1,0 +1,72 @@
+package com.craftlink.backend.jobRequest.adapter.persistence;
+
+import com.craftlink.backend.client.entities.ClientEntity;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.DeadlineType;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
+import com.craftlink.backend.service.entities.ServiceEntity;
+import com.craftlink.backend.shared.entities.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Table(name = "job_requests")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = {"service"})
+public class JobRequestEntity extends BaseEntity {
+
+  @Id
+  @GeneratedValue
+  @Column(updatable = false, nullable = false)
+  private UUID id;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "service_id", nullable = false)
+  private ServiceEntity service;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "requester_id", nullable = false)
+  private ClientEntity requester;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private JobRequestStatus status;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private DeadlineType deadlineType;
+
+  @Column(nullable = true)
+  private LocalDate deadline;
+
+  @Column(nullable = false, length = 500)
+  private String description;
+
+  @Column(nullable = false)
+  private String city;
+
+  @Column(nullable = true)
+  private String district;
+
+  @Column(nullable = true)
+  private LocalDate preferredDate;
+
+  @Column(nullable = true)
+  private LocalDate calculatedDeadline;
+}

@@ -1,5 +1,6 @@
 package com.craftlink.backend.client.dtos;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class ClientDto {
 
-    private Integer id;
+  private UUID id;
 }
