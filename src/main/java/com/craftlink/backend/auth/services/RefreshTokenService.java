@@ -7,6 +7,7 @@ import com.craftlink.backend.auth.repositories.RefreshTokenRepository;
 import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.custom.ValidationException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
+import com.craftlink.backend.config.security.models.UserPrincipal;
 import com.craftlink.backend.config.security.services.JwtService;
 import com.craftlink.backend.shared.cookies.CookieService;
 import com.craftlink.backend.user.entities.UserEntity;
@@ -63,8 +64,14 @@ public class RefreshTokenService {
       throw new SecurityException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
     }
 
-    return jwtService.generateAccessToken(refreshTokenEntity.getUser().getId().toString(),
-        refreshTokenEntity.getUser().getEmail());
+    var userPrincipal = new UserPrincipal(refreshTokenEntity.getUser());
+
+    return jwtService.generateAccessToken(
+        userPrincipal.getId().toString(),
+        userPrincipal.getUsername(),
+        userPrincipal.getUserType(),
+        userPrincipal.getAuthorities()
+    );
   }
 
   private String generateRefreshToken() {

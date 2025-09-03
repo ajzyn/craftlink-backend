@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtEncoderService {
 
-  public String generateToken(String subject, Map<String, String> claims, Long expTime, String secret) {
+  public String generateToken(String subject, Map<String, Object> claims, Long expTime, String secret) {
     if (expTime == null) {
       throw new ValidationException(
           ExceptionCode.MISSING_REQUIRED_FIELD,

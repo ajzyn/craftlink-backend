@@ -59,7 +59,12 @@ public class AuthService {
         .expirationTimeInSeconds(refreshTokenCookieProperties.getExpirationTimeInSeconds())
         .build());
 
-    var token = jwtService.generateAccessToken(userPrincipal.getId().toString(), userPrincipal.getUsername());
+    var token = jwtService.generateAccessToken(
+        userPrincipal.getId().toString(),
+        userPrincipal.getUsername(),
+        userPrincipal.getUserType(),
+        userPrincipal.getAuthorities()
+    );
     return LoginResponseDto.builder()
         .token(token)
         .user(modelMapper.map(user, UserDto.class))
