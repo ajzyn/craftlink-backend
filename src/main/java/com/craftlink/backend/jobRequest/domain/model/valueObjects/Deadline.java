@@ -2,22 +2,31 @@ package com.craftlink.backend.jobRequest.domain.model.valueObjects;
 
 import com.craftlink.backend.shared.exceptions.DomainViolation;
 import java.time.LocalDate;
+import java.util.Optional;
 
-public record Deadline(LocalDate value) {
+public record Deadline(Optional<LocalDate> value) {
+
+  private static final String ERROR_CODE = "PAST_DEADLINE_DATE";
 
   public Deadline {
-    if (value == null) {
-      throw new DomainViolation(
-          "INCORRECT_CALCULATED_DATE",
-          "Calculated deadline value is required"
-      );
-    }
+    value.ifPresent(date -> {
+      if (date.isBefore(LocalDate.now())) {
+        throw new DomainViolation(
+            ERROR_CODE,
+            "Deadline value is in the past"
+        );
+      }
+    });
+  }
 
-    if (value().isBefore(LocalDate.now())) {
-      throw new DomainViolation(
-          "PAST_CALCULATED_DATE",
-          "Calculated deadline value is in the past"
-      );
+  public static Deadline of(LocalDate date, LocalDate referenceDate) {
+    if (date.isBefore(referenceDate)) {
+      throw new DomainViolation(ERROR_CODE, "Deadline cannot be in the past");
     }
+    return new Deadline(Optional.of(date));
+  }
+
+  public static Deadline empty() {
+    return new Deadline(Optional.empty());
   }
 }

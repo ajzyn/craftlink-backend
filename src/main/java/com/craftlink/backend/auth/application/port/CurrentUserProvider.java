@@ -1,8 +1,8 @@
 package com.craftlink.backend.auth.application.port;
 
-import java.util.UUID;
+import com.craftlink.backend.auth.adapters.security.SpringSecurityCurrentUserProvider.CurrentUserContext;
 
 public interface CurrentUserProvider {
 
-  UUID getCurrentUserId();
+  CurrentUserContext getCurrentUser();
 }

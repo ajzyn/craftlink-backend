@@ -1,42 +1,44 @@
 package com.craftlink.backend.jobRequest.domain.model.valueObjects;
 
 import com.craftlink.backend.shared.exceptions.DomainViolation;
-import java.util.Optional;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
 public enum DeadlineType {
 
-  ASAP(false),
-  WITHIN_5_DAYS(true) {
-    @Override
-    public CalculatedDeadline calculate(Deadline baseDate) {
-      return new CalculatedDeadline(Optional.of(baseDate.value().plusDays(5)));
-    }
-  },
-  WITHIN_2_WEEKS(true) {
-    @Override
-    public CalculatedDeadline calculate(Deadline baseDate) {
-      return new CalculatedDeadline(Optional.of(baseDate.value().plusDays(14)));
-    }
-  },
-  EXACT_DATE(true) {
-    @Override
-    public CalculatedDeadline calculate(Deadline baseDate) {
-      return new CalculatedDeadline(Optional.of(baseDate.value()));
-    }
-  },
-  ADJUST(false);
+  ASAP,
+  WITHIN_5_DAYS(5),
+  WITHIN_2_WEEKS(14),
+  EXACT_DATE,
+  ADJUST;
 
-  private final boolean supportsCalculation;
+  private final int daysToAdd;
 
-  public CalculatedDeadline calculate(Deadline baseDate) {
-    throw new DomainViolation(
-        "CALCULATION_NOT_SUPPORTED",
-        String.format("%s does not support calculation", this.name())
-    );
+  DeadlineType() {
+    this.daysToAdd = 0;
+  }
+
+  DeadlineType(int daysToAdd) {
+    this.daysToAdd = daysToAdd;
+  }
+
+  public Deadline calculate(LocalDate referenceDate) {
+    return switch (this) {
+      case WITHIN_5_DAYS, WITHIN_2_WEEKS -> Deadline.of(referenceDate.plusDays(daysToAdd), referenceDate);
+      case ADJUST, ASAP -> Deadline.empty();
+      case EXACT_DATE -> throw new DomainViolation(
+          "EXACT_DATE_REQUIRES_FIELD",
+          "Exact date must be provided when deadline type is EXACT_DATE"
+      );
+    };
+  }
+
+  public Deadline calculateExact(LocalDate exactDate, LocalDate referenceDate) {
+    if (this != EXACT_DATE) {
+      throw new DomainViolation(
+          "INVALID_DEADLINE_TYPE",
+          String.format("%s does not support exact date", this)
+      );
+    }
+    return Deadline.of(exactDate, referenceDate);
   }
 }

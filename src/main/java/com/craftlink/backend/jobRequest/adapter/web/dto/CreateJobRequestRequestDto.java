@@ -10,9 +10,9 @@ import java.util.UUID;
 public record CreateJobRequestRequestDto(@NotBlank String city,
                                          @NotBlank String district,
                                          @NotNull DeadlineType deadlineType,
-                                         LocalDate deadline,
+                                         LocalDate deadlineDate,
                                          @NotNull
-                                         LocalDate preferredDate,
+                                         LocalDate exactDate,
                                          @NotNull
                                          UUID serviceId,
                                          @NotBlank

@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -32,7 +31,6 @@ import lombok.ToString;
 public class JobRequestEntity extends BaseEntity {
 
   @Id
-  @GeneratedValue
   @Column(updatable = false, nullable = false)
   private UUID id;
 
@@ -52,21 +50,13 @@ public class JobRequestEntity extends BaseEntity {
   @Column(nullable = false)
   private DeadlineType deadlineType;
 
-  @Column(nullable = true)
-  private LocalDate deadline;
-
   @Column(nullable = false, length = 500)
   private String description;
 
   @Column(nullable = false)
   private String city;
 
-  @Column(nullable = true)
+  private LocalDate deadline;
   private String district;
-
-  @Column(nullable = true)
-  private LocalDate preferredDate;
-
-  @Column(nullable = true)
-  private LocalDate calculatedDeadline;
+  private LocalDate exactDate;
 }

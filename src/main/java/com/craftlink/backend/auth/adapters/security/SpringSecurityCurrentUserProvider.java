@@ -11,11 +11,25 @@ import org.springframework.stereotype.Component;
 public class SpringSecurityCurrentUserProvider implements CurrentUserProvider {
 
   @Override
-  public UUID getCurrentUserId() {
+  public CurrentUserContext getCurrentUser() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth == null || !auth.isAuthenticated()) {
       throw new IllegalStateException("No authenticated user");
     }
-    return ((UserPrincipal) auth.getPrincipal()).getId();
+    var principal = (UserPrincipal) auth.getPrincipal();
+
+    UUID userId = principal.getId();
+    UUID clientId = principal.getClientId();
+    UUID specialistId = principal.getSpecialistId();
+
+    return new CurrentUserContext(userId, clientId, specialistId);
+  }
+
+  public record CurrentUserContext(
+      UUID userId,
+      UUID clientId,
+      UUID specialistId
+  ) {
+
   }
 }

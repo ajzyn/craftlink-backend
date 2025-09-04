@@ -4,6 +4,7 @@ import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestRequestD
 import com.craftlink.backend.jobRequest.adapter.web.mappers.JobRequestWebMapper;
 import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
 import com.craftlink.backend.jobRequest.application.usecase.CreateJobRequestUseCase;
+import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sec/service-requests")
+@RequestMapping("/api/sec/job-requests")
 public class JobRequestController {
 
   private final CreateJobRequestUseCase createJobRequestUseCase;
@@ -24,8 +25,8 @@ public class JobRequestController {
 
   // check if the user is a client
   // user should be auithenticated
-  @PostMapping()
-  public ResponseEntity<CreateJobRequestResult> createServiceRequest(@RequestBody
+  @PostMapping("")
+  public ResponseEntity<CreateJobRequestResult> createServiceRequest(@Valid @RequestBody
   CreateJobRequestRequestDto requestDto) {
     var cmd = jobRequestWebMapper.toCommand(requestDto);
     var result = createJobRequestUseCase.handle(cmd);

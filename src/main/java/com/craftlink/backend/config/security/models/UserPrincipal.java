@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserPrincipal implements UserDetails {
 
   private final UUID id;
+  private final UUID clientId;
+  private final UUID specialistId;
   private final String username;
   private final String password;
   private final UserType userType;
@@ -24,6 +26,8 @@ public class UserPrincipal implements UserDetails {
 
   public UserPrincipal(UserEntity user) {
     id = user.getId();
+    clientId = user.getClient() != null ? user.getClient().getId() : null;
+    specialistId = user.getSpecialist() != null ? user.getSpecialist().getId() : null;
     username = user.getEmail();
     password = user.getPassword();
     userType = user.getUserType();
@@ -42,5 +46,5 @@ public class UserPrincipal implements UserDetails {
       offeredServices = Set.of();
     }
   }
-  
+
 }

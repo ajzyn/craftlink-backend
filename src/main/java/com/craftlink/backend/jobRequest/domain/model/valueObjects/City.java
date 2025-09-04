@@ -7,7 +7,7 @@ public record City(String value) {
 
   public City {
     if (StringUtils.isBlank(value)) {
-      throw new DomainViolation("INCORRECT_LOCATION", "Incorrect required");
+      throw new DomainViolation("INCORRECT_CITY", "Incorrect required");
     }
   }
 }

@@ -2,12 +2,12 @@ package com.craftlink.backend.jobRequest.application.mapper;
 
 import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.CalculatedDeadline;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.City;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.Deadline;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.Description;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.District;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.PreferredDate;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import java.time.LocalDate;
@@ -20,55 +20,52 @@ import org.mapstruct.Named;
 public interface JobRequestDomainMapper {
 
   @Mapping(source = "id", target = "id", qualifiedByName = "mapJobRequestId")
-//  @Mapping(source = "requesterId", target = "requesterId", qualifiedByName = "mapRequesterId")
-//  @Mapping(source = "serviceId", target = "serviceId", qualifiedByName = "mapServiceId")
-//  @Mapping(source = "status", target = "status")
-//  @Mapping(source = "deadlineType", target = "deadlineType")
-//  @Mapping(source = "calculatedDeadline", target = "calculatedDeadline", qualifiedByName = "mapCalculatedDeadline")
-//  @Mapping(source = "deadline", target = "deadline", qualifiedByName = "mapDeadline")
+  @Mapping(source = "serviceId", target = "serviceId", qualifiedByName = "mapServiceId")
+  @Mapping(source = "requesterId", target = "requesterId", qualifiedByName = "mapRequesterId")
+  @Mapping(source = "deadline", target = "deadline", qualifiedByName = "mapDeadline")
   @Mapping(source = "description", target = "description", qualifiedByName = "mapDescription")
-//  @Mapping(source = "city", target = "city", qualifiedByName = "mapCity")
-//  @Mapping(source = "district", target = "district")
-//  @Mapping(source = "preferredDate", target = "preferredDate", qualifiedByName = "mapPreferredDate")
+  @Mapping(source = "city", target = "city", qualifiedByName = "mapCity")
+  @Mapping(source = "exactDate", target = "exactDate", qualifiedByName = "mapExactDate")
+  @Mapping(source = "district", target = "district", qualifiedByName = "mapDistrict")
   CreateJobRequestResult toResult(JobRequest jobRequest);
 
   @Named("mapJobRequestId")
   default UUID map(JobRequestId id) {
-    return id != null ? id.value() : null;
+    return id.value();
   }
 
   @Named("mapRequesterId")
   default UUID map(RequesterId id) {
-    return id != null ? id.value() : null;
+    return id.value();
   }
 
   @Named("mapServiceId")
   default UUID map(ServiceId id) {
-    return id != null ? id.value() : null;
+    return id.value();
   }
 
-  @Named("mapCalculatedDeadline")
-  default LocalDate map(CalculatedDeadline deadline) {
-    return deadline != null ? deadline.value().orElse(null) : null;
+  @Named("mapExactDate")
+  default LocalDate map(ExactDate exactDate) {
+    return exactDate != null ? exactDate.value() : null;
   }
 
   @Named("mapDeadline")
   default LocalDate map(Deadline deadline) {
-    return deadline != null ? deadline.value() : null;
+    return deadline != null ? deadline.value().orElse(null) : null;
   }
 
   @Named("mapDescription")
   default String map(Description description) {
-    return description != null ? description.value() : null;
+    return description.value();
   }
 
   @Named("mapCity")
   default String map(City city) {
-    return city != null ? city.value() : null;
+    return city.value();
   }
 
-  @Named("mapPreferredDate")
-  default LocalDate map(PreferredDate date) {
-    return date != null ? date.value() : null;
+  @Named("mapDistrict")
+  default String map(District district) {
+    return district != null ? district.value() : null;
   }
 }

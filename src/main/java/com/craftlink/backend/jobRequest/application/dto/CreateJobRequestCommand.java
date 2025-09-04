@@ -8,8 +8,7 @@ public record CreateJobRequestCommand(
     String city,
     String district,
     DeadlineType deadlineType,
-    LocalDate deadlineDate,
-    LocalDate preferredDate,
+    LocalDate exactDate,
     UUID serviceId,
     String description
 ) {

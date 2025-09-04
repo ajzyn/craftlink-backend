@@ -3,12 +3,12 @@ package com.craftlink.backend.jobRequest.adapter.persistence.mapper;
 import com.craftlink.backend.client.entities.ClientEntity;
 import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.CalculatedDeadline;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.City;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.Deadline;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.Description;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.District;
+import com.craftlink.backend.jobRequest.domain.model.valueObjects.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.PreferredDate;
 import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import com.craftlink.backend.service.entities.ServiceEntity;
@@ -19,7 +19,7 @@ import org.mapstruct.Mapper;
 public interface JobRequestPersistenceMapper {
 
   default JobRequestEntity toEntity(JobRequest d) {
-    var e = new JobRequestEntity();
+    var entity = new JobRequestEntity();
 
     var requester = new ClientEntity();
     requester.setId(d.getRequesterId().value());
@@ -27,17 +27,17 @@ public interface JobRequestPersistenceMapper {
     var service = new ServiceEntity();
     service.setId(d.getServiceId().value());
 
-    e.setId(d.getId().value());
-    e.setRequester(requester);
-    e.setService(service);
-    e.setStatus(d.getStatus());
-    e.setDeadlineType(d.getDeadlineType());
-    e.setDeadline(d.getDeadline().value());
-    e.setDescription(d.getDescription().toString());
-    e.setCity(d.getCity().toString());
-    e.setDistrict(d.getDistrict());
-    e.setPreferredDate(d.getPreferredDate().value());
-    return e;
+    entity.setId(d.getId().value());
+    entity.setRequester(requester);
+    entity.setService(service);
+    entity.setStatus(d.getStatus());
+    entity.setDeadlineType(d.getDeadlineType());
+    entity.setDeadline(d.getDeadline().value().orElse(null));
+    entity.setDescription(d.getDescription().value());
+    entity.setCity(d.getCity().value());
+    entity.setDistrict(d.getDistrict().value());
+    entity.setExactDate(d.getExactDate().value());
+    return entity;
   }
 
   default JobRequest toDomain(JobRequestEntity e) {
@@ -47,12 +47,11 @@ public interface JobRequestPersistenceMapper {
         new ServiceId(e.getService().getId()),
         e.getDeadlineType(),
         e.getStatus(),
-        new CalculatedDeadline(Optional.ofNullable(e.getCalculatedDeadline())),
-        new Deadline(e.getDeadline()),
+        new Deadline(Optional.ofNullable(e.getDeadline())),
         new Description(e.getDescription()),
         new City(e.getCity()),
-        e.getDistrict(),
-        new PreferredDate(e.getPreferredDate())
+        new District(e.getDistrict()),
+        new ExactDate(e.getExactDate())
     );
   }
 }
