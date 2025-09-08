@@ -1,6 +1,6 @@
 package com.craftlink.backend.service.domain.model;
 
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
+import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.shared.exceptions.DomainViolation;
 import java.util.Map;
 import java.util.UUID;

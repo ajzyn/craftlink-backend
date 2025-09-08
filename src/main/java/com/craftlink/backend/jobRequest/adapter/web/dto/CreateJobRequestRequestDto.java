@@ -1,6 +1,6 @@
 package com.craftlink.backend.jobRequest.adapter.web.dto;
 
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.DeadlineType;
+import com.craftlink.backend.jobRequest.domain.model.vo.DeadlineType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

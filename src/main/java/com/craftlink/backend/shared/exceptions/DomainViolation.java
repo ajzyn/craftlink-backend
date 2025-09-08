@@ -3,6 +3,8 @@ package com.craftlink.backend.shared.exceptions;
 import java.util.Map;
 import lombok.Getter;
 
+
+//TODO: make it more secure
 @Getter
 public final class DomainViolation extends RuntimeException {
 

@@ -1,13 +1,10 @@
 package com.craftlink.backend.jobRequest.adapter.persistence.write;
 
 import com.craftlink.backend.jobRequest.adapter.persistence.mapper.JobRequestPersistenceMapper;
+import com.craftlink.backend.jobRequest.application.port.JobRequestRepository;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
-import com.craftlink.backend.jobRequest.domain.port.JobRequestRepository;
-import java.util.EnumSet;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,18 +18,12 @@ public class JobRequestRepositoryAdapter implements JobRequestRepository {
   @Override
   public JobRequest save(JobRequest jobRequest) {
     var entity = mapper.toEntity(jobRequest);
-    var savedJobRequest = jpa.save(entity);
-    return mapper.toDomain(savedJobRequest);
+    jpa.save(entity);
+    return mapper.toDomain(entity);
   }
 
   @Override
   public Optional<JobRequest> findById(JobRequestId id) {
     return jpa.findById(id.value()).map(mapper::toDomain);
-  }
-
-  @Override
-  public boolean existsActiveByUserId(UUID requesterId) {
-    var active = EnumSet.of(JobRequestStatus.ACTIVE);
-    return jpa.existsByRequesterIdAndStatusIn(requesterId, active);
   }
 }

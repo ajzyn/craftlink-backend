@@ -1,15 +1,15 @@
 package com.craftlink.backend.jobRequest.adapter.persistence.mapper;
 
-import com.craftlink.backend.client.entities.ClientEntity;
+import com.craftlink.backend.client.adapter.persistence.ClientEntity;
 import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.City;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Deadline;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Description;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.District;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.ExactDate;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
+import com.craftlink.backend.jobRequest.domain.model.vo.City;
+import com.craftlink.backend.jobRequest.domain.model.vo.Deadline;
+import com.craftlink.backend.jobRequest.domain.model.vo.Description;
+import com.craftlink.backend.jobRequest.domain.model.vo.District;
+import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
+import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import com.craftlink.backend.service.entities.ServiceEntity;
 import java.util.Optional;

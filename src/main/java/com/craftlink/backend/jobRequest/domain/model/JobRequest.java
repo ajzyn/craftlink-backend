@@ -1,14 +1,14 @@
 package com.craftlink.backend.jobRequest.domain.model;
 
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.City;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Deadline;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.DeadlineType;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Description;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.District;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.ExactDate;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
+import com.craftlink.backend.jobRequest.domain.model.vo.City;
+import com.craftlink.backend.jobRequest.domain.model.vo.Deadline;
+import com.craftlink.backend.jobRequest.domain.model.vo.DeadlineType;
+import com.craftlink.backend.jobRequest.domain.model.vo.Description;
+import com.craftlink.backend.jobRequest.domain.model.vo.District;
+import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
+import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import lombok.Getter;
 

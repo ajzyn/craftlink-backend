@@ -19,5 +19,5 @@ public interface SpringDataJobRequestDetailsJpa extends JpaRepository<JobRequest
         from JobRequestEntity sr
         where sr.id = :id
       """)
-  Optional<JobRequestBasicViewProjection> findViewById(UUID id);
+  Optional<JobRequestBasicViewJpaProjection> findViewById(UUID id);
 }

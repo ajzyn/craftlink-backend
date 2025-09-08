@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -156,6 +157,20 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
   }
 
+  @ExceptionHandler(DataAccessException.class)
+  public ResponseEntity<ErrorResponseDto> handleDataAccess(
+      DataAccessException ex, HttpServletRequest request) {
+
+    log.error("Database error - Path: {}, Error: {}", request.getRequestURI(), ex.getMessage(), ex);
+
+    var response = ErrorResponseDto.builder()
+        .error("DATABASE_ERROR")
+        .message("Service temporarily unavailable")
+        .timestamp(LocalDateTime.now())
+        .build();
+
+    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+  }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponseDto> handleGenericException(

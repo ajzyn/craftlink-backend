@@ -1,8 +1,8 @@
 package com.craftlink.backend.jobRequest.adapter.persistence;
 
-import com.craftlink.backend.client.entities.ClientEntity;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.DeadlineType;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
+import com.craftlink.backend.client.adapter.persistence.ClientEntity;
+import com.craftlink.backend.jobRequest.domain.model.vo.DeadlineType;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
 import com.craftlink.backend.service.entities.ServiceEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import jakarta.persistence.Column;

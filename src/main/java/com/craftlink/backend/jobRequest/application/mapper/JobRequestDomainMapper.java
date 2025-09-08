@@ -2,13 +2,13 @@ package com.craftlink.backend.jobRequest.application.mapper;
 
 import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.City;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Deadline;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.Description;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.District;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.ExactDate;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestId;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.RequesterId;
+import com.craftlink.backend.jobRequest.domain.model.vo.City;
+import com.craftlink.backend.jobRequest.domain.model.vo.Deadline;
+import com.craftlink.backend.jobRequest.domain.model.vo.Description;
+import com.craftlink.backend.jobRequest.domain.model.vo.District;
+import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
+import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -16,7 +16,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring")
+@Mapper()
 public interface JobRequestDomainMapper {
 
   @Mapping(source = "id", target = "id", qualifiedByName = "mapJobRequestId")

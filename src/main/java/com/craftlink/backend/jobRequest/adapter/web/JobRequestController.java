@@ -25,7 +25,7 @@ public class JobRequestController {
 
   // check if the user is a client
   // user should be auithenticated
-  @PostMapping("")
+  @PostMapping()
   public ResponseEntity<CreateJobRequestResult> createServiceRequest(@Valid @RequestBody
   CreateJobRequestRequestDto requestDto) {
     var cmd = jobRequestWebMapper.toCommand(requestDto);

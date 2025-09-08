@@ -1,6 +1,6 @@
 package com.craftlink.backend.jobRequest.application.dto;
 
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

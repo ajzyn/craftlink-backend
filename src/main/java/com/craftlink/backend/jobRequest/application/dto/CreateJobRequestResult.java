@@ -1,7 +1,7 @@
 package com.craftlink.backend.jobRequest.application.dto;
 
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.DeadlineType;
-import com.craftlink.backend.jobRequest.domain.model.valueObjects.JobRequestStatus;
+import com.craftlink.backend.jobRequest.domain.model.vo.DeadlineType;
+import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
 import java.time.LocalDate;
 import java.util.UUID;
 

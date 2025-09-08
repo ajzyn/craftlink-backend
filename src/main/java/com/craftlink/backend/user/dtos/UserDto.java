@@ -1,6 +1,6 @@
 package com.craftlink.backend.user.dtos;
 
-import com.craftlink.backend.user.models.UserType;
+import com.craftlink.backend.auth.domain.model.user.vo.UserType;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
