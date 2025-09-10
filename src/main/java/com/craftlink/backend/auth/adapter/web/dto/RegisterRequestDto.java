@@ -15,6 +15,9 @@ public class RegisterRequestDto {
   private String email;
 
   @NotBlank
+  private String username;
+
+  @NotBlank
   @Pattern(regexp = "^.{8,}$",
       message = "Password must be at least 8 characters long")
   private String password;

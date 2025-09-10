@@ -14,7 +14,7 @@ public interface RefreshTokenPersistenceMapper {
 
   default RefreshTokenEntity toEntity(RefreshToken refreshToken) {
     var refreshTokenEntity = new RefreshTokenEntity();
-    refreshTokenEntity.setToken(refreshToken.getToken().toString());
+    refreshTokenEntity.setToken(refreshToken.getToken().value());
     refreshTokenEntity.setExpirationDate(refreshToken.getExpirationDate().value());
 
     var user = new UserEntity();

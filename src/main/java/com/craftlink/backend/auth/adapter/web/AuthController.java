@@ -1,14 +1,16 @@
 package com.craftlink.backend.auth.adapter.web;
 
-import com.craftlink.backend.auth.adapter.service.RefreshTokenService;
+import com.craftlink.backend.auth.adapter.web.dto.AuthResponseDto;
 import com.craftlink.backend.auth.adapter.web.dto.LoginRequestDto;
-import com.craftlink.backend.auth.adapter.web.dto.LoginResponseDto;
 import com.craftlink.backend.auth.adapter.web.dto.RegisterRequestDto;
-import com.craftlink.backend.auth.services.AuthService;
+import com.craftlink.backend.auth.adapter.web.mapper.AuthWebMapper;
+import com.craftlink.backend.auth.application.TokenType;
+import com.craftlink.backend.auth.application.usecase.LoginUseCase;
+import com.craftlink.backend.auth.application.usecase.RefreshTokenUseCase;
+import com.craftlink.backend.auth.application.usecase.RegisterClientUserUseCase;
+import com.craftlink.backend.shared.cookies.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,32 +25,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-  private final AuthService authService;
-  private final RefreshTokenService refreshTokenService;
+  private final LoginUseCase loginUseCase;
+  private final RegisterClientUserUseCase registerClientUserUseCase;
+  private final RefreshTokenUseCase refreshTokenUseCase;
+  private final CookieService cookieService;
+  private final AuthWebMapper mapper;
 
   @PostMapping("/register-client")
   public ResponseEntity<HttpStatus> registerClient(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-    authService.registerClient(registerRequestDto);
+    var cmd = mapper.toCommand(registerRequestDto);
+    registerClientUserUseCase.handle(cmd);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-  @PostMapping("/register-specialist")
-  public ResponseEntity<HttpStatus> registerSpecialist(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-    authService.registerSpecialist(registerRequestDto);
-
-    return ResponseEntity.status(HttpStatus.CREATED).build();
-  }
+//  @PostMapping("/register-specialist")
+//  public ResponseEntity<HttpStatus> registerSpecialist(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+//    return ResponseEntity.status(HttpStatus.CREATED).build();
+//  }
 
   @PostMapping("/login")
-  public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto,
-      HttpServletResponse response) {
-    return ResponseEntity.ok(authService.login(loginRequestDto, response));
+  public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    var cmd = mapper.toCommand(loginRequestDto);
+    var response = mapper.toResponse(loginUseCase.handle(cmd));
+    return ResponseEntity.ok(response);
   }
 
+  //TODO: logout
+
   @GetMapping("/refresh-token")
-  public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-    var token = refreshTokenService.refreshAccessToken(request);
-    return ResponseEntity.ok(Map.of("token", token));
+  public ResponseEntity<AuthResponseDto> refreshToken(HttpServletRequest request) {
+    var token = cookieService.getCookie(request, TokenType.REFRESH_TOKEN.name());
+    var accessToken = refreshTokenUseCase.handle(token);
+    var response = mapper.toResponse(accessToken);
+
+    return ResponseEntity.ok().body(response);
   }
 }

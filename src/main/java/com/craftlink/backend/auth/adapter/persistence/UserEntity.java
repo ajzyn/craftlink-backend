@@ -45,11 +45,13 @@ public class UserEntity extends BaseEntity {
   @Column(unique = true)
   private String phoneNumber;
 
+  private String username;
+
   @Column(unique = true)
   private String email;
 
+  @Column(nullable = false)
   private String password;
-
 
   //TODO: set user type based on connection with specific profile. it shouldnt be stored in the db
   @Enumerated(EnumType.STRING)
@@ -58,7 +60,7 @@ public class UserEntity extends BaseEntity {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "users_authorities",
+      name = "user_authorities",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "authority_id")
   )

@@ -16,8 +16,10 @@ import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public final class CreateJobRequestService implements CreateJobRequestUseCase {
 
   private final CurrentUserProvider currentUserProvider;

@@ -4,9 +4,9 @@ import com.craftlink.backend.auth.adapter.acl.ClientProfileAcl;
 import com.craftlink.backend.auth.adapter.security.PasswordHasherAdapter;
 import com.craftlink.backend.auth.application.dto.RegisterUserCommand;
 import com.craftlink.backend.auth.domain.model.user.User;
-import com.craftlink.backend.auth.domain.model.user.vo.ClientId;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;
 import com.craftlink.backend.auth.domain.model.user.vo.Password;
+import com.craftlink.backend.auth.domain.model.user.vo.Username;
 import com.craftlink.backend.auth.domain.port.UserRepository;
 import com.craftlink.backend.config.exceptions.custom.BusinessException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
@@ -25,7 +25,7 @@ public class RegisterClientUserUseCaseImpl implements RegisterClientUserUseCase 
 
   @Override
   @Transactional
-  public void registerClientUser(RegisterUserCommand cmd) {
+  public void handle(RegisterUserCommand cmd) {
     var email = new Email(cmd.email());
 
     if (userRepository.existByEmail(email)) {
@@ -34,19 +34,15 @@ public class RegisterClientUserUseCaseImpl implements RegisterClientUserUseCase 
 
     var hashedPassword = passwordHasherAdapter.hash(cmd.password());
 
-    var user = User.registerUser(
+    var user = User.registerClient(
         new Email(cmd.email()),
+        new Username(cmd.username()),
         new Password(hashedPassword),
         Set.of()
     );
 
     userRepository.save(user);
 
-    var clientId = clientProfileAcl.createClientForUser(user.getId().value());
-
-    user.assignClientId(new ClientId(clientId));
-
-    userRepository.save(user);
-
+    clientProfileAcl.createClientForUser(user.getId().value());
   }
 }

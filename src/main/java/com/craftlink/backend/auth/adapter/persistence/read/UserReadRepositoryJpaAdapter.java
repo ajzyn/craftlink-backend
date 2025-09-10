@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserReadRepositoryJpaAdapter implements UserReadRepository {
 
-  private final SpringDataUserRepositoryJpa jpa;
+  private final SpringDataUserReadRepositoryJpa jpa;
 
   @Override
   public Optional<UserSnapshot> findByEmail(Email email) {

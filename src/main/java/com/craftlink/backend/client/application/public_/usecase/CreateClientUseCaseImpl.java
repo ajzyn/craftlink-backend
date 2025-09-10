@@ -14,7 +14,7 @@ class CreateClientUseCaseImpl implements CreateClientUseCase {
   private final ClientRepository clientRepository;
 
   @Override
-  public UUID createNewClient(UUID userId) {
+  public UUID handle(UUID userId) {
     var client = Client.create(new UserId(userId));
 
     clientRepository.save(client);

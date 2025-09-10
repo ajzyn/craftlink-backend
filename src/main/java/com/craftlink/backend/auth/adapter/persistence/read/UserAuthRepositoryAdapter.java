@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserAuthRepositoryAdapter implements UserAuthRepository {
 
-  private final SpringDataUserRepositoryJpa jpa;
+  private final SpringDataUserReadRepositoryJpa jpa;
 
   @Override
   public Optional<UserAuthView> findByEmailWithServices(Email email) {

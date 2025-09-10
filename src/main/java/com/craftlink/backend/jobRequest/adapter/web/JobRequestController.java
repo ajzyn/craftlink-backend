@@ -1,8 +1,8 @@
 package com.craftlink.backend.jobRequest.adapter.web;
 
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestRequestDto;
-import com.craftlink.backend.jobRequest.adapter.web.mappers.JobRequestWebMapper;
-import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
+import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestResponseDto;
+import com.craftlink.backend.jobRequest.adapter.web.mapper.JobRequestWebMapper;
 import com.craftlink.backend.jobRequest.application.usecase.CreateJobRequestUseCase;
 import jakarta.validation.Valid;
 import java.util.Map;
@@ -24,13 +24,12 @@ public class JobRequestController {
 //  private final GetJobRequestDetailsUseCase getJobRequestDetailsUseCase;
 
   // check if the user is a client
-  // user should be auithenticated
   @PostMapping()
-  public ResponseEntity<CreateJobRequestResult> createServiceRequest(@Valid @RequestBody
+  public ResponseEntity<CreateJobRequestResponseDto> createServiceRequest(@Valid @RequestBody
   CreateJobRequestRequestDto requestDto) {
     var cmd = jobRequestWebMapper.toCommand(requestDto);
     var result = createJobRequestUseCase.handle(cmd);
-    return ResponseEntity.ok(result);
+    return ResponseEntity.ok(jobRequestWebMapper.toResponse(result));
   }
 
   @GetMapping()

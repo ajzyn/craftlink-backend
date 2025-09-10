@@ -1,6 +1,8 @@
 package com.craftlink.backend.auth.application.usecase;
 
+import com.craftlink.backend.auth.application.dto.AuthResult;
+
 public interface RefreshTokenUseCase {
 
-  String refresh(String rawRefreshToken);
+  AuthResult handle(String rawRefreshToken);
 }

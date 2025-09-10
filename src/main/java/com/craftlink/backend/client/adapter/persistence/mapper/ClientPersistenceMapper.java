@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-interface ClientPersistenceMapper {
+public interface ClientPersistenceMapper {
 
   default ClientEntity toEntity(Client client) {
     var clientEntity = new ClientEntity();

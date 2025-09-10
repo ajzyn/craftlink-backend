@@ -8,11 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpringDataUserRepositoryJpa extends JpaRepository<UserEntity, UUID> {
+public interface SpringDataUserReadRepositoryJpa extends JpaRepository<UserEntity, UUID> {
 
   Optional<UserEntity> findByEmail(String email);
-
-  boolean existsByEmail(String email);
 
   @Query("""
       SELECT u FROM UserEntity u

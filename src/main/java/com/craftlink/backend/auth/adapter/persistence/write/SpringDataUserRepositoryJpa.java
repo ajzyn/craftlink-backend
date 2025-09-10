@@ -1,0 +1,10 @@
+package com.craftlink.backend.auth.adapter.persistence.write;
+
+import com.craftlink.backend.auth.adapter.persistence.UserEntity;
+import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SpringDataUserRepositoryJpa extends JpaRepository<UserEntity, UUID> {
+
+  boolean existsByEmail(String email);
+}

@@ -1,5 +1,6 @@
 package com.craftlink.backend.auth.application.usecase;
 
+import com.craftlink.backend.auth.application.dto.AuthResult;
 import com.craftlink.backend.auth.application.port.UserReadRepository;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenValue;
 import com.craftlink.backend.auth.domain.port.security.AccessTokenGenerator;
@@ -8,6 +9,7 @@ import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +21,12 @@ public class RefreshTokenUseCaseImpl implements RefreshTokenUseCase {
   private final AccessTokenGenerator accessTokenGenerator;
   private final UserReadRepository userReadRepository;
 
-  @Override
   @Transactional
-  public String refresh(String rawRefreshToken) {
+  public AuthResult handle(String rawRefreshToken) {
+    if (StringUtils.isBlank(rawRefreshToken)) {
+      throw new SecurityException(ExceptionCode.REFRESH_TOKEN_INVALID);
+    }
+
     var rt = repository.findByToken(new RefreshTokenValue(rawRefreshToken))
         .orElseThrow(() -> new SecurityException(ExceptionCode.REFRESH_TOKEN_INVALID));
 
@@ -33,6 +38,6 @@ public class RefreshTokenUseCaseImpl implements RefreshTokenUseCase {
     var userSnapshot = userReadRepository.findById(rt.getUserId())
         .orElseThrow(() -> new SecurityException(ExceptionCode.USER_NOT_FOUND));
 
-    return accessTokenGenerator.generateAccessToken(userSnapshot);
+    return new AuthResult(accessTokenGenerator.generateAccessToken(userSnapshot));
   }
 }

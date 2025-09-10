@@ -1,4 +1,4 @@
-package com.craftlink.backend.jobRequest.adapter.web.mappers;
+package com.craftlink.backend.jobRequest.adapter.web.mapper;
 
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestRequestDto;
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestResponseDto;
