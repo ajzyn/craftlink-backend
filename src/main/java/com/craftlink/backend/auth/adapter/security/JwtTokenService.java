@@ -1,10 +1,10 @@
 package com.craftlink.backend.auth.adapter.security;
 
+import com.craftlink.backend.auth.adapter.config.JwtProperties;
 import com.craftlink.backend.auth.domain.model.user.vo.UserType;
 import com.craftlink.backend.config.exceptions.custom.SecurityException;
 import com.craftlink.backend.config.exceptions.custom.ValidationException;
 import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
-import com.craftlink.backend.shared.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -15,7 +15,6 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -42,13 +41,13 @@ public class JwtTokenService {
             "userType", userType,
             "authorities", authorities
         ),
-        jwtProperties.getExpirationTime(),
+        jwtProperties.getAccessToken().getExpirationSeconds(),
         jwtProperties.getSecret());
   }
 
 
-  private String generateToken(String subject, Map<String, Object> claims, Long expTime, String secret) {
-    if (expTime == null) {
+  private String generateToken(String subject, Map<String, Object> claims, Long expTimeInSeconds, String secret) {
+    if (expTimeInSeconds == null) {
       throw new ValidationException(
           ExceptionCode.MISSING_REQUIRED_FIELD,
           Map.of("expTimeMillis", "Expiration time is required")
@@ -56,13 +55,14 @@ public class JwtTokenService {
     }
 
     try {
-      Date tokenExpTime = Date.from(Instant.ofEpochMilli(System.currentTimeMillis() + expTime));
+      var expMillis = System.currentTimeMillis() + (expTimeInSeconds * 1000);
+      var tokenExpTime = new Date(expMillis);
 
       return Jwts.builder()
-          .setExpiration(tokenExpTime)
           .setClaims(claims)
           .setSubject(subject)
           .setIssuedAt(new Date())
+          .setExpiration(tokenExpTime)
           .signWith(getSigningKey(secret))
           .compact();
     } catch (JwtException e) {
@@ -85,15 +85,9 @@ public class JwtTokenService {
 
       return claims.getSubject();
     } catch (ExpiredJwtException e) {
-      throw new SecurityException(
-          ExceptionCode.JWT_EXPIRED,
-          "Token has expired"
-      );
+      throw new SecurityException(ExceptionCode.JWT_EXPIRED);
     } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-      throw new SecurityException(
-          ExceptionCode.TOKEN_FORMAT_ERROR,
-          "Invalid authentication token"
-      );
+      throw new SecurityException(ExceptionCode.TOKEN_FORMAT_ERROR);
     }
   }
 

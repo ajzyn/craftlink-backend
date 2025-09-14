@@ -55,7 +55,7 @@ public class LoginUseCaseImpl implements LoginUseCase {
         new UserId(authResult.userId()),
         token,
         new ExpirationDate(
-            Instant.now().plus(refreshTokenCookieProperties.getExpirationTimeInSeconds(), ChronoUnit.SECONDS))
+            Instant.now().plus(refreshTokenCookieProperties.getExpirationSeconds(), ChronoUnit.SECONDS))
     );
 
     var savedRefreshToken = refreshTokenRepository.save(refreshToken);

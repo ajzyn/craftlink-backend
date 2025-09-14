@@ -38,4 +38,9 @@ public class JpaRefreshTokenRepository implements RefreshTokenRepository {
   public void delete(RefreshToken refreshToken) {
     jpa.delete(mapper.toEntity(refreshToken));
   }
+
+  @Override
+  public void deleteByToken(RefreshTokenValue token) {
+    jpa.deleteByToken(token.value());
+  }
 }

@@ -1,5 +1,6 @@
-package com.craftlink.backend.shared.properties;
+package com.craftlink.backend.auth.adapter.config;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,10 +17,18 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class JwtProperties {
 
-    @NotNull
-    private long expirationTime;
+  @Valid
+  private AccessToken accessToken = new AccessToken();
 
-    @NotBlank
-    @Size(min = 32)
-    private String secret;
+  @NotBlank
+  @Size(min = 32)
+  private String secret;
+
+  @Getter
+  @Setter
+  public static class AccessToken {
+
+    @NotNull
+    private long expirationSeconds;
+  }
 }

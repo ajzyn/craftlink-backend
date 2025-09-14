@@ -31,6 +31,14 @@ public class GlobalExceptionHandler {
 
     logSecurityError(ex, request);
 
+    if (ex.getCode().isSafeForUser()) {
+      log.info("Security violation - Code: {}, Path: {}",
+          ex.getCode().getCode(), request.getRequestURI());
+    } else {
+      log.error("Internal security error - Code: {}, Path: {}",
+          ex.getCode().getCode(), request.getRequestURI());
+    }
+
     var response = ErrorResponseDto.builder()
         .error(ex.getCode().getUserCode())
         .message(ex.getCode().getUserMessage())

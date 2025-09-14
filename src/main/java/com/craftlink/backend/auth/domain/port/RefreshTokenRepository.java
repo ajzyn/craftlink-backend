@@ -14,4 +14,6 @@ public interface RefreshTokenRepository {
   void deleteByUserId(UserId id);
 
   void delete(RefreshToken refreshToken);
+
+  void deleteByToken(RefreshTokenValue token);
 }

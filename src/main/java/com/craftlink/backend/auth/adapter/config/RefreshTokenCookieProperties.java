@@ -8,12 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-@ConfigurationProperties("auth.cookies.refresh-token") //TODO: change location of that
+@ConfigurationProperties("auth.cookie.refresh-token")
 public class RefreshTokenCookieProperties {
 
-  private long expirationTimeInSeconds;
+  private long expirationSeconds;
   private String domain;
   private String path;
   private boolean isSecure;
   private boolean httpOnly;
+  private String sameSite;
 }
