@@ -1,7 +1,7 @@
 package com.craftlink.backend.auth.adapter.acl;
 
 import com.craftlink.backend.auth.application.port.ClientProfilePort;
-import com.craftlink.backend.client.application.public_.usecase.CreateClientUseCase;
+import com.craftlink.backend.client.application.service.CreateClientUseCase;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

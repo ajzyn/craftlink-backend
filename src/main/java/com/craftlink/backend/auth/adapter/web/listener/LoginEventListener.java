@@ -1,7 +1,7 @@
 package com.craftlink.backend.auth.adapter.web.listener;
 
 import com.craftlink.backend.auth.adapter.config.RefreshTokenCookieProperties;
-import com.craftlink.backend.auth.application.TokenType;
+import com.craftlink.backend.auth.adapter.security.TokenType;
 import com.craftlink.backend.auth.domain.events.UserLoggedInEvent;
 import com.craftlink.backend.shared.cookies.CookieOptions;
 import com.craftlink.backend.shared.cookies.CookieService;

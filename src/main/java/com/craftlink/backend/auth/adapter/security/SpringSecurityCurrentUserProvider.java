@@ -1,7 +1,7 @@
 package com.craftlink.backend.auth.adapter.security;
 
-import com.craftlink.backend.auth.adapter.config.models.UserPrincipal;
-import com.craftlink.backend.auth.application.port.CurrentUserProvider;
+import com.craftlink.backend.auth.adapter.security.model.UserPrincipal;
+import com.craftlink.backend.shared.security.CurrentUserProvider;
 import java.util.UUID;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,13 +23,5 @@ public class SpringSecurityCurrentUserProvider implements CurrentUserProvider {
     UUID specialistId = principal.getSpecialistId();
 
     return new CurrentUserContext(userId, clientId, specialistId);
-  }
-
-  public record CurrentUserContext(
-      UUID userId,
-      UUID clientId,
-      UUID specialistId
-  ) {
-
   }
 }

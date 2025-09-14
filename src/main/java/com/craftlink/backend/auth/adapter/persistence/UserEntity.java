@@ -53,7 +53,6 @@ public class UserEntity extends BaseEntity {
   @Column(nullable = false)
   private String password;
 
-  //TODO: set user type based on connection with specific profile. it shouldnt be stored in the db
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private UserType userType;
@@ -75,20 +74,4 @@ public class UserEntity extends BaseEntity {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RefreshTokenEntity> refreshToken;
-
-
-  //TODO: consider if keep it
-  public void setClient(ClientEntity client) {
-    this.client = client;
-    if (client != null) {
-      client.setUser(this);  // Synchronizacja za każdym razem
-    }
-  }
-
-  public void setSpecialist(SpecialistEntity specialist) {
-    this.specialist = specialist;
-    if (specialist != null) {
-      specialist.setUser(this);
-    }
-  }
 }

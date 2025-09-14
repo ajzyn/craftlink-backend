@@ -1,13 +1,13 @@
 package com.craftlink.backend.auth.adapter.web;
 
+import com.craftlink.backend.auth.adapter.security.TokenType;
 import com.craftlink.backend.auth.adapter.web.dto.AuthResponseDto;
 import com.craftlink.backend.auth.adapter.web.dto.LoginRequestDto;
 import com.craftlink.backend.auth.adapter.web.dto.RegisterRequestDto;
 import com.craftlink.backend.auth.adapter.web.mapper.AuthWebMapper;
-import com.craftlink.backend.auth.application.TokenType;
-import com.craftlink.backend.auth.application.usecase.LoginUseCase;
-import com.craftlink.backend.auth.application.usecase.RefreshTokenUseCase;
-import com.craftlink.backend.auth.application.usecase.RegisterClientUserUseCase;
+import com.craftlink.backend.auth.application.port.usecase.LoginUseCase;
+import com.craftlink.backend.auth.application.port.usecase.RefreshTokenUseCase;
+import com.craftlink.backend.auth.application.port.usecase.RegisterClientUserUseCase;
 import com.craftlink.backend.shared.cookies.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -51,7 +51,6 @@ public class AuthController {
     return ResponseEntity.ok(response);
   }
 
-  //TODO: logout
 
   @GetMapping("/refresh-token")
   public ResponseEntity<AuthResponseDto> refreshToken(HttpServletRequest request) {

@@ -1,6 +1,5 @@
 package com.craftlink.backend.jobRequest.application.service;
 
-import com.craftlink.backend.auth.application.port.CurrentUserProvider;
 import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestCommand;
 import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
 import com.craftlink.backend.jobRequest.application.mapper.JobRequestDomainMapper;
@@ -14,6 +13,7 @@ import com.craftlink.backend.jobRequest.domain.model.vo.District;
 import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
 import com.craftlink.backend.service.domain.model.ServiceId;
+import com.craftlink.backend.shared.security.CurrentUserProvider;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

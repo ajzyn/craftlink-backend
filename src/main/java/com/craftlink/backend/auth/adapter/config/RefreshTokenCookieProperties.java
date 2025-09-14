@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-@ConfigurationProperties("auth.cookies.refresh-token")
+@ConfigurationProperties("auth.cookies.refresh-token") //TODO: change location of that
 public class RefreshTokenCookieProperties {
 
   private long expirationTimeInSeconds;
