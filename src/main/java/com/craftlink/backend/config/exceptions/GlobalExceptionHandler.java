@@ -31,14 +31,6 @@ public class GlobalExceptionHandler {
 
     logSecurityError(ex, request);
 
-    if (ex.getCode().isSafeForUser()) {
-      log.info("Security violation - Code: {}, Path: {}",
-          ex.getCode().getCode(), request.getRequestURI());
-    } else {
-      log.error("Internal security error - Code: {}, Path: {}",
-          ex.getCode().getCode(), request.getRequestURI());
-    }
-
     var response = ErrorResponseDto.builder()
         .error(ex.getCode().getUserCode())
         .message(ex.getCode().getUserMessage())
@@ -172,8 +164,8 @@ public class GlobalExceptionHandler {
     log.error("Database error - Path: {}, Error: {}", request.getRequestURI(), ex.getMessage(), ex);
 
     var response = ErrorResponseDto.builder()
-        .error("DATABASE_ERROR")
-        .message("Service temporarily unavailable")
+        .error("INTERNAL_SERVER_ERROR")
+        .message("An unexpected error occurred")
         .timestamp(LocalDateTime.now())
         .build();
 
