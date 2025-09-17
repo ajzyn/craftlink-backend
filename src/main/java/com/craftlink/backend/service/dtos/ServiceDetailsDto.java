@@ -1,6 +1,6 @@
 package com.craftlink.backend.service.dtos;
 
-import com.craftlink.backend.category.infrastructure.web.dto.CategoryBasicDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategoryBasicDto;
 import lombok.Getter;
 import lombok.Setter;
 

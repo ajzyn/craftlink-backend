@@ -1,6 +1,6 @@
 package com.craftlink.backend.category.application.port.out.write;
 
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import com.craftlink.backend.shared.enums.LifecycleStatus;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;

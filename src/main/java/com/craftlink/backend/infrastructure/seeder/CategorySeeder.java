@@ -1,10 +1,10 @@
 package com.craftlink.backend.infrastructure.seeder;
 
+import com.craftlink.backend.category.adapter.out.persistance.CategoryEntity;
+import com.craftlink.backend.category.adapter.out.persistance.CategoryImageEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.read.CategoryQueryRepositorySpringData;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.Status;
-import com.craftlink.backend.category.infrastructure.persistance.CategoryEntity;
-import com.craftlink.backend.category.infrastructure.persistance.CategoryImageEntity;
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
-import com.craftlink.backend.category.infrastructure.persistance.read.JpaCategoryQueryRepository;
 import com.craftlink.backend.service.repositories.ServiceRepository;
 import com.craftlink.backend.shared.enums.LifecycleStatus;
 import com.craftlink.backend.shared.utils.SlugUtils;
@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CategorySeeder implements CommandLineRunner {
 
-  private final JpaCategoryQueryRepository jpaCategoryQueryRepository;
+  private final CategoryQueryRepositorySpringData jpaCategoryQueryRepository;
   private final ServiceRepository serviceRepository;
 
   @Override

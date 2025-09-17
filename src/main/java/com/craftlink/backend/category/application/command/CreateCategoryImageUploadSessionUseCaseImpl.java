@@ -1,5 +1,6 @@
 package com.craftlink.backend.category.application.command;
 
+import com.craftlink.backend.category.adapter.config.CategoryImageUploadProperties;
 import com.craftlink.backend.category.application.port.in.command.createCategoryImageUploadSession.CreateCategoryImageUploadSessionCommand;
 import com.craftlink.backend.category.application.port.in.command.createCategoryImageUploadSession.CreateCategoryImageUploadSessionResult;
 import com.craftlink.backend.category.application.port.in.command.createCategoryImageUploadSession.CreateCategoryImageUploadSessionUseCase;
@@ -9,7 +10,6 @@ import com.craftlink.backend.category.domain.model.categoryImage.vo.ContentType;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileName;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
-import com.craftlink.backend.category.infrastructure.config.CategoryImageUploadProperties;
 import com.craftlink.backend.shared.security.CurrentUserProvider;
 import com.craftlink.backend.shared.storage.FileIdentityPort;
 import com.craftlink.backend.shared.storage.FileStoragePort;

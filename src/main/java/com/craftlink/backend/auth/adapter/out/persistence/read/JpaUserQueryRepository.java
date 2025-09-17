@@ -5,7 +5,7 @@ import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserA
 import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserView;
 import com.craftlink.backend.auth.application.port.out.read.UserQueryRepository;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import com.craftlink.backend.shared.vo.UserId;
 import java.util.Optional;
 import java.util.Set;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 public class JpaUserQueryRepository implements UserQueryRepository {
 
   private final UserQueryRepositorySpringData jpa;
+
+  //TODO: do projection directly from JPA
 
   @Override
   public Optional<UserView> findByEmail(Email email) {

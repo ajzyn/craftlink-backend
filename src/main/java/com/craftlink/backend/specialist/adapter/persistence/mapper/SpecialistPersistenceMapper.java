@@ -1,7 +1,7 @@
 package com.craftlink.backend.specialist.adapter.persistence.mapper;
 
 import com.craftlink.backend.auth.adapter.out.persistence.UserEntity;
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import com.craftlink.backend.shared.vo.UserId;
 import com.craftlink.backend.specialist.adapter.persistence.SpecialistEntity;
 import com.craftlink.backend.specialist.domain.model.Specialist;

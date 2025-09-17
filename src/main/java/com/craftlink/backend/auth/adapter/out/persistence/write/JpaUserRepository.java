@@ -1,7 +1,6 @@
 package com.craftlink.backend.auth.adapter.out.persistence.write;
 
 import com.craftlink.backend.auth.adapter.out.persistence.mapper.UserPersistenceMapper;
-import com.craftlink.backend.auth.adapter.out.persistence.read.AuthorityQueryRepositorySpringData;
 import com.craftlink.backend.auth.application.port.out.write.UserRepository;
 import com.craftlink.backend.auth.domain.model.user.User;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;

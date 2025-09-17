@@ -1,8 +1,8 @@
 package com.craftlink.backend.config.modelmapper;
 
-import com.craftlink.backend.category.infrastructure.persistance.CategoryEntity;
-import com.craftlink.backend.category.infrastructure.web.dto.CategoryBasicDto;
-import com.craftlink.backend.category.infrastructure.web.dto.CategoryDetailsDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategoryBasicDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategoryDetailsDto;
+import com.craftlink.backend.category.adapter.out.persistance.CategoryEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;

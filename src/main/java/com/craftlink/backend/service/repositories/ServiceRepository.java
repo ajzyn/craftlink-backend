@@ -1,6 +1,6 @@
 package com.craftlink.backend.service.repositories;
 
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

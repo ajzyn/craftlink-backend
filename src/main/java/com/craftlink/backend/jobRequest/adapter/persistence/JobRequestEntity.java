@@ -1,6 +1,6 @@
 package com.craftlink.backend.jobRequest.adapter.persistence;
 
-import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
+import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import com.craftlink.backend.client.adapter.persistence.ClientEntity;
 import com.craftlink.backend.jobRequest.domain.model.vo.DeadlineType;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
