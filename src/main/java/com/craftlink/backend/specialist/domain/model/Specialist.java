@@ -1,15 +1,14 @@
 package com.craftlink.backend.specialist.domain.model;
 
-import com.craftlink.backend.shared.domain.model.vo.AggregateRoot;
+import com.craftlink.backend.shared.vo.UserId;
 import com.craftlink.backend.specialist.domain.model.vo.ServiceId;
 import com.craftlink.backend.specialist.domain.model.vo.SpecialistId;
 import com.craftlink.backend.specialist.domain.model.vo.SpecialistType;
-import com.craftlink.backend.specialist.domain.model.vo.UserId;
 import java.util.Set;
 import lombok.Getter;
 
 @Getter
-public final class Specialist extends AggregateRoot {
+public final class Specialist {
 
   private final SpecialistId id;
   private final Set<ServiceId> serviceIds;

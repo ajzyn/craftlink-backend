@@ -1,6 +1,6 @@
 package com.craftlink.backend.jobRequest.domain.model.vo;
 
-import com.craftlink.backend.shared.exceptions.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
 import java.time.LocalDate;
 import java.util.Optional;
 

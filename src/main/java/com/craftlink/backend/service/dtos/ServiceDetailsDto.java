@@ -1,6 +1,6 @@
 package com.craftlink.backend.service.dtos;
 
-import com.craftlink.backend.category.dtos.CategoryBasicDto;
+import com.craftlink.backend.category.infrastructure.web.dto.CategoryBasicDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class ServiceDetailsDto extends ServiceBasicDto {
 
-    private CategoryBasicDto category;
+  private CategoryBasicDto category;
 }

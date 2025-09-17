@@ -9,7 +9,7 @@ import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestStatus;
 import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
-import com.craftlink.backend.service.domain.model.ServiceId;
+import com.craftlink.backend.jobRequest.domain.model.vo.ServiceId;
 import lombok.Getter;
 
 

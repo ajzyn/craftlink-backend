@@ -1,8 +1,8 @@
 package com.craftlink.backend.config.modelmapper;
 
-import com.craftlink.backend.category.dtos.CategoryBasicDto;
-import com.craftlink.backend.category.dtos.CategoryDetailsDto;
-import com.craftlink.backend.category.entities.CategoryEntity;
+import com.craftlink.backend.category.infrastructure.persistance.CategoryEntity;
+import com.craftlink.backend.category.infrastructure.web.dto.CategoryBasicDto;
+import com.craftlink.backend.category.infrastructure.web.dto.CategoryDetailsDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
@@ -12,24 +12,24 @@ import org.springframework.stereotype.Component;
 public class ModelMapperConfig {
 
 
-    @Bean
-    public ModelMapper modelMapper() {
-        var mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+  @Bean
+  public ModelMapper modelMapper() {
+    var mapper = new ModelMapper();
+    mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        configureCategoryMapper(mapper);
+    configureCategoryMapper(mapper);
 
-        mapper.validate();
-        return mapper;
-    }
+    mapper.validate();
+    return mapper;
+  }
 
 
-    private void configureCategoryMapper(ModelMapper mapper) {
+  private void configureCategoryMapper(ModelMapper mapper) {
 
-        mapper.createTypeMap(CategoryEntity.class, CategoryBasicDto.class)
-            .addMapping(src -> src.getImage().getImageKey(), CategoryBasicDto::setImageKey);
+    mapper.createTypeMap(CategoryEntity.class, CategoryBasicDto.class)
+        .addMapping(src -> src.getImage().getImageKey(), CategoryBasicDto::setImageKey);
 
-        mapper.createTypeMap(CategoryEntity.class, CategoryDetailsDto.class)
-            .addMapping(src -> src.getImage().getImageKey(), CategoryDetailsDto::setImageKey);
-    }
+    mapper.createTypeMap(CategoryEntity.class, CategoryDetailsDto.class)
+        .addMapping(src -> src.getImage().getImageKey(), CategoryDetailsDto::setImageKey);
+  }
 }

@@ -1,6 +1,6 @@
 package com.craftlink.backend.auth.domain.model.user.vo;
 
-import com.craftlink.backend.shared.exceptions.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
 import java.util.regex.Pattern;
 
 public record Email(String value) {

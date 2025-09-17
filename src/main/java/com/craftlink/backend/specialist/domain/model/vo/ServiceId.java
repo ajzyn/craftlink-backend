@@ -1,6 +1,6 @@
 package com.craftlink.backend.specialist.domain.model.vo;
 
-import com.craftlink.backend.shared.exceptions.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
 import java.util.Map;
 import java.util.UUID;
 

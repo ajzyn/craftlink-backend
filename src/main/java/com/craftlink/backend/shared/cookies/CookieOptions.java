@@ -7,12 +7,12 @@ import lombok.Value;
 @Builder
 public class CookieOptions {
 
-    String name;
-    String value;
-    long expirationTimeInSeconds;
-    String domain;
-    boolean isSecure;
-    String path;
-    boolean httpOnly;
-    String sameSite;
+  String name;
+  String value;
+  long expirationTimeInSeconds;
+  String domain;
+  boolean isSecure;
+  String path;
+  boolean httpOnly;
+  String sameSite;
 }

@@ -1,7 +1,7 @@
 package com.craftlink.backend.shared.cookies;
 
-import com.craftlink.backend.config.exceptions.custom.SecurityException;
-import com.craftlink.backend.config.exceptions.enums.ExceptionCode;
+import com.craftlink.backend.infrastructure.exceptions.custom.SecurityException;
+import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

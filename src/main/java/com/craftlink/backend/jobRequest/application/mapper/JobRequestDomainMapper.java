@@ -1,6 +1,6 @@
 package com.craftlink.backend.jobRequest.application.mapper;
 
-import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
+import com.craftlink.backend.jobRequest.application.port.usecase.createJobRequest.CreateJobRequestResult;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
 import com.craftlink.backend.jobRequest.domain.model.vo.City;
 import com.craftlink.backend.jobRequest.domain.model.vo.Deadline;
@@ -9,7 +9,7 @@ import com.craftlink.backend.jobRequest.domain.model.vo.District;
 import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
 import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
-import com.craftlink.backend.service.domain.model.ServiceId;
+import com.craftlink.backend.jobRequest.domain.model.vo.ServiceId;
 import java.time.LocalDate;
 import java.util.UUID;
 import org.mapstruct.Mapper;

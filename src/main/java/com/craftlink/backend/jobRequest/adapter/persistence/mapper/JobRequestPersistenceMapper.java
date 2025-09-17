@@ -1,5 +1,6 @@
 package com.craftlink.backend.jobRequest.adapter.persistence.mapper;
 
+import com.craftlink.backend.category.infrastructure.persistance.ServiceEntity;
 import com.craftlink.backend.client.adapter.persistence.ClientEntity;
 import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
@@ -10,8 +11,7 @@ import com.craftlink.backend.jobRequest.domain.model.vo.District;
 import com.craftlink.backend.jobRequest.domain.model.vo.ExactDate;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
 import com.craftlink.backend.jobRequest.domain.model.vo.RequesterId;
-import com.craftlink.backend.service.domain.model.ServiceId;
-import com.craftlink.backend.service.entities.ServiceEntity;
+import com.craftlink.backend.jobRequest.domain.model.vo.ServiceId;
 import java.util.Optional;
 import org.mapstruct.Mapper;
 

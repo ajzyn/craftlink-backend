@@ -2,8 +2,8 @@ package com.craftlink.backend.jobRequest.adapter.web.mapper;
 
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestRequestDto;
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestResponseDto;
-import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestCommand;
-import com.craftlink.backend.jobRequest.application.dto.CreateJobRequestResult;
+import com.craftlink.backend.jobRequest.application.port.usecase.createJobRequest.CreateJobRequestCommand;
+import com.craftlink.backend.jobRequest.application.port.usecase.createJobRequest.CreateJobRequestResult;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

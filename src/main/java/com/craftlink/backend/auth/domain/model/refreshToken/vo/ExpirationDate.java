@@ -1,6 +1,6 @@
 package com.craftlink.backend.auth.domain.model.refreshToken.vo;
 
-import com.craftlink.backend.shared.exceptions.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
 import java.time.Instant;
 
 public record ExpirationDate(Instant value) {

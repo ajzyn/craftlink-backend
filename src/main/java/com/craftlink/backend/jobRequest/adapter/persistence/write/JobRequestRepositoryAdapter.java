@@ -1,9 +1,9 @@
 package com.craftlink.backend.jobRequest.adapter.persistence.write;
 
 import com.craftlink.backend.jobRequest.adapter.persistence.mapper.JobRequestPersistenceMapper;
-import com.craftlink.backend.jobRequest.application.port.JobRequestRepository;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
 import com.craftlink.backend.jobRequest.domain.model.vo.JobRequestId;
+import com.craftlink.backend.jobRequest.domain.port.JobRequestRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

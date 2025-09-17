@@ -3,15 +3,14 @@ package com.craftlink.backend.auth.domain.model.user;
 import com.craftlink.backend.auth.domain.model.user.vo.AuthorityCode;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;
 import com.craftlink.backend.auth.domain.model.user.vo.Password;
-import com.craftlink.backend.auth.domain.model.user.vo.UserId;
 import com.craftlink.backend.auth.domain.model.user.vo.UserType;
 import com.craftlink.backend.auth.domain.model.user.vo.Username;
-import com.craftlink.backend.shared.domain.model.vo.AggregateRoot;
+import com.craftlink.backend.shared.vo.UserId;
 import java.util.Set;
 import lombok.Getter;
 
 @Getter
-public final class User extends AggregateRoot {
+public final class User {
 
   private final UserId id;
   //  private final PhoneNumber phoneNumber;
@@ -32,7 +31,7 @@ public final class User extends AggregateRoot {
     this.authorities = authorities;
   }
 
-  public static User registerSpecialist(Email email, Username username,
+  static User registerSpecialist(Email email, Username username,
       Password password, Set<AuthorityCode> authorities) {
     var id = UserId.newId();
 

@@ -1,51 +1,17 @@
 package com.craftlink.backend.auth.domain.model.security.vo;
 
-import lombok.Getter;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import org.apache.commons.lang3.StringUtils;
 
-/**
- * Value object representing a permission in the system.
- */
-@Getter
-public final class Permission {
+public record Permission(String value) {
 
-  private final String value;
-
-  private Permission(String value) {
-    this.value = value;
+  public Permission {
+    if (StringUtils.isBlank(value)) {
+      throw new DomainViolation("INVALID_PERMISSION", "Permission value cannot be null or blank");
+    }
   }
 
-  /**
-   * Creates a new Permission instance.
-   *
-   * @param value the permission value
-   * @return a new Permission instance
-   */
   public static Permission of(String value) {
-    if (value == null || value.isBlank()) {
-      throw new IllegalArgumentException("Permission value cannot be null or blank");
-    }
     return new Permission(value);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Permission that = (Permission) o;
-    return value.equals(that.value);
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value;
   }
 }

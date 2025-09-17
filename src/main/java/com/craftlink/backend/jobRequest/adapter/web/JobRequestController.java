@@ -3,7 +3,7 @@ package com.craftlink.backend.jobRequest.adapter.web;
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestRequestDto;
 import com.craftlink.backend.jobRequest.adapter.web.dto.CreateJobRequestResponseDto;
 import com.craftlink.backend.jobRequest.adapter.web.mapper.JobRequestWebMapper;
-import com.craftlink.backend.jobRequest.application.usecase.CreateJobRequestUseCase;
+import com.craftlink.backend.jobRequest.application.port.usecase.createJobRequest.CreateJobRequestUseCase;
 import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

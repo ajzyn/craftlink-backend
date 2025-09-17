@@ -1,0 +1,20 @@
+package com.craftlink.backend.shared.security;
+
+import com.craftlink.backend.auth.domain.model.security.vo.Permission;
+import com.craftlink.backend.auth.domain.model.security.vo.ResourceId;
+import com.craftlink.backend.auth.domain.model.security.vo.Role;
+import com.craftlink.backend.shared.vo.UserId;
+
+
+public interface AuthorizationService {
+
+  boolean hasPermission(UserId userId, Permission permission);
+
+  boolean hasRole(UserId userId, Role role);
+
+  boolean hasAccess(UserId userId, ResourceId resourceId, Permission permission);
+
+  boolean hasSpecialization(UserId userId, String specializationCode);
+
+  boolean hasAnySpecialization(UserId userId, String... specializationCodes);
+}

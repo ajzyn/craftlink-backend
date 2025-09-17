@@ -1,33 +1,20 @@
 package com.craftlink.backend.auth.domain.model.security.vo;
 
-import lombok.Getter;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import org.apache.commons.lang3.StringUtils;
 
+public record Credentials(String username, String password) {
 
-@Getter
-public final class Credentials {
-
-  private final String username;
-  private final String password;
-
-  private Credentials(String username, String password) {
-    this.username = username;
-    this.password = password;
+  public Credentials {
+    if (StringUtils.isBlank(username)) {
+      throw new DomainViolation("INVALID_USERNAME", "Username cannot be null or blank");
+    }
+    if (StringUtils.isBlank(password)) {
+      throw new DomainViolation("INVALID_PASSWORD", "Password cannot be null or blank");
+    }
   }
 
-  /**
-   * Creates a new Credentials instance.
-   *
-   * @param username the username (email)
-   * @param password the raw password
-   * @return a new Credentials instance
-   */
   public static Credentials of(String username, String password) {
-    if (username == null || username.isBlank()) {
-      throw new IllegalArgumentException("Username cannot be null or blank");
-    }
-    if (password == null || password.isBlank()) {
-      throw new IllegalArgumentException("Password cannot be null or blank");
-    }
     return new Credentials(username, password);
   }
 }

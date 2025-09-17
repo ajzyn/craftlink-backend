@@ -1,12 +1,12 @@
 package com.craftlink.backend.client.adapter.persistence.mapper;
 
-import com.craftlink.backend.auth.adapter.persistence.UserEntity;
+import com.craftlink.backend.auth.adapter.out.persistence.UserEntity;
 import com.craftlink.backend.client.adapter.persistence.ClientEntity;
 import com.craftlink.backend.client.domain.model.Client;
 import com.craftlink.backend.client.domain.model.vo.ClientId;
 import com.craftlink.backend.client.domain.model.vo.JobRequestId;
-import com.craftlink.backend.client.domain.model.vo.UserId;
 import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
+import com.craftlink.backend.shared.vo.UserId;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 
