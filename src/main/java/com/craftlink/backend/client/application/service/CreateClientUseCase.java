@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface CreateClientUseCase {
 
-  UUID handle(UUID userId);
+  void handle(UUID userId);
 }
