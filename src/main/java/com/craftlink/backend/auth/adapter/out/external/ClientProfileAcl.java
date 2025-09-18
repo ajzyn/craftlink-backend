@@ -14,6 +14,6 @@ public class ClientProfileAcl implements ClientProfilePort {
 
   @Override
   public void createClientForUser(UUID userId) {
-    return createClientUseCase.handle(userId);
+    createClientUseCase.handle(userId);
   }
 }

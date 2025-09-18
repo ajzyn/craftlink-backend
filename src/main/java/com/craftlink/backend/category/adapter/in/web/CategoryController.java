@@ -8,7 +8,8 @@ import com.craftlink.backend.category.adapter.in.web.mapper.CategoryWebMapper;
 import com.craftlink.backend.category.application.port.in.command.createCategoryImageUploadSession.CreateCategoryImageUploadSessionUseCase;
 import com.craftlink.backend.category.application.port.in.command.markCategoryImageCompleted.MarkCategoryImageUploadCompletedCommand;
 import com.craftlink.backend.category.application.port.in.command.markCategoryImageCompleted.MarkCategoryImageUploadCompletedUseCase;
-import com.craftlink.backend.category.services.CategoryService;
+import com.craftlink.backend.category.application.port.in.query.getCategoryDetails.GetCategoryDetailsUseCase;
+import com.craftlink.backend.category.application.port.in.query.getCategorySummaries.GetCategorySummariesUseCase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
@@ -28,20 +29,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/sec/categories")
 public class CategoryController {
 
-  private final CategoryService categoryService;
   private final CreateCategoryImageUploadSessionUseCase createUploadImageSession;
   private final MarkCategoryImageUploadCompletedUseCase markUploadCompleted;
+  //TODO: handle upload fail
+  private final GetCategoryDetailsUseCase getCategoryDetails;
+  private final GetCategorySummariesUseCase getCategorySummaries;
   private final CategoryWebMapper categoryWebMapper;
 
 
   @GetMapping
   public ResponseEntity<List<CategorySummaryDto>> getCategories() {
-    return ResponseEntity.ok(categoryService.getCategories());
+    var dto = categoryWebMapper.toDto(getCategorySummaries.handle());
+    return ResponseEntity.ok(dto);
   }
 
   @GetMapping("/{slug}")
   public ResponseEntity<CategoryDetailsDto> getCategoryWithServices(@PathVariable String slug) {
-    return ResponseEntity.ok(categoryService.getCategoryDetailsBySlug(slug));
+    var dto = categoryWebMapper.toDto(getCategoryDetails.handle(slug));
+    return ResponseEntity.ok(dto);
   }
 
   //TODO: add authorization check and create presignedULR to fetch image

@@ -1,7 +1,7 @@
 package com.craftlink.backend.specialist.application.public_.usecase;
 
+import com.craftlink.backend.shared.vo.UserId;
 import com.craftlink.backend.specialist.domain.model.Specialist;
-import com.craftlink.backend.specialist.domain.model.vo.UserId;
 import com.craftlink.backend.specialist.domain.port.SpecialistRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

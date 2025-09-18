@@ -22,6 +22,6 @@ public class JpaCategoryImageRepository implements CategoryImageRepository {
 
   @Override
   public Optional<CategoryImage> findByImageKey(ImageKey imageKey) {
-    return repository.findByImageKey(imageKey.value()).map(mapper::toDomain);
+    return repository.findByImageKey(imageKey.value()).map(CategoryImagePersistenceMapper::toDomain);
   }
 }
