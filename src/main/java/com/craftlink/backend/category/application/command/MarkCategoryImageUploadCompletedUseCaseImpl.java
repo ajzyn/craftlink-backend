@@ -4,7 +4,7 @@ import com.craftlink.backend.category.application.port.in.command.markCategoryIm
 import com.craftlink.backend.category.application.port.in.command.markCategoryImageCompleted.MarkCategoryImageUploadCompletedUseCase;
 import com.craftlink.backend.category.application.port.out.write.CategoryImageRepository;
 import com.craftlink.backend.category.domain.model.categoryImage.CategoryImage;
-import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
+import com.craftlink.backend.category.domain.model.categoryImage.vo.CategoryImageId;
 import com.craftlink.backend.infrastructure.exceptions.custom.BusinessException;
 import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,9 @@ public class MarkCategoryImageUploadCompletedUseCaseImpl implements MarkCategory
 
   @Override
   public void handle(MarkCategoryImageUploadCompletedCommand cmd) {
-    var imageKey = new ImageKey(cmd.imageKey());
+    var id = new CategoryImageId(cmd.id());
 
-    var categoryImage = categoryImageRepository.findByImageKey(imageKey).orElseThrow(() -> new BusinessException(
+    var categoryImage = categoryImageRepository.findById(id).orElseThrow(() -> new BusinessException(
         ExceptionCode.FAILED_COMPLETE_UPLOADING));
 
     CategoryImage completedImage = categoryImage.markAsCompleted();

@@ -4,8 +4,8 @@ import com.craftlink.backend.category.adapter.out.persistance.CategoryEntity;
 import com.craftlink.backend.category.adapter.out.persistance.CategoryImageEntity;
 import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
 import com.craftlink.backend.category.adapter.out.persistance.read.CategoryQueryRepositorySpringData;
+import com.craftlink.backend.category.adapter.out.persistance.read.ServiceQueryRepositorySpringData;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.Status;
-import com.craftlink.backend.service.repositories.ServiceRepository;
 import com.craftlink.backend.shared.enums.LifecycleStatus;
 import com.craftlink.backend.shared.utils.SlugUtils;
 import java.time.Instant;
@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategorySeeder implements CommandLineRunner {
 
   private final CategoryQueryRepositorySpringData jpaCategoryQueryRepository;
-  private final ServiceRepository serviceRepository;
+  private final ServiceQueryRepositorySpringData serviceRepository;
 
   @Override
   @Transactional
@@ -61,6 +61,7 @@ public class CategorySeeder implements CommandLineRunner {
 
   private CategoryEntity createCategory(CategoryData data) {
     var image = CategoryImageEntity.builder()
+        .id(UUID.randomUUID())
         .imageKey(data.imageKey())
         .originalFileName(data.imageKey())
         .imageStatus(Status.COMPLETED)
@@ -71,6 +72,7 @@ public class CategorySeeder implements CommandLineRunner {
         .build();
 
     CategoryEntity category = new CategoryEntity();
+    category.setId(data.id());
     category.setName(data.name());
     category.setSlug(data.slug());
     category.setDescription(data.description());
@@ -96,6 +98,7 @@ public class CategorySeeder implements CommandLineRunner {
   private List<CategoryData> getCategoriesData() {
     return List.of(
         new CategoryData(
+            UUID.randomUUID(),
             "Prace budowlane",
             "prace-budowlane",
             "Kompleksowe usługi budowlane - od fundamentów po wykończenie. Profesjonalni wykonawcy z wieloletnim doświadczeniem.",
@@ -121,6 +124,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Elektryka",
             "elektryka",
             "Profesjonalne usługi elektryczne - instalacje, naprawy, modernizacje. Bezpieczeństwo i jakość gwarantowana.",
@@ -146,6 +150,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Hydraulika",
             "hydraulika",
             "Kompleksowe usługi hydrauliczne - od drobnych napraw po kompletne instalacje. Szybko, solidnie, profesjonalnie.",
@@ -171,6 +176,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Wykończenia wnętrz",
             "wykończenia-wnetrz",
             "Profesjonalne wykończenia wnętrz - malowanie, gładzie, tapetowanie, układanie płytek. Perfekcyjne detale.",
@@ -196,6 +202,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Ogrodnictwo i zieleń",
             "ogrodnictwo",
             "Kompleksowa pielęgnacja ogrodów - projektowanie, sadzenie, pielęgnacja. Twój ogród marzeń na wyciągnięcie ręki.",
@@ -221,6 +228,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Stolarstwo i meble",
             "stolarstwo",
             "Precyzyjne usługi stolarskie - meble na wymiar, zabudowy, naprawy. Jakość drewna spotyka się z mistrzostwem.",
@@ -246,6 +254,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Czyszczenie i sprzątanie",
             "czyszczenie",
             "Profesjonalne usługi sprzątające - mieszkania, domy, biura. Czystość na najwyższym poziomie.",
@@ -271,6 +280,7 @@ public class CategorySeeder implements CommandLineRunner {
             )
         ),
         new CategoryData(
+            UUID.randomUUID(),
             "Transport i przeprowadzki",
             "transport",
             "Bezpieczny transport i profesjonalne przeprowadzki. Twoje rzeczy w dobrych rękach.",
@@ -300,6 +310,7 @@ public class CategorySeeder implements CommandLineRunner {
 
 
   private record CategoryData(
+      UUID id,
       String name,
       String slug,
       String description,

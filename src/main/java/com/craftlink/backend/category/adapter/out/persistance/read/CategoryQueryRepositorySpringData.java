@@ -20,10 +20,11 @@ public interface CategoryQueryRepositorySpringData extends JpaRepository<Categor
           c.slug,
           c.iconName,
           null,
-          c.image.imageKey,
+          i.imageKey,
           c.description
            )
        FROM CategoryEntity c
+       JOIN c.image i
        WHERE c.slug = :slug
       """)
   Optional<CategoryDetailsView> findBySlugWithImage(String slug);
@@ -35,6 +36,4 @@ public interface CategoryQueryRepositorySpringData extends JpaRepository<Categor
             FROM CategoryEntity c
       """)
   List<CategorySummaryView> findAllSummaries();
-
-
 }

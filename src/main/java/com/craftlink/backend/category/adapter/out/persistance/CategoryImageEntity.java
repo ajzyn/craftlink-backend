@@ -26,7 +26,10 @@ import lombok.Setter;
 public class CategoryImageEntity extends BaseEntity {
 
   @Id
-  @Column(nullable = false, unique = true, updatable = false)
+  @Column(updatable = false, nullable = false, unique = true)
+  private UUID id;
+
+  @Column(nullable = false)
   private String imageKey;
 
   @Column(nullable = false)

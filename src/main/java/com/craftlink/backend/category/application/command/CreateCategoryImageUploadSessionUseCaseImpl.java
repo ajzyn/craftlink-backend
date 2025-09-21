@@ -54,6 +54,7 @@ public class CreateCategoryImageUploadSessionUseCaseImpl implements CreateCatego
     categoryImageRepository.save(categoryImage);
 
     return new CreateCategoryImageUploadSessionResult(
+        categoryImage.getId().value(),
         presigned.presignedUrl(),
         presigned.imageKey(),
         presigned.expiresAt()

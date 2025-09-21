@@ -7,6 +7,7 @@ import com.craftlink.backend.jobRequest.application.port.usecase.createJobReques
 import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class JobRequestController {
   CreateJobRequestRequestDto requestDto) {
     var cmd = jobRequestWebMapper.toCommand(requestDto);
     var result = createJobRequestUseCase.handle(cmd);
-    return ResponseEntity.ok(jobRequestWebMapper.toResponse(result));
+    return ResponseEntity.status(HttpStatus.CREATED).body(jobRequestWebMapper.toResponse(result));
   }
 
   @GetMapping()

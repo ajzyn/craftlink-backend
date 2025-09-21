@@ -19,10 +19,11 @@ public class GetCategoryDetailsHandler implements GetCategoryDetailsUseCase {
 
   @Override
   public CategoryDetailsView handle(String slug) {
+    //TODO: consider to use only one projection
     var category = categoryQueryRepository.findBySlug(slug).orElseThrow(() -> new BusinessException(
         ExceptionCode.RESOURCE_NOT_FOUND));
 
-    var relatedServices = serviceQueryRepository.findActiveServicesByCategorySlug(slug);
+    var relatedServices = serviceQueryRepository.findActiveServiceSummariesByCategorySlug(slug);
 
     return new CategoryDetailsView(
         category.id(),

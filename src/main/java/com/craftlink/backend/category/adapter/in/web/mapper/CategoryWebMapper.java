@@ -1,7 +1,7 @@
 package com.craftlink.backend.category.adapter.in.web.mapper;
 
-import com.craftlink.backend.category.adapter.in.web.dto.CategoryDetailsDto;
-import com.craftlink.backend.category.adapter.in.web.dto.CategorySummaryDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategoryDetailsWithServicesResponseDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategorySummaryResponseDto;
 import com.craftlink.backend.category.adapter.in.web.dto.CreateCategoryImageUploadSessionRequestDto;
 import com.craftlink.backend.category.adapter.in.web.dto.CreateCategoryImageUploadSessionResponseDto;
 import com.craftlink.backend.category.application.port.in.command.createCategoryImageUploadSession.CreateCategoryImageUploadSessionCommand;
@@ -18,7 +18,7 @@ public interface CategoryWebMapper {
 
   CreateCategoryImageUploadSessionCommand toCommand(CreateCategoryImageUploadSessionRequestDto dto);
 
-  List<CategorySummaryDto> toDto(List<CategorySummaryView> category);
+  List<CategorySummaryResponseDto> toDto(List<CategorySummaryView> category);
 
-  CategoryDetailsDto toDto(CategoryDetailsView category);
+  CategoryDetailsWithServicesResponseDto toDto(CategoryDetailsView category);
 }

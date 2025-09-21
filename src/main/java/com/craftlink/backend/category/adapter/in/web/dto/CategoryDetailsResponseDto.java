@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryBasicDto extends CategorySummaryDto {
+public class CategoryDetailsResponseDto extends CategorySummaryResponseDto {
 
   private String imageKey;
   private String description;

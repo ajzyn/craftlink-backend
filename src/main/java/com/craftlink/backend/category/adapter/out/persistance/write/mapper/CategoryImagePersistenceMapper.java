@@ -2,6 +2,7 @@ package com.craftlink.backend.category.adapter.out.persistance.write.mapper;
 
 import com.craftlink.backend.category.adapter.out.persistance.CategoryImageEntity;
 import com.craftlink.backend.category.domain.model.categoryImage.CategoryImage;
+import com.craftlink.backend.category.domain.model.categoryImage.vo.CategoryImageId;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ContentType;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileName;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
@@ -17,6 +18,7 @@ public class CategoryImagePersistenceMapper {
 
   public CategoryImage toDomain(CategoryImageEntity e) {
     return CategoryImage.rehydrate(
+        new CategoryImageId(e.getId()),
         new ImageKey(e.getImageKey()),
         new FileName(e.getOriginalFileName()),
         new FileSize(e.getFileSize()),
@@ -29,6 +31,7 @@ public class CategoryImagePersistenceMapper {
 
   public CategoryImageEntity toEntity(CategoryImage d) {
     return CategoryImageEntity.builder()
+        .id(d.getId().value())
         .imageKey(d.getImageKey().value())
         .originalFileName(d.getFileName().value())
         .fileSize(d.getFileSize().value())

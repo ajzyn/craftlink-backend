@@ -40,7 +40,7 @@ public class CategoryEntity extends BaseEntity {
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<ServiceEntity> services = new HashSet<>();
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "image_id", nullable = false, unique = true)
   private CategoryImageEntity image;
 }

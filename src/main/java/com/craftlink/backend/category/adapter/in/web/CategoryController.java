@@ -1,7 +1,7 @@
 package com.craftlink.backend.category.adapter.in.web;
 
-import com.craftlink.backend.category.adapter.in.web.dto.CategoryDetailsDto;
-import com.craftlink.backend.category.adapter.in.web.dto.CategorySummaryDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategoryDetailsWithServicesResponseDto;
+import com.craftlink.backend.category.adapter.in.web.dto.CategorySummaryResponseDto;
 import com.craftlink.backend.category.adapter.in.web.dto.CreateCategoryImageUploadSessionRequestDto;
 import com.craftlink.backend.category.adapter.in.web.dto.CreateCategoryImageUploadSessionResponseDto;
 import com.craftlink.backend.category.adapter.in.web.mapper.CategoryWebMapper;
@@ -11,8 +11,8 @@ import com.craftlink.backend.category.application.port.in.command.markCategoryIm
 import com.craftlink.backend.category.application.port.in.query.getCategoryDetails.GetCategoryDetailsUseCase;
 import com.craftlink.backend.category.application.port.in.query.getCategorySummaries.GetCategorySummariesUseCase;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,14 +38,16 @@ public class CategoryController {
 
 
   @GetMapping
-  public ResponseEntity<List<CategorySummaryDto>> getCategories() {
+  public ResponseEntity<List<CategorySummaryResponseDto>> getCategories() {
     var dto = categoryWebMapper.toDto(getCategorySummaries.handle());
     return ResponseEntity.ok(dto);
   }
 
   @GetMapping("/{slug}")
-  public ResponseEntity<CategoryDetailsDto> getCategoryWithServices(@PathVariable String slug) {
-    var dto = categoryWebMapper.toDto(getCategoryDetails.handle(slug));
+  public ResponseEntity<CategoryDetailsWithServicesResponseDto> getCategoryWithServices(@PathVariable String slug) {
+    var response = getCategoryDetails.handle(slug);
+    var dto = categoryWebMapper.toDto(response);
+
     return ResponseEntity.ok(dto);
   }
 
@@ -58,8 +60,7 @@ public class CategoryController {
   }
 
   @PatchMapping("/image/{imageKey}/complete")
-  public ResponseEntity<HttpStatus> markUploadImageAsCompleted(@PathVariable @NotBlank
-  String imageKey) {
+  public ResponseEntity<HttpStatus> markUploadImageAsCompleted(@PathVariable UUID imageKey) {
     markUploadCompleted.handle(new MarkCategoryImageUploadCompletedCommand(imageKey));
 
     return ResponseEntity.noContent().build();

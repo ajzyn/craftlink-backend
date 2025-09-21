@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategorySummaryDto {
+public class CategorySummaryResponseDto {
 
   private UUID id;
   private String name;

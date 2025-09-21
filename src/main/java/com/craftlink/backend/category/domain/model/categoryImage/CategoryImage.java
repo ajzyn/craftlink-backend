@@ -1,5 +1,6 @@
 package com.craftlink.backend.category.domain.model.categoryImage;
 
+import com.craftlink.backend.category.domain.model.categoryImage.vo.CategoryImageId;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ContentType;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileName;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
@@ -14,6 +15,7 @@ import lombok.Getter;
 @Getter
 public class CategoryImage {
 
+  private final CategoryImageId id;
   private final ImageKey imageKey;
   private final FileName fileName;
   private final FileSize fileSize;
@@ -22,13 +24,16 @@ public class CategoryImage {
   private final Status status;
   private final UploadUpdatedAt uploadUpdatedAt;
 
-  private CategoryImage(ImageKey imageKey,
+  private CategoryImage(
+      CategoryImageId id,
+      ImageKey imageKey,
       FileName fileName,
       FileSize fileSize,
       ContentType contentType,
       UserId userId,
       Status status,
       UploadUpdatedAt uploadUpdatedAt) {
+    this.id = id;
     this.imageKey = imageKey;
     this.fileName = fileName;
     this.fileSize = fileSize;
@@ -48,7 +53,8 @@ public class CategoryImage {
       long maxSize) {
 
     validate(fileName, fileSize, contentType, allowedExtensions, allowedContentTypes, maxSize);
-    return new CategoryImage(imageKey, fileName, fileSize, contentType, userId, Status.UPLOADING, null);
+    return new CategoryImage(CategoryImageId.newId(), imageKey, fileName, fileSize, contentType, userId,
+        Status.UPLOADING, null);
   }
 
   private static void validate(FileName fileName,
@@ -68,21 +74,23 @@ public class CategoryImage {
     }
   }
 
-  public static CategoryImage rehydrate(ImageKey imageKey,
+  public static CategoryImage rehydrate(
+      CategoryImageId id,
+      ImageKey imageKey,
       FileName fileName,
       FileSize fileSize,
       ContentType contentType,
       UserId userId,
       Status status,
       UploadUpdatedAt uploadUpdatedAt) {
-    return new CategoryImage(imageKey, fileName, fileSize, contentType, userId, status, uploadUpdatedAt);
+    return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, status, uploadUpdatedAt);
   }
 
   public CategoryImage markAsCompleted() {
-    return new CategoryImage(imageKey, fileName, fileSize, contentType, userId, Status.COMPLETED, uploadUpdatedAt);
+    return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, Status.COMPLETED, uploadUpdatedAt);
   }
 
   public CategoryImage markAsFailed() {
-    return new CategoryImage(imageKey, fileName, fileSize, contentType, userId, Status.FAILED, uploadUpdatedAt);
+    return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, Status.FAILED, uploadUpdatedAt);
   }
 }
