@@ -18,7 +18,7 @@ public final class User {
   private final Username username;
   private final Password password;
   private final UserType userType;
-  private final Set<com.craftlink.backend.auth.domain.model.user.vo.AuthorityCode> authorities;
+  private final Set<AuthorityCode> authorities;
 
   private User(UserId id, Email email, Username username, Password password,
       UserType userType, Set<AuthorityCode> authorities) {

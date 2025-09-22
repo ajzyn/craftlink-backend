@@ -1,6 +1,6 @@
 package com.craftlink.backend.auth.domain.model.user.vo;
 
-import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
 import java.util.regex.Pattern;
 
 public record Email(String value) {
@@ -9,7 +9,7 @@ public record Email(String value) {
 
   public Email {
     if (!P.matcher(value).matches()) {
-      throw new DomainViolation("USER_EMAIL_INVALID", "Invalid email");
+      throw new DomainException("USER_EMAIL_INVALID", "Invalid email");
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.craftlink.backend.client.adapter.port.out.persistence;
 
 import com.craftlink.backend.auth.adapter.out.persistence.UserEntity;
-import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
+import com.craftlink.backend.jobRequest.adapter.port.out.persistence.JobRequestEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

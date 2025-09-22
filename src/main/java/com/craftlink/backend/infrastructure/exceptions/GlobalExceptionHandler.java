@@ -1,7 +1,8 @@
 package com.craftlink.backend.infrastructure.exceptions;
 
 import com.craftlink.backend.infrastructure.exceptions.custom.BusinessException;
-import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.ConfigurationException;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
 import com.craftlink.backend.infrastructure.exceptions.custom.InfrastructureException;
 import com.craftlink.backend.infrastructure.exceptions.custom.SecurityException;
 import com.craftlink.backend.infrastructure.exceptions.custom.ValidationException;
@@ -41,9 +42,9 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(ex.getCode().getHttpStatus()).body(response);
   }
 
-  @ExceptionHandler(DomainViolation.class)
+  @ExceptionHandler(DomainException.class)
   public ResponseEntity<ErrorResponseDto> handleDomainViolation(
-      DomainViolation ex, HttpServletRequest request) {
+      DomainException ex, HttpServletRequest request) {
 
     log.warn("Domain rule violated - Code: {}, Path: {}, Details: {}",
         ex.getCode(), request.getRequestURI(), ex.getDetails());
@@ -101,6 +102,23 @@ public class GlobalExceptionHandler {
         .message(ex.getCode().getUserMessage())
         .timestamp(LocalDateTime.now())
         .details(ex.getFieldErrors())
+        .build();
+
+    return ResponseEntity.status(ex.getCode().getHttpStatus()).body(response);
+  }
+
+
+  @ExceptionHandler(ConfigurationException.class)
+  public ResponseEntity<ErrorResponseDto> handleConfigurationException(
+      ConfigurationException ex, HttpServletRequest request) {
+
+    log.warn("Validation error - Code: {}, Path: {}",
+        ex.getCode().getCode(), request.getRequestURI());
+
+    var response = ErrorResponseDto.builder()
+        .error(ex.getCode().getUserCode())
+        .message(ex.getCode().getUserMessage())
+        .timestamp(LocalDateTime.now())
         .build();
 
     return ResponseEntity.status(ex.getCode().getHttpStatus()).body(response);

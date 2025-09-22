@@ -7,7 +7,7 @@ import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.Status;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.UploadUpdatedAt;
-import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
 import com.craftlink.backend.shared.vo.UserId;
 import java.util.List;
 import lombok.Getter;
@@ -64,13 +64,13 @@ public class CategoryImage {
       List<String> allowedContentTypes,
       long maxSize) {
     if (!allowedExtensions.contains(fileName.extension())) {
-      throw new DomainViolation("EXTENSION_NOT_ALLOWED", "Extension not allowed: " + fileName.extension());
+      throw new DomainException("EXTENSION_NOT_ALLOWED", "Extension not allowed: " + fileName.extension());
     }
     if (!allowedContentTypes.contains(contentType.value().toLowerCase())) {
-      throw new DomainViolation("CONTENT_TYPE_NOT_ALLOWED", "Content type not allowed: " + contentType.value());
+      throw new DomainException("CONTENT_TYPE_NOT_ALLOWED", "Content type not allowed: " + contentType.value());
     }
     if (fileSize.value() > maxSize) {
-      throw new DomainViolation("FILE_TOO_BIG", "File size exceeds " + maxSize + " bytes");
+      throw new DomainException("FILE_TOO_BIG", "File size exceeds " + maxSize + " bytes");
     }
   }
 

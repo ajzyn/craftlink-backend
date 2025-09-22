@@ -1,9 +1,9 @@
 package com.craftlink.backend.infrastructure.exceptions.custom;
 
 import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
+import lombok.Getter;
 
-
-//TODO: consider if it is necessary
+@Getter
 public class ConfigurationException extends RuntimeException {
 
   private final ExceptionCode code;

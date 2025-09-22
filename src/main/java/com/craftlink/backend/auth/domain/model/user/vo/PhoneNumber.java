@@ -1,6 +1,6 @@
 package com.craftlink.backend.auth.domain.model.user.vo;
 
-import com.craftlink.backend.infrastructure.exceptions.custom.DomainViolation;
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
 import java.util.regex.Pattern;
 
 public record PhoneNumber(String value) {
@@ -9,7 +9,7 @@ public record PhoneNumber(String value) {
 
   public PhoneNumber {
     if (!P.matcher(value).matches()) {
-      throw new DomainViolation("USER_PHONE_NUMBER_INVALID", "Invalid phone number");
+      throw new DomainException("USER_PHONE_NUMBER_INVALID", "Invalid phone number");
     }
   }
 }
