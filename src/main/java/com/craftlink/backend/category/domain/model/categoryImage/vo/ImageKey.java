@@ -1,0 +1,13 @@
+package com.craftlink.backend.category.domain.model.categoryImage.vo;
+
+import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
+import org.apache.commons.lang3.StringUtils;
+
+public record ImageKey(String value) {
+
+  public ImageKey {
+    if (StringUtils.isBlank(value)) {
+      throw new DomainException("INVALID_IMAGE_KEY", "Image Key value cannot be empty");
+    }
+  }
+}

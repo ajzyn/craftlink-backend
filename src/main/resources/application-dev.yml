@@ -5,16 +5,17 @@ app:
 
 auth:
   jwt:
-    expiration-time: 60000
     secret: ${JWT_ACCESS_TOKEN_SECRET}
-  cookies:
+    access-token:
+      expiration-seconds: 60
+  cookie:
     refresh-token:
-      expiration-time-in-seconds: 180000
+      expiration-seconds: 604800
       domain: localhost
-      path: /api/auth
-      httpOnly: true
-      isSecure: false
-      sameSite: strict
+      path: /
+      http-only: true
+      secure: false
+      same-site: Strict
 
 server:
   port: 8080
