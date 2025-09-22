@@ -57,7 +57,7 @@ public class UserEntity extends BaseEntity {
   @Column(nullable = false)
   private UserType userType;
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "user_authorities",
       joinColumns = @JoinColumn(name = "user_id"),

@@ -1,6 +1,7 @@
 package com.craftlink.backend.auth.adapter.out.persistence.read;
 
 import com.craftlink.backend.auth.adapter.out.persistence.AuthorityEntity;
+import com.craftlink.backend.auth.adapter.out.persistence.UserEntity;
 import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserAuthView;
 import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserView;
 import com.craftlink.backend.auth.application.port.out.read.UserQueryRepository;
@@ -18,8 +19,6 @@ import org.springframework.stereotype.Component;
 public class UserQueryRepositoryHandler implements UserQueryRepository {
 
   private final UserQueryRepositoryJpa jpa;
-
-  //TODO: do projection directly from JPA
 
   @Override
   public Optional<UserView> findByEmail(Email email) {
@@ -48,36 +47,31 @@ public class UserQueryRepositoryHandler implements UserQueryRepository {
   @Override
   public Optional<UserAuthView> findByEmailWithServices(Email email) {
     return jpa.findByEmailWithServices(email.value())
-        .map(user -> new UserAuthView(
-            user.getId(),
-            user.getClient() != null ? user.getClient().getId() : null,
-            user.getSpecialist() != null ? user.getSpecialist().getId() : null,
-            user.getEmail(),
-            user.getPassword(),
-            user.getUserType(),
-            user.getAuthorities().stream().map(AuthorityEntity::getCode).collect(Collectors.toSet()),
-            user.getSpecialist() != null && user.getSpecialist().getOfferedServices() != null
-                ? user.getSpecialist().getOfferedServices().stream().map(ServiceEntity::getSlug)
-                .collect(Collectors.toSet())
-                : Set.of()
-        ));
+        .map(this::toAuthView);
   }
 
   @Override
   public Optional<UserAuthView> findByIdWithServices(UserId id) {
     return jpa.findByIdWithServices(id.value())
-        .map(user -> new UserAuthView(
-            user.getId(),
-            user.getClient() != null ? user.getClient().getId() : null,
-            user.getSpecialist() != null ? user.getSpecialist().getId() : null,
-            user.getEmail(),
-            user.getPassword(),
-            user.getUserType(),
-            user.getAuthorities().stream().map(AuthorityEntity::getCode).collect(Collectors.toSet()),
-            user.getSpecialist() != null && user.getSpecialist().getOfferedServices() != null
-                ? user.getSpecialist().getOfferedServices().stream().map(ServiceEntity::getSlug)
-                .collect(Collectors.toSet())
-                : Set.of()
-        ));
+        .map(this::toAuthView);
+  }
+
+  private UserAuthView toAuthView(UserEntity user) {
+    return new UserAuthView(
+        user.getId(),
+        user.getClient() != null ? user.getClient().getId() : null,
+        user.getSpecialist() != null ? user.getSpecialist().getId() : null,
+        user.getEmail(),
+        user.getPassword(),
+        user.getUserType(),
+        user.getAuthorities().stream()
+            .map(AuthorityEntity::getCode)
+            .collect(Collectors.toSet()),
+        user.getSpecialist() != null && user.getSpecialist().getOfferedServices() != null
+            ? user.getSpecialist().getOfferedServices().stream()
+            .map(ServiceEntity::getSlug)
+            .collect(Collectors.toSet())
+            : Set.of()
+    );
   }
 }
