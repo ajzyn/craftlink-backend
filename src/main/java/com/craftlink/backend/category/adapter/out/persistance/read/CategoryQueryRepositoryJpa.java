@@ -1,11 +1,11 @@
 package com.craftlink.backend.category.adapter.out.persistance.read;
 
 import com.craftlink.backend.category.adapter.out.persistance.CategoryEntity;
-import com.craftlink.backend.category.application.port.in.query.getCategoryDetails.CategoryDetailsView;
 import com.craftlink.backend.category.application.port.in.query.getCategorySummaries.CategorySummaryView;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,21 +13,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryQueryRepositoryJpa extends JpaRepository<CategoryEntity, UUID> {
 
-  @Query("""
-      SELECT new com.craftlink.backend.category.application.port.in.query.getCategoryDetails.CategoryDetailsView(
-          c.id,
-          c.name,
-          c.slug,
-          c.iconName,
-          null,
-          i.imageKey,
-          c.description
-           )
-       FROM CategoryEntity c
-       JOIN c.image i
-       WHERE c.slug = :slug
-      """)
-  Optional<CategoryDetailsView> findBySlugWithImage(String slug);
+  @EntityGraph(attributePaths = {"services", "image"})
+  Optional<CategoryEntity> findBySlug(String slug);
 
   @Query("""
       SELECT new com.craftlink.backend.category.application.port.in.query.getCategorySummaries.CategorySummaryView(

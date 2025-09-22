@@ -14,10 +14,6 @@ public class ServiceQueryRepositoryHandler implements ServiceQueryRepository {
 
   private final ServiceQueryRepositoryJpa repository;
 
-  @Override
-  public Set<ServiceSummaryView> findActiveServiceSummariesByCategorySlug(String categorySlug) {
-    return repository.findActiveServiceSummariesByCategorySlug(categorySlug);
-  }
 
   @Override
   public Optional<ServiceDetailsView> findActiveServiceDetailsWithCategoryBySlug(String categorySlug) {

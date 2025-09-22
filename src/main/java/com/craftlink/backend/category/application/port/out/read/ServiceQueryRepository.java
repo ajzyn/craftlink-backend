@@ -7,8 +7,6 @@ import java.util.Set;
 
 public interface ServiceQueryRepository {
 
-  Set<ServiceSummaryView> findActiveServiceSummariesByCategorySlug(String categorySlug);
-
   Optional<ServiceDetailsView> findActiveServiceDetailsWithCategoryBySlug(String categorySlug);
 
   Set<ServiceSummaryView> findByNameContainingIgnoreCase(String searchPhrase);

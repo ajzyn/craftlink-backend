@@ -41,6 +41,6 @@ public class CategoryEntity extends BaseEntity {
   private Set<ServiceEntity> services = new HashSet<>();
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "image_id", nullable = false, unique = true)
+  @JoinColumn(name = "image_id", nullable = false)
   private CategoryImageEntity image;
 }

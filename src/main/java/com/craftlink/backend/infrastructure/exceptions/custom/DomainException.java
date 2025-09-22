@@ -4,7 +4,6 @@ import java.util.Map;
 import lombok.Getter;
 
 
-//TODO: make it more secure
 @Getter
 public final class DomainException extends RuntimeException {
 

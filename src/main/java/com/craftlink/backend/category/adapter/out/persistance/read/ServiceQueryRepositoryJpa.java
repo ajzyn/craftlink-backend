@@ -14,17 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface ServiceQueryRepositoryJpa extends JpaRepository<ServiceEntity, UUID> {
 
   @Query("""
-        SELECT new com.craftlink.backend.category.application.port.in.query.shared.ServiceSummaryView(
-          s.id,
-          s.name,
-          s.slug
-          )
-            FROM ServiceEntity s
-            WHERE s.category.slug = :categorySlug AND s.status = 'ACTIVE'
-      """)
-  Set<ServiceSummaryView> findActiveServiceSummariesByCategorySlug(String categorySlug);
-
-  @Query("""
         SELECT new com.craftlink.backend.category.application.port.in.query.getServiceDetails.ServiceDetailsView(
           s.id,
           s.name,

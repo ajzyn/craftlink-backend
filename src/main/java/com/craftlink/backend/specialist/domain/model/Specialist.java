@@ -12,7 +12,7 @@ public final class Specialist {
 
   private final SpecialistId id;
   private final Set<ServiceId> serviceIds;
-  private final SpecialistType specialistType; //TODO: handle it properly
+  private final SpecialistType specialistType;
   private final UserId userId;
 
   private Specialist(SpecialistId specialistId, Set<ServiceId> serviceIds, SpecialistType specialistType,
