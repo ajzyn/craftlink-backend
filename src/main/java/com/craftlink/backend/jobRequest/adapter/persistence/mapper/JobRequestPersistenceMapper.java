@@ -1,7 +1,7 @@
 package com.craftlink.backend.jobRequest.adapter.persistence.mapper;
 
 import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
-import com.craftlink.backend.client.adapter.persistence.ClientEntity;
+import com.craftlink.backend.client.adapter.port.out.persistence.ClientEntity;
 import com.craftlink.backend.jobRequest.adapter.persistence.JobRequestEntity;
 import com.craftlink.backend.jobRequest.domain.model.JobRequest;
 import com.craftlink.backend.jobRequest.domain.model.vo.City;
