@@ -32,7 +32,7 @@ public class RefreshTokenHandler implements RefreshTokenUseCase {
     var rt = repository.findByToken(new RefreshTokenValue(cmd.rawToken()))
         .orElseThrow(() -> new SecurityException(ExceptionCode.REFRESH_TOKEN_INVALID));
 
-    if (Instant.now().isAfter(rt.getExpirationDate().value())) {
+    if (rt.isActive(Instant.now())) {
       repository.delete(rt);
       throw new SecurityException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
     }
