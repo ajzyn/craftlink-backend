@@ -4,10 +4,8 @@ import com.craftlink.backend.category.domain.model.category.vo.CategoryDescripti
 import com.craftlink.backend.category.domain.model.category.vo.CategoryId;
 import com.craftlink.backend.category.domain.model.category.vo.CategoryName;
 import com.craftlink.backend.category.domain.model.category.vo.IconName;
-import com.craftlink.backend.category.domain.model.category.vo.ServiceId;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import lombok.Getter;
 
@@ -15,12 +13,21 @@ import lombok.Getter;
 public class Category {
 
   private final CategoryId id;
-  private final CategoryName name;
-  private final CategoryDescription description;
-  private final IconName iconName;
-  private final ImageKey imageId;
+  private Set<Service> services = new HashSet<>();
+  private CategoryName name;
+  private CategoryDescription description;
+  private IconName iconName;
+  private ImageKey imageId;
 
-  private final Set<Service> services = new HashSet<>();
+  private Category(CategoryId id, CategoryName name, CategoryDescription description,
+      IconName iconName, ImageKey imageId, Set<Service> services) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.iconName = iconName;
+    this.imageId = imageId;
+    this.services = new HashSet<>(services);
+  }
 
   private Category(CategoryId id, CategoryName name, CategoryDescription description,
       IconName iconName, ImageKey imageId) {
@@ -32,8 +39,8 @@ public class Category {
   }
 
   public static Category create(CategoryName name, CategoryDescription description,
-      IconName iconName, ImageKey imageId) {
-    return new Category(CategoryId.newId(), name, description, iconName, imageId);
+      IconName iconName, ImageKey imageId, Set<Service> services) {
+    return new Category(CategoryId.newId(), name, description, iconName, imageId, services);
   }
 
   public static Category rehydrate(CategoryId id, CategoryName name, CategoryDescription description,
@@ -50,7 +57,11 @@ public class Category {
     services.remove(service);
   }
 
-  public Optional<Service> findService(ServiceId serviceId) {
-    return services.stream().filter(s -> s.getId().equals(serviceId)).findFirst();
+  public void updateDetails(CategoryName name, CategoryDescription description, IconName iconName,
+      ImageKey imageId) {
+    this.name = name;
+    this.description = description;
+    this.iconName = iconName;
+    this.imageId = imageId;
   }
 }

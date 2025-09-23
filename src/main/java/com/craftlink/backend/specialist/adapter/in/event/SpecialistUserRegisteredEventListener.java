@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class UserRegisteredEventListener {
+class SpecialistUserRegisteredEventListener {
 
   private final CreateSpecialistProfileUseCase createClientProfileUseCase;
 

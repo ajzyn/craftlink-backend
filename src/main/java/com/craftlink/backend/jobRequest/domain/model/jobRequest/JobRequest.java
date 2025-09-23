@@ -19,13 +19,31 @@ public final class JobRequest {
   private final JobRequestId id;
   private final RequesterId requesterId;
   private final ServiceId serviceId;
-  private final JobRequestStatus status;
   private final DeadlineType deadlineType;
   private final Deadline deadline;
   private final Description description;
   private final City city;
   private final District district;
   private final ExactDate exactDate;
+  private JobRequestStatus status = JobRequestStatus.ACTIVE;
+  //TODO: add photos and consider if I want to allow to allow editing job requests or force user to recreate it
+
+  private JobRequest(
+      JobRequestId id, RequesterId requesterId,
+      ServiceId serviceId, DeadlineType deadlineType, Deadline deadline,
+      Description description,
+      City city, District district, ExactDate exactDate) {
+
+    this.id = id;
+    this.requesterId = requesterId;
+    this.serviceId = serviceId;
+    this.deadlineType = deadlineType;
+    this.deadline = deadline;
+    this.description = description;
+    this.city = city;
+    this.district = district;
+    this.exactDate = exactDate;
+  }
 
   private JobRequest(
       JobRequestId id, RequesterId requesterId,
@@ -56,10 +74,9 @@ public final class JobRequest {
       ExactDate exactDate
   ) {
     JobRequestId id = JobRequestId.newId();
-    JobRequestStatus status = JobRequestStatus.ACTIVE;
 
     return new JobRequest(
-        id, requesterId, serviceId, status, deadlineType,
+        id, requesterId, serviceId, deadlineType,
         deadline, description, city, district, exactDate
     );
   }
@@ -79,5 +96,17 @@ public final class JobRequest {
         id, requesterId, serviceId, status, deadlineType,
         deadlineDate, description, city, district, exactDate
     );
+  }
+
+  public void take() {
+    this.status = JobRequestStatus.TAKEN;
+  }
+
+  public void complete() {
+    this.status = JobRequestStatus.COMPLETED;
+  }
+
+  public void cancel() {
+    this.status = JobRequestStatus.CANCELLED;
   }
 }

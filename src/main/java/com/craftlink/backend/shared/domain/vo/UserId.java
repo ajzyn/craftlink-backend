@@ -8,8 +8,8 @@ public record UserId(UUID value) {
 
   public UserId {
     if (value == null) {
-      throw new DomainException("INCORRECT_REFRESH_TOKEN_ID",
-          "Incorrect refresh token id",
+      throw new DomainException("INCORRECT_USER_ID",
+          "Incorrect User id",
           Map.of("value", "null"));
     }
   }

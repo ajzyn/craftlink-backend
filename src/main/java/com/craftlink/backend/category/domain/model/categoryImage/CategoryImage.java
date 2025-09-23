@@ -21,8 +21,23 @@ public class CategoryImage {
   private final FileSize fileSize;
   private final ContentType contentType;
   private final UserId userId;
-  private final Status status;
-  private final UploadUpdatedAt uploadUpdatedAt;
+  private UploadUpdatedAt uploadUpdatedAt;
+  private Status status = Status.UPLOADING;
+
+  private CategoryImage(
+      CategoryImageId id,
+      ImageKey imageKey,
+      FileName fileName,
+      FileSize fileSize,
+      ContentType contentType,
+      UserId userId) {
+    this.id = id;
+    this.imageKey = imageKey;
+    this.fileName = fileName;
+    this.fileSize = fileSize;
+    this.contentType = contentType;
+    this.userId = userId;
+  }
 
   private CategoryImage(
       CategoryImageId id,
@@ -53,8 +68,7 @@ public class CategoryImage {
       long maxSize) {
 
     validate(fileName, fileSize, contentType, allowedExtensions, allowedContentTypes, maxSize);
-    return new CategoryImage(CategoryImageId.newId(), imageKey, fileName, fileSize, contentType, userId,
-        Status.UPLOADING, null);
+    return new CategoryImage(CategoryImageId.newId(), imageKey, fileName, fileSize, contentType, userId);
   }
 
   private static void validate(FileName fileName,
@@ -86,11 +100,13 @@ public class CategoryImage {
     return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, status, uploadUpdatedAt);
   }
 
-  public CategoryImage markAsCompleted() {
-    return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, Status.COMPLETED, uploadUpdatedAt);
+  public void markAsCompleted(UploadUpdatedAt updatedAt) {
+    this.status = Status.COMPLETED;
+    this.uploadUpdatedAt = updatedAt;
   }
 
-  public CategoryImage markAsFailed() {
-    return new CategoryImage(id, imageKey, fileName, fileSize, contentType, userId, Status.FAILED, uploadUpdatedAt);
+  public void markAsFailed(UploadUpdatedAt updatedAt) {
+    this.status = Status.COMPLETED;
+    this.uploadUpdatedAt = updatedAt;
   }
 }

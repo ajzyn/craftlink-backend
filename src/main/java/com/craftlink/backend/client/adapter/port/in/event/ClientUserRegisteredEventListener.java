@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserRegisteredEventListener {
+public class ClientUserRegisteredEventListener {
 
   private final CreateClientProfileUseCase createClientProfile;
 

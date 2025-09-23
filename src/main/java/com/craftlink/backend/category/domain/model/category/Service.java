@@ -10,9 +10,9 @@ import lombok.Getter;
 public class Service {
 
   private final ServiceId id;
-  private final ServiceName name;
-  private final ServiceDescription description;
-  private final LifecycleStatus status;
+  private ServiceName name;
+  private ServiceDescription description;
+  private LifecycleStatus status;
 
   private Service(ServiceId id, ServiceName name, ServiceDescription description, LifecycleStatus status) {
     this.id = id;
@@ -30,11 +30,20 @@ public class Service {
     return new Service(id, name, description, status);
   }
 
-  public Service activate() {
-    return new Service(id, name, description, LifecycleStatus.ACTIVE);
+  public void updateDetails(ServiceName name, ServiceDescription description) {
+    this.name = name;
+    this.description = description;
   }
 
-  public Service deactivate() {
-    return new Service(id, name, description, LifecycleStatus.INACTIVE);
+  public void active() {
+    this.status = LifecycleStatus.ACTIVE;
+  }
+
+  public void inactive() {
+    this.status = LifecycleStatus.INACTIVE;
+  }
+
+  public void remove() {
+    this.status = LifecycleStatus.DELETED;
   }
 }
