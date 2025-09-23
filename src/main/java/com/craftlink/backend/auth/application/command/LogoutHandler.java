@@ -5,9 +5,9 @@ import com.craftlink.backend.auth.application.port.in.command.logout.LogoutUseCa
 import com.craftlink.backend.auth.application.port.out.write.RefreshTokenRepository;
 import com.craftlink.backend.auth.domain.events.UserLoggedOutEvent;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenValue;
+import com.craftlink.backend.shared.application.port.out.DomainEventPublisher;
 import com.craftlink.backend.shared.security.CurrentUserProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LogoutHandler implements LogoutUseCase {
 
   private final RefreshTokenRepository refreshTokenRepository;
-  private final ApplicationEventPublisher eventPublisher;
+  private final DomainEventPublisher eventPublisher;
   private final CurrentUserProvider currentUserProvider;
 
 
@@ -25,6 +25,6 @@ public class LogoutHandler implements LogoutUseCase {
   public void handle(LogoutCommand cmd) {
     refreshTokenRepository.deleteByToken(new RefreshTokenValue(cmd.rawToken()));
 
-    eventPublisher.publishEvent(new UserLoggedOutEvent(cmd.rawToken(), currentUserProvider.getCurrentUser().userId()));
+    eventPublisher.publish(new UserLoggedOutEvent(cmd.rawToken(), currentUserProvider.getCurrentUser().userId()));
   }
 }

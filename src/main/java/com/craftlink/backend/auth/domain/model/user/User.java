@@ -5,7 +5,7 @@ import com.craftlink.backend.auth.domain.model.user.vo.Email;
 import com.craftlink.backend.auth.domain.model.user.vo.Password;
 import com.craftlink.backend.auth.domain.model.user.vo.UserType;
 import com.craftlink.backend.auth.domain.model.user.vo.Username;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Set;
 import lombok.Getter;
 
@@ -31,27 +31,12 @@ public final class User {
     this.authorities = authorities;
   }
 
-  static User registerSpecialist(Email email, Username username,
-      Password password, Set<AuthorityCode> authorities) {
+  public static User register(Email email, Username username,
+      Password password, UserType userType, Set<AuthorityCode> authorities) {
     var id = UserId.newId();
 
     return new User(id, email, username, password,
-        UserType.SPECIALIST, authorities);
-  }
-
-  public static User registerClient(Email email, Username username,
-      Password password, Set<AuthorityCode> authorities) {
-    var id = UserId.newId();
-
-    return new User(id, email, username, password,
-        UserType.CLIENT, authorities);
-  }
-
-
-  public static User createAdmin(UserId id, Email email, Username username,
-      Password password, Set<AuthorityCode> authorities) {
-    return new User(id, email, username, password,
-        UserType.ADMIN, authorities);
+        userType, authorities);
   }
 
   public static User rehydrate(UserId id, Email email, Username username, Password password,

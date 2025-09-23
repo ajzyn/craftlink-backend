@@ -4,7 +4,7 @@ import com.craftlink.backend.auth.adapter.out.persistence.mapper.RefreshTokenPer
 import com.craftlink.backend.auth.application.port.out.write.RefreshTokenRepository;
 import com.craftlink.backend.auth.domain.model.refreshToken.RefreshToken;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenValue;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

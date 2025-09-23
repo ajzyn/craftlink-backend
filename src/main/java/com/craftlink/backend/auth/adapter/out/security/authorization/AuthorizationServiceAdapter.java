@@ -4,8 +4,8 @@ import com.craftlink.backend.auth.application.port.out.read.UserQueryRepository;
 import com.craftlink.backend.auth.domain.model.security.vo.Permission;
 import com.craftlink.backend.auth.domain.model.security.vo.ResourceId;
 import com.craftlink.backend.auth.domain.model.security.vo.Role;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import com.craftlink.backend.shared.security.AuthorizationService;
-import com.craftlink.backend.shared.vo.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

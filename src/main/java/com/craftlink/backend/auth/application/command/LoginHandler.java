@@ -15,11 +15,11 @@ import com.craftlink.backend.auth.domain.model.security.vo.Credentials;
 import com.craftlink.backend.infrastructure.config.RefreshTokenCookieProperties;
 import com.craftlink.backend.infrastructure.exceptions.custom.SecurityException;
 import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.application.port.out.DomainEventPublisher;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ public class LoginHandler implements LoginUseCase {
 
   private final AuthenticationService authenticationService;
   private final AccessTokenGenerator accessTokenGenerator;
-  private final ApplicationEventPublisher eventPublisher;
+  private final DomainEventPublisher eventPublisher;
   private final RefreshTokenGenerator refreshTokenGenerator;
   private final RefreshTokenCookieProperties refreshTokenCookieProperties;
   private final RefreshTokenRepository refreshTokenRepository;
@@ -60,7 +60,7 @@ public class LoginHandler implements LoginUseCase {
 
     var savedRefreshToken = refreshTokenRepository.save(refreshToken);
 
-    eventPublisher.publishEvent(
+    eventPublisher.publish(
         new UserLoggedInEvent(authResult.userId(), authResult.username(), savedRefreshToken.getToken().value(),
             Instant.now()));
 

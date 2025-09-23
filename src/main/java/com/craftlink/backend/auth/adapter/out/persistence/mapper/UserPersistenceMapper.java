@@ -6,7 +6,7 @@ import com.craftlink.backend.auth.domain.model.user.vo.AuthorityCode;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;
 import com.craftlink.backend.auth.domain.model.user.vo.Password;
 import com.craftlink.backend.auth.domain.model.user.vo.Username;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 

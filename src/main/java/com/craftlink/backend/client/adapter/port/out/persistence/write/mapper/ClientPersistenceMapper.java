@@ -6,7 +6,7 @@ import com.craftlink.backend.client.domain.model.client.Client;
 import com.craftlink.backend.client.domain.model.client.vo.ClientId;
 import com.craftlink.backend.client.domain.model.client.vo.JobRequestId;
 import com.craftlink.backend.jobRequest.adapter.port.out.persistence.JobRequestEntity;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 

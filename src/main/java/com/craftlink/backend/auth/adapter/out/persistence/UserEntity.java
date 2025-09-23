@@ -3,7 +3,7 @@ package com.craftlink.backend.auth.adapter.out.persistence;
 import com.craftlink.backend.auth.domain.model.user.vo.UserType;
 import com.craftlink.backend.client.adapter.port.out.persistence.ClientEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
-import com.craftlink.backend.specialist.adapter.persistence.SpecialistEntity;
+import com.craftlink.backend.specialist.adapter.out.persistence.SpecialistEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

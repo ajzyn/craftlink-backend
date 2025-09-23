@@ -10,11 +10,11 @@ import com.craftlink.backend.category.domain.model.categoryImage.vo.ContentType;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileName;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import com.craftlink.backend.shared.security.CurrentUserProvider;
 import com.craftlink.backend.shared.storage.FileIdentityPort;
 import com.craftlink.backend.shared.storage.FileStoragePort;
 import com.craftlink.backend.shared.storage.PresignedUrlRequest;
-import com.craftlink.backend.shared.vo.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

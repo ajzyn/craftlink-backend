@@ -9,7 +9,7 @@ import com.craftlink.backend.category.domain.model.categoryImage.vo.FileSize;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.ImageKey;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.Status;
 import com.craftlink.backend.category.domain.model.categoryImage.vo.UploadUpdatedAt;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 

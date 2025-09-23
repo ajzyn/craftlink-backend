@@ -4,7 +4,7 @@ package com.craftlink.backend.category.adapter.out.persistance;
 import com.craftlink.backend.jobRequest.adapter.port.out.persistence.JobRequestEntity;
 import com.craftlink.backend.shared.entities.BaseEntity;
 import com.craftlink.backend.shared.enums.LifecycleStatus;
-import com.craftlink.backend.specialist.adapter.persistence.SpecialistEntity;
+import com.craftlink.backend.specialist.adapter.out.persistence.SpecialistEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

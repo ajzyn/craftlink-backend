@@ -9,7 +9,7 @@ import com.craftlink.backend.auth.application.port.in.command.logout.LogoutComma
 import com.craftlink.backend.auth.application.port.in.command.logout.LogoutUseCase;
 import com.craftlink.backend.auth.application.port.in.command.refreshToken.RefreshTokenCommand;
 import com.craftlink.backend.auth.application.port.in.command.refreshToken.RefreshTokenUseCase;
-import com.craftlink.backend.auth.application.port.in.command.register.RegisterClientUserUseCase;
+import com.craftlink.backend.auth.application.port.in.command.register.RegisterUserUseCase;
 import com.craftlink.backend.infrastructure.exceptions.custom.SecurityException;
 import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
 import com.craftlink.backend.shared.cookies.CookieNames;
@@ -31,23 +31,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   private final LoginUseCase loginUseCase;
-  private final RegisterClientUserUseCase registerClientUserUseCase;
+  private final RegisterUserUseCase registerUserUseCase;
   private final RefreshTokenUseCase refreshTokenUseCase;
   private final LogoutUseCase logoutUseCase;
   private final AuthWebMapper mapper;
 
-  @PostMapping("/register-client")
-  public ResponseEntity<HttpStatus> registerClient(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+  @PostMapping("/register")
+  public ResponseEntity<HttpStatus> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
     var cmd = mapper.toCommand(registerRequestDto);
-    registerClientUserUseCase.handle(cmd);
+    registerUserUseCase.handle(cmd);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
-
-//  @PostMapping("/register-specialist")
-//  public ResponseEntity<HttpStatus> registerSpecialist(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-//    return ResponseEntity.status(HttpStatus.CREATED).build();
-//  }
 
   @PostMapping("/login")
   public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {

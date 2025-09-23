@@ -2,7 +2,7 @@ package com.craftlink.backend.client.domain.model.client;
 
 import com.craftlink.backend.client.domain.model.client.vo.ClientId;
 import com.craftlink.backend.client.domain.model.client.vo.JobRequestId;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Set;
 import lombok.Getter;
 

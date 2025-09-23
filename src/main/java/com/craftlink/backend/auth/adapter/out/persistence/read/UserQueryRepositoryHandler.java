@@ -7,7 +7,7 @@ import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserV
 import com.craftlink.backend.auth.application.port.out.read.UserQueryRepository;
 import com.craftlink.backend.auth.domain.model.user.vo.Email;
 import com.craftlink.backend.category.adapter.out.persistance.ServiceEntity;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;

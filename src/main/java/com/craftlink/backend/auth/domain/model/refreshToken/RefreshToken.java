@@ -3,7 +3,7 @@ package com.craftlink.backend.auth.domain.model.refreshToken;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.ExpirationDate;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenId;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenValue;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.time.Instant;
 import lombok.Getter;
 

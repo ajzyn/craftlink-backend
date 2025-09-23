@@ -2,7 +2,7 @@ package com.craftlink.backend.auth.application.port.out.write;
 
 import com.craftlink.backend.auth.domain.model.refreshToken.RefreshToken;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.RefreshTokenValue;
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Optional;
 
 public interface RefreshTokenRepository {

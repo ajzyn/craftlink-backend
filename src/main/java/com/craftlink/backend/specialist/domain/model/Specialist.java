@@ -1,6 +1,6 @@
 package com.craftlink.backend.specialist.domain.model;
 
-import com.craftlink.backend.shared.vo.UserId;
+import com.craftlink.backend.shared.domain.vo.UserId;
 import com.craftlink.backend.specialist.domain.model.vo.ServiceId;
 import com.craftlink.backend.specialist.domain.model.vo.SpecialistId;
 import com.craftlink.backend.specialist.domain.model.vo.SpecialistType;
@@ -24,7 +24,7 @@ public final class Specialist {
   }
 
   public static Specialist create(UserId userId) {
-    return new Specialist(SpecialistId.newId(), Set.of(), SpecialistType.INDIVIDUAL, userId);
+    return new Specialist(SpecialistId.newId(), Set.of(), null, userId);
   }
 
 
