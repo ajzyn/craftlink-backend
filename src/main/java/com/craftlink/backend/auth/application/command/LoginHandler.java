@@ -2,7 +2,7 @@ package com.craftlink.backend.auth.application.command;
 
 import com.craftlink.backend.auth.application.port.in.command.login.LoginCommand;
 import com.craftlink.backend.auth.application.port.in.command.login.LoginUseCase;
-import com.craftlink.backend.auth.application.port.in.command.shared.AuthResult;
+import com.craftlink.backend.auth.application.port.in.command.shared.LoginResult;
 import com.craftlink.backend.auth.application.port.in.query.getUserProfile.UserView;
 import com.craftlink.backend.auth.application.port.out.security.AccessTokenGenerator;
 import com.craftlink.backend.auth.application.port.out.security.AuthenticationService;
@@ -11,11 +11,11 @@ import com.craftlink.backend.auth.application.port.out.write.RefreshTokenReposit
 import com.craftlink.backend.auth.domain.events.UserLoggedInEvent;
 import com.craftlink.backend.auth.domain.model.refreshToken.RefreshToken;
 import com.craftlink.backend.auth.domain.model.refreshToken.vo.ExpirationDate;
-import com.craftlink.backend.auth.domain.model.security.vo.Credentials;
 import com.craftlink.backend.infrastructure.config.RefreshTokenCookieProperties;
 import com.craftlink.backend.infrastructure.exceptions.custom.SecurityException;
 import com.craftlink.backend.infrastructure.exceptions.enums.ExceptionCode;
 import com.craftlink.backend.shared.application.port.out.DomainEventPublisher;
+import com.craftlink.backend.shared.domain.vo.Credentials;
 import com.craftlink.backend.shared.domain.vo.UserId;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +36,7 @@ public class LoginHandler implements LoginUseCase {
 
   @Override
   @Transactional
-  public AuthResult handle(LoginCommand cmd) {
+  public LoginResult handle(LoginCommand cmd) {
     var authResult = authenticationService.authenticate(Credentials.of(cmd.email(), cmd.password()));
 
     if (!authResult.authenticated()) {
@@ -64,6 +64,6 @@ public class LoginHandler implements LoginUseCase {
         new UserLoggedInEvent(authResult.userId(), authResult.username(), savedRefreshToken.getToken().value(),
             Instant.now()));
 
-    return new AuthResult(accessToken);
+    return new LoginResult(accessToken);
   }
 }

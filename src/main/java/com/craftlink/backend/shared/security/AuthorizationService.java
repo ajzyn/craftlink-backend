@@ -1,8 +1,8 @@
 package com.craftlink.backend.shared.security;
 
-import com.craftlink.backend.auth.domain.model.security.vo.Permission;
-import com.craftlink.backend.auth.domain.model.security.vo.ResourceId;
-import com.craftlink.backend.auth.domain.model.security.vo.Role;
+import com.craftlink.backend.shared.domain.vo.Permission;
+import com.craftlink.backend.shared.domain.vo.ResourceId;
+import com.craftlink.backend.shared.domain.vo.Role;
 import com.craftlink.backend.shared.domain.vo.UserId;
 
 

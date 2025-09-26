@@ -2,7 +2,7 @@ package com.craftlink.backend.auth.application.command;
 
 import com.craftlink.backend.auth.application.port.in.command.refreshToken.RefreshTokenCommand;
 import com.craftlink.backend.auth.application.port.in.command.refreshToken.RefreshTokenUseCase;
-import com.craftlink.backend.auth.application.port.in.command.shared.AuthResult;
+import com.craftlink.backend.auth.application.port.in.command.shared.LoginResult;
 import com.craftlink.backend.auth.application.port.out.read.UserQueryRepository;
 import com.craftlink.backend.auth.application.port.out.security.AccessTokenGenerator;
 import com.craftlink.backend.auth.application.port.out.write.RefreshTokenRepository;
@@ -24,7 +24,7 @@ public class RefreshTokenHandler implements RefreshTokenUseCase {
   private final UserQueryRepository userQueryRepository;
 
   @Transactional
-  public AuthResult handle(RefreshTokenCommand cmd) {
+  public LoginResult handle(RefreshTokenCommand cmd) {
     if (StringUtils.isBlank(cmd.rawToken())) {
       throw new SecurityException(ExceptionCode.REFRESH_TOKEN_INVALID);
     }
@@ -40,6 +40,6 @@ public class RefreshTokenHandler implements RefreshTokenUseCase {
     var userSnapshot = userQueryRepository.findById(rt.getUserId())
         .orElseThrow(() -> new SecurityException(ExceptionCode.USER_NOT_FOUND));
 
-    return new AuthResult(accessTokenGenerator.generateAccessToken(userSnapshot));
+    return new LoginResult(accessTokenGenerator.generateAccessToken(userSnapshot));
   }
 }

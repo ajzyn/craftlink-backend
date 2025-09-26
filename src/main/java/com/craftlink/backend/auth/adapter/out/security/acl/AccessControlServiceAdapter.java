@@ -1,8 +1,8 @@
 package com.craftlink.backend.auth.adapter.out.security.acl;
 
 import com.craftlink.backend.auth.application.port.out.security.AccessControlService;
-import com.craftlink.backend.auth.domain.model.security.vo.Permission;
-import com.craftlink.backend.auth.domain.model.security.vo.ResourceId;
+import com.craftlink.backend.shared.domain.vo.Permission;
+import com.craftlink.backend.shared.domain.vo.ResourceId;
 import com.craftlink.backend.shared.domain.vo.UserId;
 import java.util.Map;
 import java.util.Set;

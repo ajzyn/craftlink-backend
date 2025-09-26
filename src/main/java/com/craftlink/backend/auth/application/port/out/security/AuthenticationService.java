@@ -1,7 +1,6 @@
 package com.craftlink.backend.auth.application.port.out.security;
 
-import com.craftlink.backend.auth.domain.model.security.vo.AuthenticationResult;
-import com.craftlink.backend.auth.domain.model.security.vo.Credentials;
+import com.craftlink.backend.shared.domain.vo.Credentials;
 
 public interface AuthenticationService {
 

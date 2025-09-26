@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "specialists")
@@ -29,12 +28,22 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user", "offeredServices"})
 public class SpecialistEntity extends BaseEntity {
 
   @Id
   @Column(updatable = false, nullable = false)
   private UUID id;
+
+  private String fullName;
+  private String phoneNumber;
+  private String location;
+
+  @Column(length = 1000)
+  private String bio;
+  private String profilePhotoUrl;
+  private Integer yearsOfExperience;
+  private boolean verified;
+
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)

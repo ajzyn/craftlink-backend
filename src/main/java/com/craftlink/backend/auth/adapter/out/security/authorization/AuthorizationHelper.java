@@ -35,4 +35,12 @@ public class AuthorizationHelper {
 
     return Optional.of(user);
   }
+
+  public boolean isSpecialist() {
+    return getCurrentPrincipal().map(user -> user.getSpecialistId() != null).orElse(false);
+  }
+
+  public boolean isClient() {
+    return getCurrentPrincipal().map(user -> user.getClientId() != null).orElse(false);
+  }
 }

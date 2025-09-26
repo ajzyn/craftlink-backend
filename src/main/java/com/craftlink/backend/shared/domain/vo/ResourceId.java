@@ -1,4 +1,4 @@
-package com.craftlink.backend.auth.domain.model.security.vo;
+package com.craftlink.backend.shared.domain.vo;
 
 import com.craftlink.backend.infrastructure.exceptions.custom.DomainException;
 import java.util.UUID;
